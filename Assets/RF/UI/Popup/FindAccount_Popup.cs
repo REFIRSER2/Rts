@@ -19,7 +19,7 @@ public class FindAccount_Popup : Popup_Base
     
     public void onClose()
     {
-        UI_Manager.Instance.RemovePopup(EnumData.PopupType.FindAccount);
+        this.Remove();
     }
 
     public void onFind()
@@ -28,6 +28,6 @@ public class FindAccount_Popup : Popup_Base
         {
             return;
         }
-        DatabaseManager.Instance.FindAccount(emailInput.text);
+        BackendManager.Instance.FindAccount(this, emailInput.text);
     }
 }

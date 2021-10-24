@@ -12,108 +12,131 @@ public class UI_Manager : SerializedMonoBehaviour
     
     #region UI Pool
 
+    [SerializeField] private Canvas ui_Canvas;
     [SerializeField] private Transform ui_Layer;
     [SerializeField] private Transform popup_Layer;
 
-    private GameObject uiPool_Object;
+    private List<UI_Base> uiPool_List = new List<UI_Base>();
+    private List<Popup_Base> popupPool_List = new List<Popup_Base>();
+    private Dictionary<UI_Base, List<UIItem_Base>> uiItemPool_List = new Dictionary<UI_Base, List<UIItem_Base>>();
     
-    private List<UI_Base>uiPool_List = new List<UI_Base>();
-    private List<Popup_Base>popupPool_List = new List<Popup_Base>();
+    private GameObject ui_Pool_OBJ;
 
-    private int uiIndex = -1;
-    private int popupIndex = -1;
-    
-    private void Setup()
+    private void SetUp()
     {
-        if (uiPool_Object != null)
+        ui_Pool_OBJ = new GameObject();
+        ui_Pool_OBJ.name = "UI_Pool";
+        
+        DontDestroyOnLoad(ui_Pool_OBJ);
+        DontDestroyOnLoad(ui_Canvas.gameObject);
+    }
+
+    public T CreateUI<T>(string name = "") where T : UI_Base
+    {
+        if (string.IsNullOrEmpty(name))
+        {
+            name = typeof(T).Name;
+        }
+
+        GameObject obj = Instantiate(Resources.Load($"Prefabs/UI/{name}")) as GameObject;
+        obj.transform.SetParent(ui_Layer, false);
+        T ui = obj.GetComponent<T>();
+        
+        uiPool_List.Add(ui);
+
+        return ui;
+    }
+
+    public void RemoveUI(UI_Base ui)
+    {
+        if (uiPool_List.Contains(ui))
+        {
+            uiPool_List.Remove(ui);
+        }
+        Destroy(ui.gameObject);
+    }
+
+    public void CleanUI()
+    {
+        int max = uiPool_List.Count;
+        for (int i=0;i<max;i++)
+        {
+            RemoveUI(uiPool_List[i]);
+        }
+    }
+
+    public T CreatePopup<T>(string name = "") where T : Popup_Base
+    {
+        if (string.IsNullOrEmpty(name))
+        {
+            name = typeof(T).Name;
+        }
+
+        GameObject obj = Instantiate(Resources.Load($"Prefabs/UI/Popup/{name}")) as GameObject;
+        obj.transform.SetParent(popup_Layer, false);
+        T popup = obj.GetComponent<T>();
+        
+        popupPool_List.Add(popup);
+
+        return popup;    
+    }
+
+    public void RemovePopup(Popup_Base popup)
+    {
+        Destroy(popup.gameObject);
+    }
+
+    public void CleanPopup()
+    {
+        int index = 0;
+        while (popupPool_List.Count == 0)
+        {
+            var obj = popupPool_List[index].gameObject;
+            popupPool_List.RemoveAt(index);
+            
+            Destroy(obj);
+        }
+    }
+
+    public T CreateUIItem<T>(UI_Base parent) where T : UIItem_Base
+    {
+        if (string.IsNullOrEmpty(name))
+        {
+            name = typeof(T).Name;
+        }
+        GameObject obj = Instantiate(Resources.Load($"Prefabs/UI/Item/{name}")) as GameObject;
+        obj.transform.SetParent(parent.transform, false);
+        T uiItem = obj.GetComponent<T>();
+
+        if (!uiItemPool_List.ContainsKey(parent))
+        {
+            uiItemPool_List.Add(parent, new List<UIItem_Base>());
+        }
+        uiItemPool_List[parent].Add(uiItem);
+
+        return uiItem;
+    }
+
+    public void RemoveUIItem(UIItem_Base uiItem)
+    {
+        Destroy(uiItem.gameObject);
+    }
+
+    public void CleanUIItem(UI_Base parent)
+    {
+        if (!uiItemPool_List.ContainsKey(parent))
         {
             return;
         }
-        uiPool_Object = new GameObject();
-        uiPool_Object.name = "UI_Pool_Object";
-        DontDestroyOnLoad(uiPool_Object);
-    }
-
-    public void CreateUI(EnumData.UIType uiType)
-    {
-        if (uiIndex >= 0)
-        {
-            uiPool_List[uiIndex].gameObject.SetActive(false);
-            uiPool_List[uiIndex].transform.SetParent(uiPool_Object.transform, false);
-        }
-
-        var ui = Instantiate(Resources.Load("Prefabs/UI/" + uiType.ToString() + "_UI") as GameObject, ui_Layer);
-        ui.transform.SetParent(ui_Layer, false);
-        ui.gameObject.name = uiType.ToString() + "_UI";
-
-        uiPool_List.Add(ui.GetComponent<UI_Base>());
-        
-        uiIndex = uiPool_List.Count - 1;
-    }
-    
-    public void CreatePopup(EnumData.PopupType popupType)
-    {
-        if (popupIndex >= 0)
-        {
-            //popupPool_List[popupIndex].gameObject.SetActive(false);
-            //popupPool_List[popupIndex].transform.SetParent(uiPool_Object.transform, false);
-        }
-
-        var ui = Instantiate(Resources.Load("Prefabs/UI/Popup/" + popupType.ToString() + "_Popup") as GameObject, popup_Layer);
-        ui.transform.SetParent(popup_Layer, false);
-        ui.gameObject.name = popupType.ToString() + "_Popup";
-
-        popupPool_List.Add(ui.GetComponent<Popup_Base>());
-        
-        popupIndex = popupPool_List.Count - 1;
-    }
-
-    public void RemoveUI(EnumData.UIType uiType)
-    {
-        Destroy(GameObject.Find(uiType.ToString() + "_UI"));
-        //Destroy();
-    }
-
-    public void RemoveAllUI()
-    {
-        foreach (var ui in uiPool_List)
-        {
-            Destroy(ui.gameObject);
-        }
-    }
-
-    public void RemovePopup(EnumData.PopupType popupType)
-    {
-        GameObject find = GameObject.Find(popupType.ToString() + "_Popup");
-        Popup_Base type = find.GetComponent<Popup_Base>();
 
         int index = 0;
-        bool check = false;
-        foreach (var popup in popupPool_List)
+        while (uiItemPool_List[parent].Count == 0)
         {
-            if (popup.GetType() == type.GetType())
-            {
-                check = true;
-                break;
-            }
-
-            index++;
+            var obj = uiItemPool_List[parent][index].gameObject;
+            uiItemPool_List[parent].RemoveAt(index);
+            
+            Destroy(obj);
         }
-
-        if (check)
-        {
-            popupPool_List.RemoveAt(index);
-        }
-        
-        Destroy(GameObject.Find(popupType.ToString() + "_Popup"));
-        popupIndex = popupPool_List.Count-1;
-    }
-
-    public void BackUI()
-    {
-        uiPool_List.RemoveAt(uiIndex);
-
-        uiIndex = uiPool_List.Count - 1;
     }
     #endregion
     
@@ -130,7 +153,7 @@ public class UI_Manager : SerializedMonoBehaviour
             Destroy(this.gameObject);
         }
 
-        Setup();
+        SetUp();
     }
     #endregion
     

@@ -25,14 +25,14 @@ public class Sign_Popup : Popup_Base
 
     public void onClose()
     {
-        UI_Manager.Instance.RemovePopup(EnumData.PopupType.Sign);
+        this.Remove();
     }
 
     public void onSign()
     {
         if (emailInput.text != "" && pwdInput.text != "")
         {
-            DatabaseManager.Instance.Sign(nickInput.text, emailInput.text, pwdInput.text);  
+            BackendManager.Instance.Sign(this, nickInput.text, emailInput.text, pwdInput.text);  
         }
         else
         {
@@ -45,7 +45,6 @@ public class Sign_Popup : Popup_Base
         int index = -1;
 
         bool check = false;
-        
         for (int i = 0; i < inputField_List.Count; i++)
         {
             if (inputField_List[i].isFocused)
@@ -56,7 +55,7 @@ public class Sign_Popup : Popup_Base
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (check && Input.GetKeyDown(KeyCode.Tab))
             {
                 if (index < inputField_List.Count - 1)
                 {

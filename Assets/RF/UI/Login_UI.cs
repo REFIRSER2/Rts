@@ -7,12 +7,11 @@ using UnityEngine.UI;
 public class Login_UI : UI_Base
 {
     [SerializeField] private GameObject loginGroup;
-
     [SerializeField] private InputField pwdInput;
     
     public void onSign_Click()
     {
-        UI_Manager.Instance.CreatePopup(EnumData.PopupType.Sign);
+        UI_Manager.Instance.CreatePopup<Sign_Popup>();
         //DatabaseManager.Instance.Sign();
     }
 
@@ -20,14 +19,13 @@ public class Login_UI : UI_Base
     {
         if (pwdInput.text == "")
         {
-            
             return;
         }
-        DatabaseManager.Instance.Login(pwdInput.text);
+        BackendManager.Instance.Login(pwdInput.text);
     }
 
     public void onFind_Click()
     {
-        UI_Manager.Instance.CreatePopup(EnumData.PopupType.FindAccount);
+        UI_Manager.Instance.CreatePopup<FindAccount_Popup>();
     }
 }

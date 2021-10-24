@@ -23,7 +23,7 @@ public class SteamManager : MonoBehaviour
         }
         catch (SystemException e)
         {
-            
+            Debug.Log("Steam Error :" + e.Message);
         }
 
         if (SteamClient.IsValid)

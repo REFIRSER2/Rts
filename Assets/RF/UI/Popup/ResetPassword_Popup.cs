@@ -19,8 +19,8 @@ public class ResetPassword_Popup : Popup_Base
     }
     
     public void onClose()
-    {
-        UI_Manager.Instance.RemovePopup(EnumData.PopupType.ResetPassword);
+    { 
+        this.Remove();
     }
 
     public void onReset()
@@ -30,6 +30,6 @@ public class ResetPassword_Popup : Popup_Base
             
             return;
         }
-        DatabaseManager.Instance.ResetPassword(oldPwdInput.text, newPwdInput.text);
+        BackendManager.Instance.ResetPassword(oldPwdInput.text, newPwdInput.text);
     }
 }

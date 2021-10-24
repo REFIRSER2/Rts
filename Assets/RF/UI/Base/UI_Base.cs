@@ -7,7 +7,7 @@ public class UI_Base : MonoBehaviour
 {
     #region UI
 
-    public string name;
+    //public string name;
     public virtual void On_Open()
     {
         
@@ -17,19 +17,14 @@ public class UI_Base : MonoBehaviour
     {
         
     }
+
+    public void Remove()
+    {
+        UI_Manager.Instance.RemoveUI(this);
+    }
     #endregion
     
     #region Unity General Funcs
-    private void Awake()
-    {
-
-    }
-
-    private void Update()
-    {
-        
-    }
-
     private void OnEnable()
     {
         On_Open();

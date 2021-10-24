@@ -17,6 +17,6 @@ public class Password_Empty_Popup : Popup_Base
     
     public void onClose()
     {
-        UI_Manager.Instance.RemovePopup(EnumData.PopupType.Password_Empty);
+        this.Remove();
     }
 }

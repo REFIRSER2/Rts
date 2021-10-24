@@ -14,6 +14,11 @@ public class Popup_Base : MonoBehaviour
     {
         
     }
+
+    public void Remove()
+    {
+        UI_Manager.Instance.RemovePopup(this);
+    }
     #endregion
     
     #region Unity General Funcs

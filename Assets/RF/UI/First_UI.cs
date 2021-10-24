@@ -41,7 +41,8 @@ public class First_UI : UI_Base
             else
             {
                 ao.allowSceneActivation = false;
-                UI_Manager.Instance.CreateUI(EnumData.UIType.Login);
+                this.Remove();
+                UI_Manager.Instance.CreateUI<Login_UI>();
             }
 
             if (dot_String.Length >= 3)

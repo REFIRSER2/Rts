@@ -4,21 +4,22 @@ using UnityEngine;
 
 public static class EnumData
 {
-    public enum UIType
+    public enum ErrorCode
     {
-        First,
-        Login,
+        BadUnauthorizedException = 401,
+        
     }
-    
-    public enum PopupType
+
+    public enum ChatChannel
     {
-        Sign,
-        FindAccount,
-        ResetPassword,
-        ResetPassword_Empty,
-        Password_Empty,
+        Global,
+        Local,
+        Whisper,
+        Notify,
+        Party,
+        Guild,
     }
-    
+
     public enum ItemType
     {
         PartWeapon = 0,

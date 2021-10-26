@@ -18,7 +18,7 @@ public class UI_Manager : SerializedMonoBehaviour
 
     private List<UI_Base> uiPool_List = new List<UI_Base>();
     private List<Popup_Base> popupPool_List = new List<Popup_Base>();
-    private Dictionary<UI_Base, List<UIItem_Base>> uiItemPool_List = new Dictionary<UI_Base, List<UIItem_Base>>();
+    private List<UIItem_Base> uiItemPool_List = new List<UIItem_Base>();
     
     private GameObject ui_Pool_OBJ;
 
@@ -98,21 +98,20 @@ public class UI_Manager : SerializedMonoBehaviour
         }
     }
 
-    public T CreateUIItem<T>(UI_Base parent) where T : UIItem_Base
+    public T CreateUIItem<T>(string name = "") where T : UIItem_Base
     {
         if (string.IsNullOrEmpty(name))
         {
             name = typeof(T).Name;
         }
         GameObject obj = Instantiate(Resources.Load($"Prefabs/UI/Item/{name}")) as GameObject;
-        obj.transform.SetParent(parent.transform, false);
         T uiItem = obj.GetComponent<T>();
 
-        if (!uiItemPool_List.ContainsKey(parent))
+        if (!uiItemPool_List.Contains(uiItem))
         {
-            uiItemPool_List.Add(parent, new List<UIItem_Base>());
+            uiItemPool_List.Add(uiItem);
         }
-        uiItemPool_List[parent].Add(uiItem);
+        uiItemPool_List.Add(uiItem);
 
         return uiItem;
     }
@@ -122,18 +121,18 @@ public class UI_Manager : SerializedMonoBehaviour
         Destroy(uiItem.gameObject);
     }
 
-    public void CleanUIItem(UI_Base parent)
+    public void CleanUIItem(UIItem_Base uiItem)
     {
-        if (!uiItemPool_List.ContainsKey(parent))
+        if (!uiItemPool_List.Contains(uiItem))
         {
             return;
         }
 
         int index = 0;
-        while (uiItemPool_List[parent].Count == 0)
+        while (uiItemPool_List.Count == 0)
         {
-            var obj = uiItemPool_List[parent][index].gameObject;
-            uiItemPool_List[parent].RemoveAt(index);
+            var obj = uiItemPool_List[index].gameObject;
+            uiItemPool_List.RemoveAt(index);
             
             Destroy(obj);
         }

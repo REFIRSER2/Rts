@@ -12,6 +12,11 @@ public class ChatManager : MonoBehaviour
 
     private Chat_UI chatUI;
 
+    public Chat_UI GetChatUI()
+    {
+        return chatUI;
+    }
+    
     private void Awake()
     {
         if (Instance == null)
@@ -63,7 +68,7 @@ public class ChatManager : MonoBehaviour
         {
             if (args.ErrInfo == ErrorInfo.Success)
             {
-                chatUI.OnReceiveMessage(false, args.From.NickName,args.Message);
+                chatUI.OnReceiveMessage(false, !args.From.IsRemote, args.From.NickName,args.Message);
             }
             else if (args.ErrInfo.Category == ErrorCode.BannedChat)
             {
@@ -92,7 +97,17 @@ public class ChatManager : MonoBehaviour
         {
             if (args.ErrInfo == ErrorInfo.Success)
             {
-                chatUI.OnReceiveMessage(true, args.From.NickName,args.Message);
+                Debug.Log(args.From.IsRemote);
+                Debug.Log(args.To.IsRemote);
+                if (!args.From.IsRemote)
+                {
+                    chatUI.OnReceiveMessage(true, true, args.To.NickName,args.Message);  
+                }
+                else
+                {
+                    chatUI.OnReceiveMessage(true, false, args.From.NickName,args.Message);  
+                }
+                
             }
             else if(args.ErrInfo.Category == ErrorCode.BannedChat)
             {

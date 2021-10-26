@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 using BackEnd;
 using BackEnd.Tcp;
+using LitJson;
 using UnityEngine.SceneManagement;
 
 public class BackendManager : MonoBehaviour
@@ -81,7 +83,23 @@ public class BackendManager : MonoBehaviour
             UI_Manager.Instance.CleanUI();
             SceneManager.LoadScene("Lobby");
             UI_Manager.Instance.CreateUI<MainMenu_UI>();
+            
+            if (GetUserData() == null)
+            {
+                int level = 1;
+                int exp = 0;
+                int cash = 0;
+                int gold = 0;
 
+                Param param = new Param();
+                param.Add("cash", cash);
+                param.Add("gold", gold);
+                param.Add("level", level);
+                param.Add("exp", exp);
+
+                var insert = Backend.GameData.Insert("user", param);
+            }
+            
             var getChannel = Backend.Chat.GetGroupChannelList("일반채널");
             if (getChannel.IsSuccess())
             {
@@ -242,6 +260,95 @@ public class BackendManager : MonoBehaviour
                 break;            
         }     
     } 
+    #endregion
+    
+    #region User Info
+    public string GetLocalNickname()
+    {
+        string nick = "";
+        nick = Backend.UserNickName;
+        
+        return nick;
+    }
+
+    private JsonData userData;
+    private JsonData GetUserData()
+    {
+        var get = Backend.GameData.GetMyData("user", new Where(), 10); 
+                
+        if (get.IsSuccess() == false)
+        {
+            return null;
+        }
+
+        if (get.GetReturnValuetoJSON()["rows"].Count <= 0)
+        {
+            return null;
+        }
+        else
+        {
+            userData = get.Rows();
+
+            return get.Rows();
+        }
+
+        return null;
+    }
+    
+    private JsonData GetUserData(string key)
+    {
+        var get = Backend.GameData.GetMyData("user", new Where(), 10); 
+                
+        Debug.Log(get.GetMessage());
+        
+        if (get.IsSuccess() == false)
+        {
+            return null;
+        }
+
+
+        var rows = get.Rows()[0];
+
+        Debug.Log("test");
+            
+        return rows[key][0];
+    }
+    
+    public int GetGold()
+    {
+        int gold = 0;
+        gold = Convert.ToInt32(GetUserData("gold").ToString());
+ 
+        return gold;
+    }
+    
+    public int GetCash()
+    {
+        int cash = 0;
+        cash = Convert.ToInt32(GetUserData("cash").ToString());
+ 
+        return cash;
+    }
+    
+    public int GetLevel()
+    {
+        int level = 0;
+        level = Convert.ToInt32(GetUserData("level").ToString());
+ 
+        return level;
+    }
+    
+    public int GetEXP()
+    {
+        int exp = 0;
+        exp = Convert.ToInt32(GetUserData("exp").ToString());
+ 
+        return exp;
+    }
+    #endregion
+    
+    #region Report
+
     #endregion
     
     #region Handler

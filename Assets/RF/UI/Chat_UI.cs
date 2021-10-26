@@ -15,12 +15,20 @@ public class Chat_UI : UI_Base
 
     private int channel = 0;
     
-    public void OnReceiveMessage(bool isWhisper, string nick, string message)
+    public void OnReceiveMessage(bool isWhisper, bool isLocal, string nick, string message)
     {
         if (isWhisper)
         {
-            chatLog_List[(int)EnumData.ChatChannel.Global].text += "<color=lightblue>" + nick + "님의 귓속말 : " + message + "</color>\n";
-            chatLog_List[(int)EnumData.ChatChannel.Whisper].text += "<color=lightblue>" + nick + "님의 귓속말 : " + message + "</color>\n";
+            if (isLocal)
+            {
+                chatLog_List[(int)EnumData.ChatChannel.Global].text += "<color=lightblue>" + nick + "님에게 보낸 귓속말 : " + message + "</color>\n";
+                chatLog_List[(int)EnumData.ChatChannel.Whisper].text += "<color=lightblue>" + nick + "님에게 보낸 귓속말 : " + message + "</color>\n";
+            }
+            else
+            {
+                chatLog_List[(int)EnumData.ChatChannel.Global].text += "<color=lightblue>" + nick + "님의 귓속말 : " + message + "</color>\n";
+                chatLog_List[(int)EnumData.ChatChannel.Whisper].text += "<color=lightblue>" + nick + "님의 귓속말 : " + message + "</color>\n";
+            }
         }
         else
         {
@@ -93,22 +101,27 @@ public class Chat_UI : UI_Base
         }
     }
 
+    public void onSelect()
+    {
+        scrollRect_List[channel].gameObject.SetActive(true);
+    }
+
+    public void onEndEdit()
+    {
+
+    }
+
     private void Awake()
     {
-        for (int i=0;i<chatLog_List.Count;i++)
+        for (int i=0;i<scrollRect_List.Count;i++)
         {
-            if (i != channel)
-            {
-                chatLog_List[i].gameObject.SetActive(false);
-                continue;
-            }
-            chatLog_List[i].gameObject.SetActive(true);
+            scrollRect_List[i].gameObject.SetActive(false);
         }
     }
     
     private void Update()
     {
-        if (chatInput.isFocused || chatInput.IsActive())
+        if (chatInput.IsActive())
         {
             if (chatInput.text == "")
             {
@@ -117,7 +130,25 @@ public class Chat_UI : UI_Base
             
             if (Input.GetKey(KeyCode.Return))
             {
-                ChatManager.Instance.SendMessage(ChannelType.Public,chatInput.text);
+                string findCmd = "";
+                foreach (var cmd in CommandManager.Instance.cmdList)
+                {
+                    if (chatInput.text.Length >= cmd.Key.Length && chatInput.text.Substring(0, cmd.Key.Length) == cmd.Key)
+                    {
+                        findCmd = cmd.Key;
+                        break;
+                    }
+                }
+
+                if (findCmd != "")
+                {
+                    CommandManager.Instance.cmdList[findCmd].Invoke(chatInput.text.Replace(findCmd + " ", ""));
+                }
+                else
+                {
+                    ChatManager.Instance.SendMessage(ChannelType.Public,chatInput.text);
+                }
+                
                 chatInput.text = "";
             }
         }

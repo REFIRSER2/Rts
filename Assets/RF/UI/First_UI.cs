@@ -7,7 +7,10 @@ using UnityEngine.UI;
 public class First_UI : UI_Base
 {
     [SerializeField] private Text loading_Text;
-    [SerializeField] private string loading_String = "로딩 중";
+    [SerializeField] private string loading_String = "Loading";
+
+    [SerializeField] private Slider progress_Bar;
+    [SerializeField] private Text progress_Text;
 
     public override void On_Open()
     {
@@ -30,20 +33,28 @@ public class First_UI : UI_Base
         ao.allowSceneActivation = false;
         
         string dot_String = ""; 
+        float progress = 0f;
         while (!ao.isDone)
         {
             yield return new WaitForSeconds(0.3F);
-
+            
             if (ao.progress < 0.9F)
             {
-                
+                progress = Mathf.Clamp(progress+Time.deltaTime*4F, 0F, ao.progress);
             }
             else
             {
-                ao.allowSceneActivation = false;
-                this.Remove();
-                UI_Manager.Instance.CreateUI<Login_UI>();
+                progress = Mathf.Clamp(progress+Time.deltaTime*4F, 0F, 1F);
+                if (progress >= 1F)
+                {
+                    ao.allowSceneActivation = false;
+                    this.Remove();
+                    UI_Manager.Instance.CreateUI<Login_UI>();    
+                }
             }
+
+            progress_Bar.value = progress;
+            progress_Text.text = Mathf.Ceil(progress * 100) + "%";
 
             if (dot_String.Length >= 3)
             {

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clientAppID: ebd24430-3077-11ec-a114-19901eee61262686
   signatureKey: ebd24431-3077-11ec-a114-19901eee61262686
-  functionAuthKey: 
-  packageName: com.DefaultCompany.Rts
+  functionAuthKey: AQICAHiT9pph8qngOxVNCJXRC0BZjtURNwhhts4F69FL8VO4dgGEhpbjjail/Qd0O02PQEmsAAAAYjBgBgkqhkiG9w0BBwagUzBRAgEAMEwGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM2c11r9+WlZKnLvIhAgEQgB+HVh0RdEtrZPDOmYB3wqzCmjgs6a4FbE9pcHUcUbQq
+  packageName: com.DefaultCompany.RTS
   isAllPlatform: 1
   sendLogReport: 1
   timeOutSec: 100

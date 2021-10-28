@@ -719,6 +719,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chat_UI
       objectReference: {fileID: 0}
+    - target: {fileID: 5160822817922218431, guid: dae13d29ba98b564cb9a9e9429588f45, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8635090175846457100, guid: dae13d29ba98b564cb9a9e9429588f45, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

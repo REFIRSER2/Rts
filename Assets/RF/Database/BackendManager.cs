@@ -99,7 +99,7 @@ public class BackendManager : MonoBehaviour
 
                 var insert = Backend.GameData.Insert("user", param);
             }
-            
+
             var getChannel = Backend.Chat.GetGroupChannelList("일반채널");
             if (getChannel.IsSuccess())
             {

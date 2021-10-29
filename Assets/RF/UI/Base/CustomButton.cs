@@ -11,11 +11,22 @@ public class CustomButton : MonoBehaviour, IPointerClickHandler, IPointerUpHandl
     public UnityEvent onClick;
 
     [SerializeField] private bool isChangeImage = false;
+
+    [SerializeField] private Image background;
     
-    [SerializeField] private Image normalBackground;
-    [SerializeField] private Image highlightBackground;
-    [SerializeField] private Image selectedBackground;
-    [SerializeField] private Image disabledBackground;
+    [SerializeField] private Sprite normalBackground;
+    [SerializeField] private Sprite highlightBackground;
+    [SerializeField] private Sprite selectedBackground;
+    [SerializeField] private Sprite disabledBackground;
+
+    [SerializeField] private bool isChangeTextColor;
+
+    [SerializeField] private Text title_Text;
+
+    [SerializeField] private Color normalColor;
+    [SerializeField] private Color highlightColor;
+    [SerializeField] private Color selectedColor;
+    [SerializeField] private Color disableColor;
     
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -34,75 +45,34 @@ public class CustomButton : MonoBehaviour, IPointerClickHandler, IPointerUpHandl
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (normalBackground != null)
+        if (isChangeImage)
         {
-            if (normalBackground.gameObject.activeSelf)
+            if (highlightBackground)
             {
-                normalBackground.gameObject.SetActive(false);
+                background.sprite = highlightBackground;
             }   
         }
 
-        if (selectedBackground != null)
+        if (isChangeTextColor)
         {
-            if (selectedBackground.gameObject.activeSelf)
-            {
-                selectedBackground.gameObject.SetActive(false);
-            }    
+            title_Text.color = highlightColor;
         }
-
-
-        if (disabledBackground != null)
-        {
-            if (disabledBackground.gameObject.activeSelf)
-            {
-                disabledBackground.gameObject.SetActive(false);
-            }   
-        }
-
-        if (highlightBackground != null)
-        {
-            if (!highlightBackground.gameObject.activeSelf)
-            {
-                highlightBackground.gameObject.SetActive(true);  
-            }    
-        }
-
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (normalBackground != null)
+        if (isChangeImage)
         {
-            if (!normalBackground.gameObject.activeSelf)
+            if (normalBackground != null)
             {
-                normalBackground.gameObject.SetActive(true);
-            }   
-        }
-
-        if (selectedBackground != null)
-        {
-            if (selectedBackground.gameObject.activeSelf)
-            {
-                selectedBackground.gameObject.SetActive(false);
+                background.sprite = normalBackground;
             }    
         }
-
-        if (disabledBackground != null)
+        
+        if (isChangeTextColor)
         {
-            if (disabledBackground.gameObject.activeSelf)
-            {
-                disabledBackground.gameObject.SetActive(false);
-            }    
+            title_Text.color = normalColor;
         }
-
-        if (highlightBackground != null)
-        {
-            if (highlightBackground.gameObject.activeSelf)
-            {
-                highlightBackground.gameObject.SetActive(false);  
-            }     
-        }
-   
     }
 
     #region Unity General Funcs

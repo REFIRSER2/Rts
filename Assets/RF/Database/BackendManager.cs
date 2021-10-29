@@ -347,6 +347,19 @@ public class BackendManager : MonoBehaviour
     }
     #endregion
     
+    #region Shop
+
+    public void GetShop_Items()
+    {
+        var getItems= Backend.Chart.GetChartContents("29978");
+
+        if (getItems.IsSuccess())
+        {
+            Debug.Log(getItems.Rows().ToString());
+        }
+    }
+    #endregion
+    
     #region Report
 
     #endregion

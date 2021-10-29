@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Text;
 using UnityEngine;
 using BackEnd;
 using BackEnd.Tcp;
@@ -308,9 +309,7 @@ public class BackendManager : MonoBehaviour
 
 
         var rows = get.Rows()[0];
-
-        Debug.Log("test");
-            
+        
         return rows[key][0];
     }
     
@@ -349,14 +348,30 @@ public class BackendManager : MonoBehaviour
     
     #region Shop
 
-    public void GetShop_Items()
+    public JsonData GetShop_Items(int cat)
     {
-        var getItems= Backend.Chart.GetChartContents("29978");
+        int chartID = 0;
+        switch (cat)
+        {
+            case 0:
+                chartID = DefineData._shopTable_Parts;
+                break;
+            case 1:
+                chartID = DefineData._shopTable_Accessary;
+                break;
+            case 2:
+                chartID = DefineData._shopTable_Ships;
+                break;
+        }
+
+            var getItems= Backend.Chart.GetChartContents((chartID).ToString());
 
         if (getItems.IsSuccess())
         {
-            Debug.Log(getItems.Rows().ToString());
+            return getItems.Rows();
         }
+
+        return null;
     }
     #endregion
     

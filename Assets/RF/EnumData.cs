@@ -27,6 +27,14 @@ public static class EnumData
         PartLeg = 2,
         PartArm = 3,
         Accessary = 4,
+        Ship = 5,
+    }
+
+    public enum ItemCat
+    {
+        Part,
+        Accessary,
+        Ship,
     }
 
     public enum Currently

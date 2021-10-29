@@ -8,7 +8,9 @@ using UnityEngine.UI;
 public class MainMenu_UI : UI_Base
 {
     [SerializeField] private TMP_Text notice_Text;
-    [SerializeField] private GameObject shopOBJ;
+    [SerializeField] private GameObject shop_OBJ;
+    [SerializeField] private GameObject inv_OBJ;
+    [SerializeField] private GameObject option_OBJ;
 
     private float noticeResetTime = 0F;
     public void SetNotice(string str)
@@ -18,10 +20,15 @@ public class MainMenu_UI : UI_Base
 
     public void onShop()
     {
-        shopOBJ.SetActive(true);
+        shop_OBJ.SetActive(true);
     }
 
     public void onInventory()
+    {
+        
+    }
+
+    public void onFriend()
     {
         
     }
@@ -34,6 +41,24 @@ public class MainMenu_UI : UI_Base
     public void onOption()
     {
         
+    }
+
+    public void onHome()
+    {
+        if (shop_OBJ != null)
+        {
+            shop_OBJ.SetActive(false); 
+        }
+
+        if (inv_OBJ != null)
+        {
+            inv_OBJ.SetActive(false);   
+        }
+
+        if (option_OBJ != null)
+        {
+            option_OBJ.SetActive(false);   
+        }
     }
 
     public void onExit()

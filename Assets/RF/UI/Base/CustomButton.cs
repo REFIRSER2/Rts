@@ -19,6 +19,13 @@ public class CustomButton : MonoBehaviour, IPointerClickHandler, IPointerUpHandl
     [SerializeField] private Sprite selectedBackground;
     [SerializeField] private Sprite disabledBackground;
 
+    [SerializeField] private bool isChangeImageColor = false;
+
+    [SerializeField] private Color normalBGColor;
+    [SerializeField] private Color highlightBGColor;
+    [SerializeField] private Color selectedBGColor;
+    [SerializeField] private Color disabledBGColor;
+
     [SerializeField] private bool isChangeTextColor;
 
     [SerializeField] private Text title_Text;
@@ -27,7 +34,7 @@ public class CustomButton : MonoBehaviour, IPointerClickHandler, IPointerUpHandl
     [SerializeField] private Color highlightColor;
     [SerializeField] private Color selectedColor;
     [SerializeField] private Color disableColor;
-
+    
     [SerializeField] private List<CustomButton> selectList = new List<CustomButton>();
 
     [SerializeField]private bool isSelect = false;
@@ -55,13 +62,20 @@ public class CustomButton : MonoBehaviour, IPointerClickHandler, IPointerUpHandl
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("on pointer enter :" + !isSelect);
         if (isChangeImage)
         {
             if (highlightBackground && !isSelect)
             {
                 background.sprite = highlightBackground;
             }   
+        }
+
+        if (isChangeImageColor)
+        {
+            if (!isSelect)
+            {
+                background.color = highlightBGColor;
+            }
         }
 
         if (isChangeTextColor && !isSelect)
@@ -80,6 +94,14 @@ public class CustomButton : MonoBehaviour, IPointerClickHandler, IPointerUpHandl
             }    
         }
         
+        if (isChangeImageColor)
+        {
+            if (!isSelect)
+            {
+                background.color = normalBGColor;
+            }
+        }
+        
         if (isChangeTextColor && !isSelect)
         {
             title_Text.color = normalColor;
@@ -88,7 +110,6 @@ public class CustomButton : MonoBehaviour, IPointerClickHandler, IPointerUpHandl
 
     public void Select()
     {
-        
         if (isChangeImage)
         {
             if (selectedBackground != null)
@@ -97,7 +118,11 @@ public class CustomButton : MonoBehaviour, IPointerClickHandler, IPointerUpHandl
                 isSelect = true;
             }
         }
-        Debug.Log("select :" + !isSelect);
+        
+        if (isChangeImageColor)
+        {
+            background.color = selectedBGColor;
+        }
 
         if (isChangeTextColor)
         {
@@ -113,6 +138,11 @@ public class CustomButton : MonoBehaviour, IPointerClickHandler, IPointerUpHandl
             {
                 background.sprite = normalBackground;
             }
+        }
+        
+        if (isChangeImageColor)
+        {
+            background.color = normalBGColor;
         }
         
         if (isChangeTextColor)
@@ -135,7 +165,6 @@ public class CustomButton : MonoBehaviour, IPointerClickHandler, IPointerUpHandl
                     background.sprite = selectedBackground;
                 }
             }
-            Debug.Log("select :" + !isSelect);
 
             if (isChangeTextColor)
             {

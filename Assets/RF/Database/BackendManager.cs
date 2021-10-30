@@ -119,14 +119,12 @@ public class BackendManager : MonoBehaviour
                         var inDate = channels[i]["inDate"].ToString();
                         ErrorInfo error;
                         Backend.Chat.JoinChannel(ChannelType.Public, serverAddress, serverPort, "일반채널", inDate, out error);
-                        Debug.Log(error);
                     }
                 }
             }
             else
             {
-                Debug.Log(getChannel.GetMessage());
-                Debug.Log("cant connect chat ");
+
             }
             
             
@@ -299,8 +297,6 @@ public class BackendManager : MonoBehaviour
     private JsonData GetUserData(string key)
     {
         var get = Backend.GameData.GetMyData("user", new Where(), 10); 
-                
-        Debug.Log(get.GetMessage());
         
         if (get.IsSuccess() == false)
         {

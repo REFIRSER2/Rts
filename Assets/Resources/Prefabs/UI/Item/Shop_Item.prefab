@@ -143,6 +143,8 @@ MonoBehaviour:
   highlightColor: {r: 0, g: 0, b: 0, a: 0}
   selectedColor: {r: 0, g: 0, b: 0, a: 0}
   disableColor: {r: 0, g: 0, b: 0, a: 0}
+  selectList: []
+  isSelect: 0
 --- !u!1 &2098529056744294111
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,6 +245,8 @@ MonoBehaviour:
   highlightColor: {r: 0, g: 0, b: 0, a: 0}
   selectedColor: {r: 0, g: 0, b: 0, a: 0}
   disableColor: {r: 0, g: 0, b: 0, a: 0}
+  selectList: []
+  isSelect: 0
 --- !u!1 &6331484772277110321
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,6 +639,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4615000009712284925}
   - component: {fileID: 627838260814086310}
+  - component: {fileID: 4680380550684991459}
   m_Layer: 5
   m_Name: Shop_Item
   m_TagString: Untagged
@@ -676,6 +681,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemTitle_Text: {fileID: 4380218113060207889}
   price_Text: {fileID: 7262639765284676289}
+  model_View: {fileID: 7189743631310305716}
+--- !u!114 &4680380550684991459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8353111685121816308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31691372e3d9ce1489ecb117da268d2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  isChangeImage: 1
+  background: {fileID: 5850327783518059706}
+  normalBackground: {fileID: 21300000, guid: 67f113fdbbaf51e41a60d167f4e624ad, type: 3}
+  highlightBackground: {fileID: 21300000, guid: c1dd95628b38561449e6bda4d712b9a6, type: 3}
+  selectedBackground: {fileID: 21300000, guid: c1dd95628b38561449e6bda4d712b9a6, type: 3}
+  disabledBackground: {fileID: 0}
+  isChangeTextColor: 0
+  title_Text: {fileID: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  selectedColor: {r: 0, g: 0, b: 0, a: 0}
+  disableColor: {r: 0, g: 0, b: 0, a: 0}
+  selectList: []
+  isSelect: 0
 --- !u!1 &8398478168681510362
 GameObject:
   m_ObjectHideFlags: 0

@@ -4852,6 +4852,7 @@ MonoBehaviour:
   - {fileID: 6540182590327227844}
   - {fileID: 927415824591294135}
   - {fileID: 7752987404127028826}
+  itemInfo: {fileID: 4649589452352430766}
 --- !u!1 &5527730520589972536
 GameObject:
   m_ObjectHideFlags: 0
@@ -7482,6 +7483,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4778998842795090873}
+  - component: {fileID: 4649589452352430766}
   m_Layer: 5
   m_Name: Item_Info
   m_TagString: Untagged
@@ -7511,6 +7513,28 @@ RectTransform:
   m_AnchoredPosition: {x: 249.5, y: -492}
   m_SizeDelta: {x: 600, y: 830}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4649589452352430766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8910911020003651249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d90f87b5277bd4e40acdca6dcca7a978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelView: {fileID: 749884792151738236}
+  title_Text: {fileID: 1578974198693248090}
+  energy_Slider: {fileID: 4256382597040438859}
+  weight_Slider: {fileID: 6293367859482445829}
+  speed_Slider: {fileID: 33423688784463380}
+  health_Slider: {fileID: 6178498620676061968}
+  sight_Slider: {fileID: 8355964022470630195}
+  damage_Slider: {fileID: 6981357080858071534}
+  dps_Slider: {fileID: 5893651554760654145}
+  reach_Slider: {fileID: 4605070388809598365}
 --- !u!1 &8955365319004148320
 GameObject:
   m_ObjectHideFlags: 0

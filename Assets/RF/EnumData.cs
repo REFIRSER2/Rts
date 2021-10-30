@@ -42,4 +42,10 @@ public static class EnumData
         Gold = 0,
         Cash = 1,
     }
+
+    public enum Status
+    {
+        Online,
+        IsPlay,
+    }
 }

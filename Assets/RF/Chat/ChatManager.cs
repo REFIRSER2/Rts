@@ -40,7 +40,12 @@ public class ChatManager : MonoBehaviour
         {
             if (args.ErrInfo == ErrorInfo.Success)
             {
-                chatUI.OnNotifyMessage("알림", "채팅 채널에 접속하였습니다.");
+                if (!args.Session.IsRemote)
+                {
+                    chatUI.OnNotifyMessage("알림", "채팅 채널에 접속하였습니다."); 
+                }
+
+
                 /*var getChannel = Backend.Chat.GetGroupChannelList("길드채널");
                 if (getChannel.IsSuccess())
                 {
@@ -50,7 +55,13 @@ public class ChatManager : MonoBehaviour
             }
             else
             {
-                chatUI.OnNotifyMessage("알림", "채팅 서버에 연결할 수 없습니다.");
+                if (!args.Session.IsRemote)
+                {
+                    chatUI.OnNotifyMessage("알림", "채팅 서버에 연결할 수 없습니다. 채팅 서버 연결 재시도 중 ..");
+
+                    StartCoroutine(RetryJoin());
+
+                }
             }
         });
         
@@ -116,6 +127,22 @@ public class ChatManager : MonoBehaviour
         });
     }
 
+    IEnumerator RetryJoin()
+    {
+        yield return new WaitForSeconds(5F);
+        BackendManager.Instance.JoinChannel();
+    }
+
+    public void NotifyMessage(string msg)
+    {
+        chatUI.OnNotifyMessage("공지",msg);
+    }
+
+    public void SendSystemMessage(string msg)
+    {
+        chatUI.SendSystemMessage(msg);
+    }
+    
     public void SendMessage(ChannelType channel, string msg)
     {
         Backend.Chat.ChatToChannel(channel, msg);

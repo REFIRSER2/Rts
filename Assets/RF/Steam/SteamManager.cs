@@ -64,9 +64,11 @@ public class SteamManager : MonoBehaviour
     
     #region Steam Lobby
     public Lobby currentLobby;
+    
+    public readonly int maxMembers = 4;
 
-    public int maxMembers = 4;
-
+    private Dictionary<SteamId, SteamLobbyClient> partyMembers = new Dictionary<SteamId, SteamLobbyClient>();
+    
     private void SetupLobby()
     {
         SteamMatchmaking.OnLobbyCreated += onLobbyCreated;
@@ -78,27 +80,70 @@ public class SteamManager : MonoBehaviour
         SteamMatchmaking.OnLobbyMemberDataChanged += onLobbyMemberDataChanged;
         SteamMatchmaking.OnLobbyMemberDisconnected += onLobbyMemberDisconnected;
         SteamMatchmaking.OnLobbyMemberKicked += onLobbyMemberKicked;
-
-        CreateLobby();
     }
 
-    private void CreateLobby()
+    public void CreateLobby()
     {
         SteamMatchmaking.CreateLobbyAsync(maxMembers);
     }
 
+    public void JoinLobby(Lobby lb)
+    {
+        SteamMatchmaking.JoinLobbyAsync(lb.Id);
+    }
+
+    private async void RefreshLobby()
+    {
+        partyMembers.Clear();
+
+        foreach (var friend in currentLobby.Members)
+        {
+            SteamLobbyClient member = new SteamLobbyClient();
+            member.nickName = BackendManager.Instance.GetLocalNickname();
+            
+            var image = await SteamFriends.GetLargeAvatarAsync(friend.Id);
+
+            if (image != null)
+            {
+                var texture = SteamManager.Instance.GetProfileIcon(image.Value);
+                member.profile = texture;
+            }
+
+            partyMembers.Add(friend.Id, member);
+
+            if (FindObjectOfType<MainMenu_UI>() != null)
+            {
+                FindObjectOfType<MainMenu_UI>().RefreshParty();
+            }
+        }
+    }
+
+    public Dictionary<SteamId, SteamLobbyClient> GetPartyMembers()
+    {
+        return partyMembers;
+    }
+
     private void onLobbyCreated(Result result, Lobby lobby)
     {
+        Debug.Log("created");
         currentLobby = lobby;
+
+        RefreshLobby();
     }
 
     private void onLobbyEntered(Lobby lobby)
     {
+        Debug.Log("entered");
         currentLobby = lobby;
+
+        RefreshLobby();
     }
 
     private void onLobbyInvited(Friend friend, Lobby lobby)
     {
+        Debug.Log("invite");
+        var invite = UI_Manager.Instance.CreatePopup<PartyInvite_Popup>();
+        invite.SetLobby(lobby);
         
     }
 
@@ -109,12 +154,14 @@ public class SteamManager : MonoBehaviour
 
     private void onLobbyMemberJoined(Lobby lobby, Friend friend)
     {
-        
+        Debug.Log("member joined");
+        RefreshLobby();
     }
 
     private void onLobbyMemberLeave(Lobby lobby, Friend friend)
     {
-        
+        Debug.Log("member leave");
+        RefreshLobby();
     }
 
     private void onLobbyMemberDataChanged(Lobby lobby, Friend friend)
@@ -124,12 +171,12 @@ public class SteamManager : MonoBehaviour
 
     private void onLobbyMemberDisconnected(Lobby lobby, Friend friend)
     {
-        
+        RefreshLobby();
     }
 
     private void onLobbyMemberKicked(Lobby lobby, Friend friend, Friend friend2)
     {
-        
+        RefreshLobby();
     }
     #endregion
     

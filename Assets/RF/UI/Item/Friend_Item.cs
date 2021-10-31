@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using BackEnd.Tcp;
 using Steamworks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -58,9 +59,10 @@ public class Friend_Item : UIItem_Base
     }
 
     public void onClick()
-    {
-        friend.InviteToGame( SteamManager.Instance.Nickname + " 님이 게임에 초대하였습니다.");
+    {;
+        SteamManager.Instance.currentLobby.InviteFriend(friend.Id);
         friend.SendMessage(SteamManager.Instance.Nickname + " 님이 게임에 초대하였습니다.");
+        ChatManager.Instance.SendSystemMessage(friend.Name + "님을 파티에 초대하였습니다." );
     }
 
     private void Awake()

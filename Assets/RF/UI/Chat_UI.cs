@@ -148,6 +148,8 @@ public class Chat_UI : UI_Base
                 {
                     ChatManager.Instance.SendMessage(ChannelType.Public,chatInput.text);
                 }
+
+                chatInput.ActivateInputField();
                 
                 chatInput.text = "";
             }

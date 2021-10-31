@@ -35,6 +35,7 @@ public class Shop_UI : UI_Base
         int copyidx = index;
         item.GetComponent<CustomButton>().onClick.AddListener(()=>onItem(copyidx));
         
+        item.GetBuyButton().onClick.AddListener(()=>onBuy(copyidx));
         ShopViewManager.Instance.Create_ItemList_Mdl(index - (index/8)*8, id);
     }
 
@@ -140,6 +141,24 @@ public class Shop_UI : UI_Base
         RefreshItems();
     }
 
+    private void onBuy(int index)
+    {
+        var data = BackendManager.Instance.GetShop_Items(cat);
+
+        if (data == null)
+        {
+            return;
+        }
+
+        Param param = new Param();
+        param.Add("ItemCat", cat.ToString());
+        param.Add("ItemIndex", index.ToString());
+        param.Add("ItemID", data[index]["ItemID"].ToString());
+        param.Add("UserID", BackendManager.Instance.GetID());
+
+        var ret = Backend.BFunc.InvokeFunction("BuyItem", param);
+    }
+    
     private void onItem(int index)
     {
         var data = BackendManager.Instance.GetShop_Items(cat);
@@ -147,6 +166,11 @@ public class Shop_UI : UI_Base
         if (data == null)
         {
             return;
+        }
+
+        for (int i = 0; i < shop_Content.childCount; i++)
+        {
+            shop_Content.GetChild(i).GetComponent<CustomButton>().UnSelect();
         }
         
         itemInfo.SetTitle(data[index]["ItemName"]["S"].ToString());

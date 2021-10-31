@@ -81,18 +81,20 @@ public class BackendManager : MonoBehaviour
         }
         else
         {
-            UI_Manager.Instance.CleanUI();
-            SceneManager.LoadScene("Lobby");
-            UI_Manager.Instance.CreateUI<MainMenu_UI>();
-            
+            SteamManager.Instance.CreateLobby();
+
             if (GetUserData() == null)
             {
                 int level = 1;
                 int exp = 0;
                 int cash = 0;
                 int gold = 0;
-
+                
+                var info = Backend.BMember.GetUserInfo();
+                string gamerID = info.GetReturnValuetoJSON()["row"]["gamerId"].ToString();
+                
                 Param param = new Param();
+                param.Add("id", gamerID);
                 param.Add("cash", cash);
                 param.Add("gold", gold);
                 param.Add("level", level);
@@ -100,35 +102,44 @@ public class BackendManager : MonoBehaviour
 
                 var insert = Backend.GameData.Insert("user", param);
             }
+            
+            UI_Manager.Instance.CleanUI();
+            SceneManager.LoadScene("Lobby");
+            UI_Manager.Instance.CreateUI<MainMenu_UI>();
 
-            var getChannel = Backend.Chat.GetGroupChannelList("일반채널");
-            if (getChannel.IsSuccess())
+            JoinChannel();
+
+
+        }
+    }
+
+    public void JoinChannel()
+    {
+        var getChannel = Backend.Chat.GetGroupChannelList("일반채널");
+        if (getChannel.IsSuccess())
+        {
+            var channels = getChannel.Rows();
+            for (int i = 0; i < channels.Count; i++)
             {
-                var channels = getChannel.Rows();
-                for (int i = 0; i < channels.Count; i++)
+                var count = Convert.ToInt32(channels[i]["joinedUserCount"].ToString());
+                if (count >= 200)
                 {
-                    var count = Convert.ToInt32(channels[i]["joinedUserCount"].ToString());
-                    if (count >= 200)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        var serverAddress = channels[i]["serverAddress"].ToString();
-                        var serverPort = ushort.Parse(channels[i]["serverPort"].ToString());
-                        var inDate = channels[i]["inDate"].ToString();
-                        ErrorInfo error;
-                        Backend.Chat.JoinChannel(ChannelType.Public, serverAddress, serverPort, "일반채널", inDate, out error);
-                    }
+                    continue;
+                }
+                else
+                {
+                    var serverAddress = channels[i]["serverAddress"].ToString();
+                    var serverPort = ushort.Parse(channels[i]["serverPort"].ToString());
+                    var inDate = channels[i]["inDate"].ToString();
+                    ErrorInfo error;
+                    Backend.Chat.JoinChannel(ChannelType.Public, serverAddress, serverPort, "일반채널", inDate, out error);
                 }
             }
-            else
-            {
-
-            }
-            
-            
         }
+        else
+        {
+
+        }   
     }
 
     public void FindAccount(FindAccount_Popup popup, string email)
@@ -171,6 +182,10 @@ public class BackendManager : MonoBehaviour
         
         switch (num)
         {
+            default:
+                error.SetTitle("오류");
+                error.SetText("기타 에러.\n해당 사유 : 알 수 없음");
+                break;
             case 400:
                 error.SetTitle("오류");
                 error.SetText("비밀번호를 찾을 수 업습니다.\n해당 사유 : 이메일 불일치");
@@ -184,6 +199,8 @@ public class BackendManager : MonoBehaviour
                 error.SetText("비밀번호를 찾을 수 업습니다.\n해당 사유 : 너무 많은 시도");
                 break;
         }    
+        
+
     }
 
     public void onLoginError(string code)
@@ -194,6 +211,10 @@ public class BackendManager : MonoBehaviour
         
         switch (num)
         {
+            default:
+                error.SetTitle("오류");
+                error.SetText("기타 에러.\n해당 사유 : 알 수 없음");
+                break;
             case 401:
                 error.SetTitle("오류");
                 error.SetText("현재 서버에 접속할 수 없습니다.\n해당 사유 : 차단, 과부하");
@@ -214,6 +235,10 @@ public class BackendManager : MonoBehaviour
         
         switch (num)
         {
+            default:
+                error.SetTitle("오류");
+                error.SetText("기타 에러.\n해당 사유 : 알 수 없음");
+                break;
             case 401:
                 error.SetTitle("오류");
                 error.SetText("현재 서버에 접속할 수 없습니다.\n해당 사유 : 차단, 과부하");
@@ -234,6 +259,10 @@ public class BackendManager : MonoBehaviour
         
         switch (num)
         {
+            default:
+                error.SetTitle("오류");
+                error.SetText("기타 에러.\n해당 사유 : 알 수 없음");
+                break;
             case 400:
                 error.SetTitle("오류");
                 error.SetText("비밀번호를 변경할 수 없습니다.\n해당 사유 : 잘못된 예전 비밀번호");
@@ -249,6 +278,10 @@ public class BackendManager : MonoBehaviour
         
         switch (num)
         {
+            default:
+                error.SetTitle("오류");
+                error.SetText("기타 에러.\n해당 사유 : 알 수 없음");
+                break;
             case 400:
                 error.SetTitle("오류");
                 error.SetText("닉네임을 설정 할 수 없습니다.\n해당 사유 : 닉네임 확인 불가, 너무 긴 닉네임, 공백 존재");
@@ -268,6 +301,17 @@ public class BackendManager : MonoBehaviour
         nick = Backend.UserNickName;
         
         return nick;
+    }
+
+    public string GetID()
+    {
+        var info = Backend.BMember.GetUserInfo();
+
+        string id = "";
+
+        id = info.GetReturnValuetoJSON()["row"]["gamerId"].ToString();
+
+        return id;
     }
 
     private JsonData userData;
@@ -296,7 +340,7 @@ public class BackendManager : MonoBehaviour
     
     private JsonData GetUserData(string key)
     {
-        var get = Backend.GameData.GetMyData("user", new Where(), 10); 
+        var get = Backend.GameData.GetMyData("user", new Where(), 20); 
         
         if (get.IsSuccess() == false)
         {

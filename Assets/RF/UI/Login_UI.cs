@@ -28,4 +28,9 @@ public class Login_UI : UI_Base
     {
         UI_Manager.Instance.CreatePopup<FindAccount_Popup>();
     }
+
+    public void onExit_Click()
+    {
+        UI_Manager.Instance.CreatePopup<Exit_Popup>();
+    }
 }

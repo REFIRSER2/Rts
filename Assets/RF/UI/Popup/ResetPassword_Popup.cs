@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ResetPassword_Popup : Popup_Base
 {
-    [SerializeField] private InputField newPwdInput;
-    [SerializeField] private InputField oldPwdInput;
+    [SerializeField] private TMP_InputField newPwdInput;
+    [SerializeField] private TMP_InputField oldPwdInput;
     
     public override void On_Open()
     {

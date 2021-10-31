@@ -9,6 +9,8 @@ public class Shop_Item : UIItem_Base
     [SerializeField] private Text price_Text;
 
     [SerializeField] private RawImage model_View;
+    [SerializeField] private CustomButton buy_Button;
+    [SerializeField] private CustomButton send_Button;
     
     public void SetName(string name)
     {
@@ -23,5 +25,15 @@ public class Shop_Item : UIItem_Base
     public void SetModel(Texture texture)
     {
         model_View.texture = texture;
+    }
+
+    public CustomButton GetBuyButton()
+    {
+        return buy_Button;
+    }
+    
+    public CustomButton GetSendButton()
+    {
+        return send_Button;
     }
 }

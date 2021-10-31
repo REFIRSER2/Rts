@@ -295,6 +295,11 @@ MonoBehaviour:
   highlightBackground: {fileID: 21300000, guid: cf116af99d966a644a5d1ae0e5d52e95, type: 3}
   selectedBackground: {fileID: 0}
   disabledBackground: {fileID: 0}
+  isChangeImageColor: 0
+  normalBGColor: {r: 0, g: 0, b: 0, a: 0}
+  highlightBGColor: {r: 0, g: 0, b: 0, a: 0}
+  selectedBGColor: {r: 0, g: 0, b: 0, a: 0}
+  disabledBGColor: {r: 0, g: 0, b: 0, a: 0}
   isChangeTextColor: 0
   title_Text: {fileID: 0}
   normalColor: {r: 0, g: 0, b: 0, a: 0}
@@ -302,6 +307,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0, b: 0, a: 0}
   disableColor: {r: 0, g: 0, b: 0, a: 0}
   selectList: []
+  isSelect: 0
 --- !u!1 &1613267511824153079
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,7 +468,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3627935979111125526}
   - component: {fileID: 8830871706036162745}
-  - component: {fileID: 3301784707705580476}
+  - component: {fileID: 474579173979936604}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -497,7 +503,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2119013745762985306}
   m_CullTransparentMesh: 1
---- !u!114 &3301784707705580476
+--- !u!114 &474579173979936604
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -506,7 +512,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2119013745762985306}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -517,16 +523,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ff79ce490cf5e2148815c1478ffb1d88, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_Texture: {fileID: 0}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &2273064388551671138
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,6 +667,11 @@ MonoBehaviour:
   highlightBackground: {fileID: 0}
   selectedBackground: {fileID: 0}
   disabledBackground: {fileID: 0}
+  isChangeImageColor: 0
+  normalBGColor: {r: 0, g: 0, b: 0, a: 0}
+  highlightBGColor: {r: 0, g: 0, b: 0, a: 0}
+  selectedBGColor: {r: 0, g: 0, b: 0, a: 0}
+  disabledBGColor: {r: 0, g: 0, b: 0, a: 0}
   isChangeTextColor: 0
   title_Text: {fileID: 0}
   normalColor: {r: 0, g: 0, b: 0, a: 0}
@@ -671,6 +679,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0, b: 0, a: 0}
   disableColor: {r: 0, g: 0, b: 0, a: 0}
   selectList: []
+  isSelect: 0
 --- !u!1 &2441809102147116062
 GameObject:
   m_ObjectHideFlags: 0
@@ -823,6 +832,11 @@ MonoBehaviour:
   highlightBackground: {fileID: 21300000, guid: a7fef2044bbf6b74083c83cf4c07cd16, type: 3}
   selectedBackground: {fileID: 21300000, guid: a0f7afe5bf5b2ce40bcc88bed8f45344, type: 3}
   disabledBackground: {fileID: 0}
+  isChangeImageColor: 0
+  normalBGColor: {r: 0, g: 0, b: 0, a: 0}
+  highlightBGColor: {r: 0, g: 0, b: 0, a: 0}
+  selectedBGColor: {r: 0, g: 0, b: 0, a: 0}
+  disabledBGColor: {r: 0, g: 0, b: 0, a: 0}
   isChangeTextColor: 0
   title_Text: {fileID: 0}
   normalColor: {r: 0, g: 0, b: 0, a: 0}
@@ -830,6 +844,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0, b: 0, a: 0}
   disableColor: {r: 0, g: 0, b: 0, a: 0}
   selectList: []
+  isSelect: 0
 --- !u!1 &3104010527488838113
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,6 +978,11 @@ MonoBehaviour:
   highlightBackground: {fileID: 0}
   selectedBackground: {fileID: 0}
   disabledBackground: {fileID: 0}
+  isChangeImageColor: 0
+  normalBGColor: {r: 0, g: 0, b: 0, a: 0}
+  highlightBGColor: {r: 0, g: 0, b: 0, a: 0}
+  selectedBGColor: {r: 0, g: 0, b: 0, a: 0}
+  disabledBGColor: {r: 0, g: 0, b: 0, a: 0}
   isChangeTextColor: 0
   title_Text: {fileID: 0}
   normalColor: {r: 0, g: 0, b: 0, a: 0}
@@ -970,6 +990,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0, b: 0, a: 0}
   disableColor: {r: 0, g: 0, b: 0, a: 0}
   selectList: []
+  isSelect: 0
 --- !u!1 &3136807046143988440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1028,6 +1049,11 @@ MonoBehaviour:
   highlightBackground: {fileID: 0}
   selectedBackground: {fileID: 0}
   disabledBackground: {fileID: 0}
+  isChangeImageColor: 0
+  normalBGColor: {r: 0, g: 0, b: 0, a: 0}
+  highlightBGColor: {r: 0, g: 0, b: 0, a: 0}
+  selectedBGColor: {r: 0, g: 0, b: 0, a: 0}
+  disabledBGColor: {r: 0, g: 0, b: 0, a: 0}
   isChangeTextColor: 0
   title_Text: {fileID: 0}
   normalColor: {r: 0, g: 0, b: 0, a: 0}
@@ -1035,6 +1061,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0, b: 0, a: 0}
   disableColor: {r: 0, g: 0, b: 0, a: 0}
   selectList: []
+  isSelect: 0
 --- !u!1 &3294310916833479954
 GameObject:
   m_ObjectHideFlags: 0
@@ -1093,6 +1120,11 @@ MonoBehaviour:
   highlightBackground: {fileID: 0}
   selectedBackground: {fileID: 0}
   disabledBackground: {fileID: 0}
+  isChangeImageColor: 0
+  normalBGColor: {r: 0, g: 0, b: 0, a: 0}
+  highlightBGColor: {r: 0, g: 0, b: 0, a: 0}
+  selectedBGColor: {r: 0, g: 0, b: 0, a: 0}
+  disabledBGColor: {r: 0, g: 0, b: 0, a: 0}
   isChangeTextColor: 0
   title_Text: {fileID: 0}
   normalColor: {r: 0, g: 0, b: 0, a: 0}
@@ -1100,6 +1132,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0, b: 0, a: 0}
   disableColor: {r: 0, g: 0, b: 0, a: 0}
   selectList: []
+  isSelect: 0
 --- !u!1 &3322711871134274265
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,6 +1308,11 @@ MonoBehaviour:
   highlightBackground: {fileID: 0}
   selectedBackground: {fileID: 0}
   disabledBackground: {fileID: 0}
+  isChangeImageColor: 0
+  normalBGColor: {r: 0, g: 0, b: 0, a: 0}
+  highlightBGColor: {r: 0, g: 0, b: 0, a: 0}
+  selectedBGColor: {r: 0, g: 0, b: 0, a: 0}
+  disabledBGColor: {r: 0, g: 0, b: 0, a: 0}
   isChangeTextColor: 0
   title_Text: {fileID: 0}
   normalColor: {r: 0, g: 0, b: 0, a: 0}
@@ -1282,6 +1320,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0, b: 0, a: 0}
   disableColor: {r: 0, g: 0, b: 0, a: 0}
   selectList: []
+  isSelect: 0
 --- !u!1 &3865639957648322756
 GameObject:
   m_ObjectHideFlags: 0
@@ -1796,6 +1835,11 @@ MonoBehaviour:
   highlightBackground: {fileID: 0}
   selectedBackground: {fileID: 0}
   disabledBackground: {fileID: 0}
+  isChangeImageColor: 0
+  normalBGColor: {r: 0, g: 0, b: 0, a: 0}
+  highlightBGColor: {r: 0, g: 0, b: 0, a: 0}
+  selectedBGColor: {r: 0, g: 0, b: 0, a: 0}
+  disabledBGColor: {r: 0, g: 0, b: 0, a: 0}
   isChangeTextColor: 1
   title_Text: {fileID: 8618815566419476124}
   normalColor: {r: 0.7176471, g: 0.7176471, b: 0.7176471, a: 1}
@@ -1803,6 +1847,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0, b: 0, a: 0}
   disableColor: {r: 0, g: 0, b: 0, a: 0}
   selectList: []
+  isSelect: 0
 --- !u!1 &6053643926768447409
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,11 +31,12 @@ public class ChatManager : MonoBehaviour
 
     private void Update()
     {
-        Backend.Chat.Poll();
+        //Backend.Chat.Poll();
     }
 
     private void HandlerInit()
     {
+        /*
         Backend.Chat.OnJoinChannel = (args =>
         {
             if (args.ErrInfo == ErrorInfo.Success)
@@ -46,12 +47,12 @@ public class ChatManager : MonoBehaviour
                 }
 
 
-                /*var getChannel = Backend.Chat.GetGroupChannelList("길드채널");
+                var getChannel = Backend.Chat.GetGroupChannelList("길드채널");
                 if (getChannel.IsSuccess())
                 {
                     var channels = getChannel.Rows();
                     
-                }*/
+                }
             }
             else
             {
@@ -124,14 +125,15 @@ public class ChatManager : MonoBehaviour
             {
                 
             }
-        });
+        });*/
     }
 
+    /*
     IEnumerator RetryJoin()
     {
         yield return new WaitForSeconds(5F);
         BackendManager.Instance.JoinChannel();
-    }
+    }*/
 
     public void NotifyMessage(string msg)
     {

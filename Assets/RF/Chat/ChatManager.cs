@@ -145,8 +145,15 @@ public class ChatManager : MonoBehaviour
         chatUI.SendSystemMessage(msg);
     }
     
-    public void SendMessage(ChannelType channel, string msg)
+    public void SendMessage(string channel, string msg)
     {
-        Backend.Chat.ChatToChannel(channel, msg);
+        ChatData data = new ChatData();
+        data.nickName = ServerManager.Instance.nickName;
+        data.channel = channel;
+        data.message = msg;
+        data.lobbyID = SteamManager.Instance.currentLobby.Id.ToString();
+
+        ServerManager.Instance.SendChat(data);
+        //Backend.Chat.ChatToChannel(channel, msg);
     }
 }

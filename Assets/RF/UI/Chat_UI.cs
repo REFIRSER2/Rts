@@ -15,7 +15,7 @@ public class Chat_UI : UI_Base
 
     private int channel = 0;
     
-    public void OnReceiveMessage(bool isWhisper, bool isLocal, string nick, string message)
+    public void OnReceiveMessage(bool isWhisper, bool isLocal, string nick, string message, string channel)
     {
         if (isWhisper)
         {
@@ -32,8 +32,8 @@ public class Chat_UI : UI_Base
         }
         else
         {
-            chatLog_List[(int)EnumData.ChatChannel.Global].text += nick + " : " + message + "\n"; 
-            chatLog_List[(int)EnumData.ChatChannel.Local].text += nick + " : " + message + "\n"; 
+            chatLog_List[(int)EnumData.ChatChannel.Global].text += "[" + channel + "]" + nick + " : " + message + "\n"; 
+            chatLog_List[(int)EnumData.ChatChannel.Local].text += "[" + channel + "]" + nick + " : " + message + "\n"; 
         }
         
 
@@ -146,7 +146,7 @@ public class Chat_UI : UI_Base
                 }
                 else
                 {
-                    ChatManager.Instance.SendMessage(ChannelType.Public,chatInput.text);
+                    ChatManager.Instance.SendMessage("일반 채널",chatInput.text);
                 }
 
                 chatInput.ActivateInputField();

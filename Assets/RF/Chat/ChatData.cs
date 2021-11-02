@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Steamworks.Data;
 using UnityEngine;
 
 public class ChatData
 {
     public string nickName;
-    public int channel;
+    public string channel;
     public string message;
+    public string lobbyID;
+    public bool isNotice = false;
 }

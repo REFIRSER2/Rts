@@ -12,7 +12,8 @@ using JsonTextReader = Newtonsoft.Json.JsonTextReader;
 public class ServerManager : MonoBehaviour
 {
     public static ServerManager Instance;
-    private SocketManager socket;
+    private SocketManager mainServer;
+    private SocketManager chatServer;
 
     private void Awake()
     {
@@ -26,53 +27,77 @@ public class ServerManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        socket = new SocketManager(new Uri("http://127.0.0.1:27000"));
-        socket.Open();
+        mainServer = new SocketManager(new Uri("http://54.180.191.145:27000"));
+        mainServer.Open();
 
-        InitHandler();
+        chatServer = new SocketManager(new Uri("http://54.180.191.145:27001"));
+        chatServer.Open();
+
+        InitMainHandler();
+        InitChatHandler();
     }
 
-    private void InitHandler()
+    private void InitMainHandler()
     {
         var connect = UI_Manager.Instance.CreateUI<Connecting_UI>();
-        socket.Socket.On("connect", () =>
+        mainServer.Socket.On("connect", () =>
         {
             UI_Manager.Instance.RemoveUI(connect);
             UI_Manager.Instance.CreateUI<Login_UI>();
         }); 
         
-        socket.Socket.On<bool, int>("sign", (can,status ) =>
+        mainServer.Socket.On("disconnect", () =>
         {
-            Debug.Log(can);
-            Debug.Log(status);
+            UI_Manager.Instance.CleanUI();
+            UI_Manager.Instance.CreateUI<Connecting_UI>();
+        });
+        
+        mainServer.Socket.On<bool, int>("sign", (can,status ) =>
+        {
             signAction.Invoke(can, status);
         });
         
-        socket.Socket.On<bool, int>("login", (can,status ) =>
+        mainServer.Socket.On<bool, int>("login", (can,status ) =>
         {
-            Debug.Log(can);
-            Debug.Log(status);
+            Debug.Log("로그인");
             loginAction.Invoke(can, status);
         });
-        
-        socket.Socket.On<ChatData>("chat", (data) =>
-        {
-            
-        });
-        
-        socket.Socket.On<string>("getInventory", (json) =>
+
+        mainServer.Socket.On<string>("getInventory", (json) =>
         {
             var data = json;
             data = data.Replace("[", "");
             data = data.Replace("]", "");
             getInventoryAction.Invoke(JsonConvert.DeserializeObject<Dictionary<string,object>>(data));
         });
+        
+        mainServer.Socket.On<string, int>("get Name", (nick, status) =>
+        {
+            switch (status)
+            {
+                case 0:
+                    getNameAction.Invoke(nick);
+                    break;
+            }
+        });
+    }
+
+    private void InitChatHandler()
+    {
+        chatServer.Socket.On<ChatData>("chat", (data) =>
+        {
+            var chatUI = FindObjectOfType<Chat_UI>();
+            if (chatUI != null)
+            {
+                chatUI.OnReceiveMessage(false, false, data.nickName, data.message, data.channel);
+            }
+        });    
     }
 
     #region Chat
     public void SendChat(ChatData data)
     {
-        socket.Socket.Emit("chat", data);
+        chatServer.Socket.Emit("chat", data);
     }
     #endregion
     
@@ -81,7 +106,7 @@ public class ServerManager : MonoBehaviour
     private Action<Dictionary<string, object>> getInventoryAction;
     public void GetInventory(Action<Dictionary<string, object>> action)
     {
-        socket.Socket.Emit("getInventory", SteamManager.Instance.steamID.ToString());
+        mainServer.Socket.Emit("getInventory", SteamManager.Instance.steamID.ToString());
         getInventoryAction = action;
     }
     #endregion
@@ -90,11 +115,13 @@ public class ServerManager : MonoBehaviour
     private Action<bool, int> loginAction;
     public void Login(string pwd)
     {
-        socket.Socket.Emit("login", SteamManager.Instance.steamID.ToString(), pwd);
+        mainServer.Socket.Emit("login", SteamManager.Instance.steamID.ToString(), pwd);
         loginAction = (can, code) =>
         {
+            Debug.Log(can);
             if (can)
             {
+                SetNickname();
                 UI_Manager.Instance.CleanUI();
                 SceneManager.LoadScene("Lobby");
                 UI_Manager.Instance.CreateUI<MainMenu_UI>();
@@ -109,7 +136,7 @@ public class ServerManager : MonoBehaviour
     private Action<bool, int> signAction;
     public void Sign(Sign_Popup popup, string nickName, string pwd, string email)
     {
-        socket.Socket.Emit("sign", SteamManager.Instance.steamID.ToString(), nickName, pwd, email);
+        mainServer.Socket.Emit("sign", SteamManager.Instance.steamID.ToString(), nickName, pwd, email);
         signAction = (can, code) =>
         {
             if (can)
@@ -142,5 +169,19 @@ public class ServerManager : MonoBehaviour
             }
         };
     }
+
+    public string nickName = "";
+    private Action<string> getNameAction;
+    
+    private void SetNickname()
+    {
+        mainServer.Socket.Emit("get name", SteamManager.Instance.steamID.ToString());
+        getNameAction = (name) =>
+        {
+            nickName = name;
+            Debug.Log(nickName);
+        };
+    }
+
     #endregion
 }

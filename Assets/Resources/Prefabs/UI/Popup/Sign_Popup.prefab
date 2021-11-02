@@ -557,7 +557,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1237779212337520774}
         m_TargetAssemblyTypeName: Sign_Popup, Assembly-CSharp
-        m_MethodName: onClose
+        m_MethodName: On_Close
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

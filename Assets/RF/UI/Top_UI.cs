@@ -11,8 +11,14 @@ public class Top_UI : UI_Base
 
     private void Awake()
     {
-        SetGold(BackendManager.Instance.GetGold());
-        SetCash(BackendManager.Instance.GetCash());
+        ServerManager.Instance.GetInventory(GetAction);
+        Debug.Log("getinventory");
+    }
+
+    private void GetAction(Dictionary<string,object> data)
+    {
+       SetGold(Convert.ToInt32(data["gold"]));
+       SetCash(Convert.ToInt32(data["cash"]));
     }
 
     private void SetGold(int gold)

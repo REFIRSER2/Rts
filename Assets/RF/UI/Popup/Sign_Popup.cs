@@ -23,16 +23,11 @@ public class Sign_Popup : Popup_Base
         base.On_Close();
     }
 
-    public void onClose()
-    {
-        this.Remove();
-    }
-
     public void onSign()
     {
         if (emailInput.text != "" && pwdInput.text != "")
         {
-            BackendManager.Instance.Sign(this, nickInput.text, emailInput.text, pwdInput.text);  
+            ServerManager.Instance.Sign(this, nickInput.text, pwdInput.text, emailInput.text);  
         }
         else
         {

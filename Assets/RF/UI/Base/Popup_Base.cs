@@ -12,7 +12,7 @@ public class Popup_Base : MonoBehaviour
 
     public virtual void On_Close()
     {
-        
+        Remove();
     }
 
     public void Remove()

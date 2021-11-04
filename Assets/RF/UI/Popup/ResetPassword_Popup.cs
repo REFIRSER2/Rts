@@ -31,6 +31,6 @@ public class ResetPassword_Popup : Popup_Base
             
             return;
         }
-        BackendManager.Instance.ResetPassword(oldPwdInput.text, newPwdInput.text);
+        //BackendManager.Instance.ResetPassword(oldPwdInput.text, newPwdInput.text);
     }
 }

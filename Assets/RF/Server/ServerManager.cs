@@ -78,14 +78,15 @@ public class ServerManager : MonoBehaviour
             }
             Debug.Log(json);
         });
-        
-        mainServer.Socket.On<string, int>("get Name", (nick, status) =>
+
+        mainServer.Socket.On<bool, string>("profile", (can, json) =>
         {
-            switch (status)
+            if (can)
             {
-                case 0:
-                    getNameAction.Invoke(nick);
-                    break;
+                var data = json;
+                data = data.Replace("[", "");
+                data = data.Replace("]", "");
+                getProfileAction.Invoke(JsonConvert.DeserializeObject<Dictionary<string,object>>(data));
             }
         });
     }
@@ -129,7 +130,7 @@ public class ServerManager : MonoBehaviour
             Debug.Log(can);
             if (can)
             {
-                SetNickname();
+                GetProfile(SteamManager.Instance.steamID.ToString());
                 UI_Manager.Instance.CleanUI();
                 SceneManager.LoadScene("Lobby");
                 UI_Manager.Instance.CreateUI<MainMenu_UI>();
@@ -177,17 +178,23 @@ public class ServerManager : MonoBehaviour
             }
         };
     }
-
-    public string nickName = "";
-    private Action<string> getNameAction;
     
-    private void SetNickname()
+    private Action<Dictionary<string, object>> getProfileAction;
+    public UserProfile userProfile;
+    public void GetProfile(string id)
     {
-        mainServer.Socket.Emit("get name", SteamManager.Instance.steamID.ToString());
-        getNameAction = (name) =>
+        mainServer.Socket.Emit("profile", id);
+        getProfileAction = (data) =>
         {
-            nickName = name;
-            Debug.Log(nickName);
+            if (userProfile != null)
+            {
+                return;
+            }
+            userProfile = new UserProfile();
+            userProfile.nickName = data["nickname"].ToString();
+            userProfile.rank = Convert.ToInt32(data["rank"]);
+            userProfile.rankPt = Convert.ToInt32(data["rankpoint"]);
+            userProfile.mmr = Convert.ToInt32(data["mmr"]);
         };
     }
 

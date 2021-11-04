@@ -99,7 +99,7 @@ public class SteamManager : MonoBehaviour
         foreach (var friend in currentLobby.Members)
         {
             SteamLobbyClient member = new SteamLobbyClient();
-            member.nickName = BackendManager.Instance.GetLocalNickname();
+            //member.nickName = BackendManager.Instance.GetLocalNickname();
             
             var image = await SteamFriends.GetLargeAvatarAsync(friend.Id);
 

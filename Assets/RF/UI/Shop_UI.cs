@@ -41,8 +41,10 @@ public class Shop_UI : UI_Base
 
     private void RefreshItems()
     {
-        var data = BackendManager.Instance.GetShop_Items(cat);
-
+        /*
+        //var data = BackendManager.Instance.GetShop_Items(cat);
+        
+        
         if (data == null)
         {
             return;
@@ -63,7 +65,7 @@ public class Shop_UI : UI_Base
             {
                 AddItem(i, data[i]["ItemID"]["S"].ToString(), data[i]["ItemName"]["S"].ToString(), data[i]["ItemType"]["S"].ToString(), data[i]["BuyType"]["S"].ToString(), data[i]["Price"]["S"].ToString());
             }
-        }
+        }*/
     }
 
     private void RefreshPageBtns()
@@ -143,6 +145,7 @@ public class Shop_UI : UI_Base
 
     private void onBuy(int index)
     {
+        /*
         var data = BackendManager.Instance.GetShop_Items(cat);
 
         if (data == null)
@@ -156,11 +159,12 @@ public class Shop_UI : UI_Base
         param.Add("ItemID", data[index]["ItemID"].ToString());
         param.Add("UserID", BackendManager.Instance.GetID());
 
-        var ret = Backend.BFunc.InvokeFunction("BuyItem", param);
+        var ret = Backend.BFunc.InvokeFunction("BuyItem", param);*/
     }
     
     private void onItem(int index)
     {
+        /*
         var data = BackendManager.Instance.GetShop_Items(cat);
 
         if (data == null)
@@ -173,7 +177,7 @@ public class Shop_UI : UI_Base
             shop_Content.GetChild(i).GetComponent<CustomButton>().UnSelect();
         }
         
-        itemInfo.SetTitle(data[index]["ItemName"]["S"].ToString());
+        itemInfo.SetTitle(data[index]["ItemName"]["S"].ToString());*/
     }
 
     private void Awake()

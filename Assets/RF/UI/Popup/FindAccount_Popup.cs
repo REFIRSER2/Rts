@@ -28,6 +28,6 @@ public class FindAccount_Popup : Popup_Base
         {
             return;
         }
-        BackendManager.Instance.FindAccount(this, emailInput.text);
+        //BackendManager.Instance.FindAccount(this, emailInput.text);
     }
 }

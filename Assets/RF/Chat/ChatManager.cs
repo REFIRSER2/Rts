@@ -148,7 +148,7 @@ public class ChatManager : MonoBehaviour
     public void SendMessage(string channel, string msg)
     {
         ChatData data = new ChatData();
-        data.nickName = ServerManager.Instance.nickName;
+        data.nickName = ServerManager.Instance.userProfile.nickName;
         data.channel = channel;
         data.message = msg;
         data.lobbyID = SteamManager.Instance.currentLobby.Id.ToString();

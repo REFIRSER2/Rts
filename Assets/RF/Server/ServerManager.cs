@@ -27,10 +27,12 @@ public class ServerManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        mainServer = new SocketManager(new Uri("http://54.180.191.145:27000"));
+        //mainServer = new SocketManager(new Uri("http://54.180.191.145:27000"));
+        mainServer = new SocketManager(new Uri("http://127.0.0.1:27000"));
         mainServer.Open();
 
-        chatServer = new SocketManager(new Uri("http://54.180.191.145:27001"));
+        //chatServer = new SocketManager(new Uri("http://54.180.191.145:27001"));
+        chatServer = new SocketManager(new Uri("http://127.0.0.1:27001"));
         chatServer.Open();
 
         InitMainHandler();
@@ -49,7 +51,7 @@ public class ServerManager : MonoBehaviour
         mainServer.Socket.On("disconnect", () =>
         {
             UI_Manager.Instance.CleanUI();
-            UI_Manager.Instance.CreateUI<Connecting_UI>();
+            connect = UI_Manager.Instance.CreateUI<Connecting_UI>();
         });
         
         mainServer.Socket.On<bool, int>("sign", (can,status ) =>
@@ -60,15 +62,21 @@ public class ServerManager : MonoBehaviour
         mainServer.Socket.On<bool, int>("login", (can,status ) =>
         {
             Debug.Log("로그인");
+            Debug.Log("로그인 " + status);
             loginAction.Invoke(can, status);
         });
 
-        mainServer.Socket.On<string>("getInventory", (json) =>
+        mainServer.Socket.On<bool, string>("inventory", (can, json) =>
         {
-            var data = json;
-            data = data.Replace("[", "");
-            data = data.Replace("]", "");
-            getInventoryAction.Invoke(JsonConvert.DeserializeObject<Dictionary<string,object>>(data));
+            if (can)
+            {
+                var data = json;
+                data = data.Replace("[", "");
+                data = data.Replace("]", "");
+                getInventoryAction.Invoke(JsonConvert.DeserializeObject<Dictionary<string,object>>(data));
+                Debug.Log(JsonConvert.DeserializeObject<Dictionary<string,object>>(data));    
+            }
+            Debug.Log(json);
         });
         
         mainServer.Socket.On<string, int>("get Name", (nick, status) =>
@@ -89,7 +97,7 @@ public class ServerManager : MonoBehaviour
             var chatUI = FindObjectOfType<Chat_UI>();
             if (chatUI != null)
             {
-                chatUI.OnReceiveMessage(false, false, data.nickName, data.message, data.channel);
+                chatUI.OnReceiveMessage(data.nickName, data.message, data.channel);
             }
         });    
     }
@@ -106,7 +114,7 @@ public class ServerManager : MonoBehaviour
     private Action<Dictionary<string, object>> getInventoryAction;
     public void GetInventory(Action<Dictionary<string, object>> action)
     {
-        mainServer.Socket.Emit("getInventory", SteamManager.Instance.steamID.ToString());
+        mainServer.Socket.Emit("inventory", SteamManager.Instance.steamID.ToString());
         getInventoryAction = action;
     }
     #endregion

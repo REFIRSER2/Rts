@@ -13,29 +13,14 @@ public class Chat_UI : UI_Base
     
     [SerializeField] private TMP_InputField chatInput;
 
+    [SerializeField] private List<string> channelList;
+    
     private int channel = 0;
     
-    public void OnReceiveMessage(bool isWhisper, bool isLocal, string nick, string message, string channel)
+    public void OnReceiveMessage(string nick, string message, string channel)
     {
-        if (isWhisper)
-        {
-            if (isLocal)
-            {
-                chatLog_List[(int)EnumData.ChatChannel.Global].text += "<color=lightblue>" + nick + "님에게 보낸 귓속말 : " + message + "</color>\n";
-                chatLog_List[(int)EnumData.ChatChannel.Whisper].text += "<color=lightblue>" + nick + "님에게 보낸 귓속말 : " + message + "</color>\n";
-            }
-            else
-            {
-                chatLog_List[(int)EnumData.ChatChannel.Global].text += "<color=lightblue>" + nick + "님의 귓속말 : " + message + "</color>\n";
-                chatLog_List[(int)EnumData.ChatChannel.Whisper].text += "<color=lightblue>" + nick + "님의 귓속말 : " + message + "</color>\n";
-            }
-        }
-        else
-        {
-            chatLog_List[(int)EnumData.ChatChannel.Global].text += "[" + channel + "]" + nick + " : " + message + "\n"; 
-            chatLog_List[(int)EnumData.ChatChannel.Local].text += "[" + channel + "]" + nick + " : " + message + "\n"; 
-        }
-        
+        chatLog_List[(int)EnumData.ChatChannel.Global].text += "[" + channel + "]" + nick + " : " + message + "\n"; 
+        chatLog_List[(int)EnumData.ChatChannel.Local].text += "[" + channel + "]" + nick + " : " + message + "\n";
 
         StartCoroutine("DownScroll");
     }
@@ -123,12 +108,24 @@ public class Chat_UI : UI_Base
     {
         if (chatInput.IsActive())
         {
-            if (chatInput.text == "")
+            if (chatInput.isFocused && Input.GetKeyDown(KeyCode.Tab))
             {
-                return;
+                chatLog_List[channel].gameObject.SetActive(false);
+                
+                if (channel < channelList.Count)
+                {
+                    channel++;
+                }
+                else
+                {
+                    channel = 0;
+                }
+
+                chatLog_List[channel].gameObject.SetActive(true);
+                SendSystemMessage(channelList[channel] + " 채널에 참가하였습니다.");
             }
             
-            if (Input.GetKey(KeyCode.Return))
+            if (Input.GetKey(KeyCode.Return) && chatInput.text != "")
             {
                 string findCmd = "";
                 foreach (var cmd in CommandManager.Instance.cmdList)
@@ -146,7 +143,7 @@ public class Chat_UI : UI_Base
                 }
                 else
                 {
-                    ChatManager.Instance.SendMessage("일반 채널",chatInput.text);
+                    ChatManager.Instance.SendMessage(channelList[channel],chatInput.text);
                 }
 
                 chatInput.ActivateInputField();

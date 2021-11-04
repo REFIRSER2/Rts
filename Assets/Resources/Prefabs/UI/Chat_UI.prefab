@@ -66,10 +66,24 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   isChangeImage: 0
+  background: {fileID: 0}
   normalBackground: {fileID: 0}
   highlightBackground: {fileID: 0}
   selectedBackground: {fileID: 0}
   disabledBackground: {fileID: 0}
+  isChangeImageColor: 0
+  normalBGColor: {r: 0, g: 0, b: 0, a: 0}
+  highlightBGColor: {r: 0, g: 0, b: 0, a: 0}
+  selectedBGColor: {r: 0, g: 0, b: 0, a: 0}
+  disabledBGColor: {r: 0, g: 0, b: 0, a: 0}
+  isChangeTextColor: 0
+  title_Text: {fileID: 0}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  selectedColor: {r: 0, g: 0, b: 0, a: 0}
+  disableColor: {r: 0, g: 0, b: 0, a: 0}
+  selectList: []
+  isSelect: 0
 --- !u!1 &111165528294109060
 GameObject:
   m_ObjectHideFlags: 0
@@ -2069,7 +2083,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4498396925859509095}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -2674,6 +2688,9 @@ MonoBehaviour:
   - {fileID: 7565545125231112112}
   - {fileID: 279580697359598459}
   chatInput: {fileID: 5944891082860389139}
+  channelList:
+  - "\uC77C\uBC18 \uCC44\uB110"
+  - "\uD30C\uD2F0 \uCC44\uB110"
 --- !u!1 &5210982057752593159
 GameObject:
   m_ObjectHideFlags: 0

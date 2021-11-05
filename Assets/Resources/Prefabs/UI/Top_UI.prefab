@@ -825,12 +825,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3923496324858049350}
+        m_TargetAssemblyTypeName: Top_UI, Assembly-CSharp
+        m_MethodName: onPlay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   isChangeImage: 1
   background: {fileID: 6318258195072166447}
-  normalBackground: {fileID: 21300000, guid: 8ad1cf266540b744bb09daee284096ef, type: 3}
-  highlightBackground: {fileID: 21300000, guid: a7fef2044bbf6b74083c83cf4c07cd16, type: 3}
-  selectedBackground: {fileID: 21300000, guid: a0f7afe5bf5b2ce40bcc88bed8f45344, type: 3}
+  normalBackground: {fileID: 21300000, guid: 363b424229a5f984395a847213a06823, type: 3}
+  highlightBackground: {fileID: 21300000, guid: 9cffd880d80c1364eb895bd3660f0eb2, type: 3}
+  selectedBackground: {fileID: 0}
   disabledBackground: {fileID: 0}
   isChangeImageColor: 0
   normalBGColor: {r: 0, g: 0, b: 0, a: 0}
@@ -2124,6 +2136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gold_Text: {fileID: 1544190546492514185}
   cash_Text: {fileID: 2608233481545953179}
+  play_Text: {fileID: 3358391522052737334}
 --- !u!1 &6594308469970047981
 GameObject:
   m_ObjectHideFlags: 0
@@ -2559,7 +2572,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8ad1cf266540b744bb09daee284096ef, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 363b424229a5f984395a847213a06823, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

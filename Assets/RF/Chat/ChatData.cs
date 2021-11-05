@@ -9,5 +9,6 @@ public class ChatData
     public string channel;
     public string message;
     public string lobbyID;
+    public string teamID;
     public bool isNotice = false;
 }

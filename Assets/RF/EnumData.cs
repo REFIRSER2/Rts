@@ -10,14 +10,16 @@ public static class EnumData
         
     }
 
-    public enum ChatChannel
+    public enum IngameChat
     {
-        Global,
-        Local,
-        Whisper,
-        Notify,
-        Party,
-        Guild,
+        Public,
+        Private,
+    }
+
+    public enum LobbyChat
+    {
+        Normal,
+        Room,
     }
 
     public enum ItemType

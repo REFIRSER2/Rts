@@ -1273,6 +1273,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3415863837472128669, guid: 1954d2abaf87c4144828daeddfcdba17, type: 3}
+      propertyPath: background
+      value: 
+      objectReference: {fileID: 750236206454953772}
     - target: {fileID: 3600018340941598423, guid: 1954d2abaf87c4144828daeddfcdba17, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1381,6 +1385,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6318258195072166447, guid: 1954d2abaf87c4144828daeddfcdba17, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6318258195072166447, guid: 1954d2abaf87c4144828daeddfcdba17, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6318258195072166447, guid: 1954d2abaf87c4144828daeddfcdba17, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6394110100205501917, guid: 1954d2abaf87c4144828daeddfcdba17, type: 3}
       propertyPath: m_Name
       value: Top_UI
@@ -1433,7 +1449,12 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7628779048347695310, guid: 1954d2abaf87c4144828daeddfcdba17, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6318258195072166447, guid: 1954d2abaf87c4144828daeddfcdba17, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1954d2abaf87c4144828daeddfcdba17, type: 3}
 --- !u!224 &328655972826896278 stripped
 RectTransform:

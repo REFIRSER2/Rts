@@ -68,6 +68,7 @@ public class SteamManager : MonoBehaviour
     public readonly int maxMembers = 4;
 
     private Dictionary<SteamId, SteamLobbyClient> partyMembers = new Dictionary<SteamId, SteamLobbyClient>();
+    private List<string> partyMemberIds = new List<string>();
     
     private void SetupLobby()
     {
@@ -95,6 +96,7 @@ public class SteamManager : MonoBehaviour
     private async void RefreshLobby()
     {
         partyMembers.Clear();
+        partyMemberIds.Clear();
 
         foreach (var friend in currentLobby.Members)
         {
@@ -110,6 +112,7 @@ public class SteamManager : MonoBehaviour
             }
 
             partyMembers.Add(friend.Id, member);
+            partyMemberIds.Add(friend.Id.ToString());
 
             if (FindObjectOfType<MainMenu_UI>() != null)
             {
@@ -121,6 +124,11 @@ public class SteamManager : MonoBehaviour
     public Dictionary<SteamId, SteamLobbyClient> GetPartyMembers()
     {
         return partyMembers;
+    }
+
+    public List<string> GetPartyMemberIds()
+    {
+        return partyMemberIds;
     }
 
     private void onLobbyCreated(Result result, Lobby lobby)
@@ -178,8 +186,13 @@ public class SteamManager : MonoBehaviour
     {
         RefreshLobby();
     }
+
+    public bool IsStartGame()
+    {
+        return false;
+    }
     #endregion
-    
+
     #region Unity General Funcs
     private void Awake()
     {

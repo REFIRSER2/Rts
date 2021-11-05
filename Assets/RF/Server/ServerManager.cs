@@ -13,7 +13,9 @@ public class ServerManager : MonoBehaviour
 {
     public static ServerManager Instance;
     private SocketManager mainServer;
-    private SocketManager chatServer;
+    private SocketManager lobbyServer;
+    private SocketManager inGameServer;
+    private SocketManager matchServer;
 
     private void Awake()
     {
@@ -32,11 +34,15 @@ public class ServerManager : MonoBehaviour
         mainServer.Open();
 
         //chatServer = new SocketManager(new Uri("http://54.180.191.145:27001"));
-        chatServer = new SocketManager(new Uri("http://127.0.0.1:27001"));
-        chatServer.Open();
+        lobbyServer = new SocketManager(new Uri("http://127.0.0.1:27001"));
+        lobbyServer.Open();
+
+        matchServer = new SocketManager(new Uri("http://127.0.0.1:27003"));
+        matchServer.Open();
 
         InitMainHandler();
         InitChatHandler();
+        InitMatchHandler();
     }
 
     private void InitMainHandler()
@@ -93,20 +99,45 @@ public class ServerManager : MonoBehaviour
 
     private void InitChatHandler()
     {
-        chatServer.Socket.On<ChatData>("chat", (data) =>
+        lobbyServer.Socket.On<ChatData>("chat", (data) =>
         {
             var chatUI = FindObjectOfType<Chat_UI>();
             if (chatUI != null)
             {
                 chatUI.OnReceiveMessage(data.nickName, data.message, data.channel);
             }
-        });    
+        });   
+        
+        /*
+        inGameServer.Socket.On<ChatData>("chat", (data) =>
+        {
+            var chatUI = FindObjectOfType<Chat_UI>();
+            if (chatUI != null)
+            {
+                chatUI.OnReceiveMessage(data.nickName, data.message, data.channel);
+            }    
+        });*/
+    }
+
+    private void InitMatchHandler()
+    {
+        matchServer.Socket.On<int>("find match", (id) =>
+        {
+            findMatchAction.Invoke(id);
+            Debug.Log("quick join");
+        });
+
+        matchServer.Socket.On<int>("joinRoom", (id) =>
+        {
+            matchID = id;
+            matchServer.Socket.Emit("")
+        });
     }
 
     #region Chat
     public void SendChat(ChatData data)
     {
-        chatServer.Socket.Emit("chat", data);
+        lobbyServer.Socket.Emit("chat", data);
     }
     #endregion
     
@@ -198,5 +229,26 @@ public class ServerManager : MonoBehaviour
         };
     }
 
+    #endregion
+    
+    #region 매칭
+    private Action<int> findMatchAction;
+    private int matchID;
+    public void FindMatching()
+    {
+        matchServer.Socket.Emit("find match", SteamManager.Instance.GetPartyMemberIds());
+        findMatchAction = (id) =>
+        {
+            matchID = id;
+        };
+        Debug.Log(matchServer.Socket.Namespace);
+    }
+
+    public void LeaveMatching()
+    {
+        matchServer.Socket.Emit("leave match",  SteamManager.Instance.steamID.ToString(), matchID);
+    }
+
+    private Action<int> joinMatchAction;
     #endregion
 }

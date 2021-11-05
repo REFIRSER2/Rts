@@ -91,6 +91,7 @@ public class CustomButton : MonoBehaviour, IPointerClickHandler, IPointerUpHandl
             if (normalBackground != null && !isSelect)
             {
                 background.sprite = normalBackground;
+                Debug.Log("exit");
             }    
         }
         

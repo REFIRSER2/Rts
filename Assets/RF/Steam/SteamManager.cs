@@ -64,12 +64,11 @@ public class SteamManager : MonoBehaviour
     
     #region Steam Lobby
     public Lobby currentLobby;
-    
-    public readonly int maxMembers = 4;
+    public readonly int maxMembers = 8;
 
     private Dictionary<SteamId, SteamLobbyClient> partyMembers = new Dictionary<SteamId, SteamLobbyClient>();
     private List<string> partyMemberIds = new List<string>();
-    
+
     private void SetupLobby()
     {
         SteamMatchmaking.OnLobbyCreated += onLobbyCreated;
@@ -88,9 +87,19 @@ public class SteamManager : MonoBehaviour
         SteamMatchmaking.CreateLobbyAsync(maxMembers);
     }
 
+    public void LeaveLobby()
+    {
+        currentLobby.Leave();
+    }
+
     public void JoinLobby(Lobby lb)
     {
         SteamMatchmaking.JoinLobbyAsync(lb.Id);
+    }
+    
+    public void JoinLobby(SteamId id)
+    {
+        SteamMatchmaking.JoinLobbyAsync(id);
     }
 
     private async void RefreshLobby()
@@ -111,8 +120,13 @@ public class SteamManager : MonoBehaviour
                 member.profile = texture;
             }
 
+            
             partyMembers.Add(friend.Id, member);
-            partyMemberIds.Add(friend.Id.ToString());
+            if (friend.IsFriend || friend.IsMe)
+            {
+                
+                partyMemberIds.Add(friend.Id.ToString());   
+            }
 
             if (FindObjectOfType<MainMenu_UI>() != null)
             {
@@ -135,7 +149,7 @@ public class SteamManager : MonoBehaviour
     {
         Debug.Log("created");
         currentLobby = lobby;
-
+        
         RefreshLobby();
     }
 
@@ -149,10 +163,12 @@ public class SteamManager : MonoBehaviour
 
     private void onLobbyInvited(Friend friend, Lobby lobby)
     {
-        Debug.Log("invite");
+        if (lobby.MemberCount > 4)
+        {
+            return;
+        }
         var invite = UI_Manager.Instance.CreatePopup<PartyInvite_Popup>();
         invite.SetLobby(lobby);
-        
     }
 
     private void onLobbyDataChanged(Lobby lobby)

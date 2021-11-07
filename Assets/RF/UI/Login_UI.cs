@@ -21,7 +21,7 @@ public class Login_UI : UI_Base
         {
             return;
         }
-        ServerManager.Instance.Login(pwdInput.text);
+        MainManager.Instance.Login(pwdInput.text);
     }
 
     public void onFind_Click()

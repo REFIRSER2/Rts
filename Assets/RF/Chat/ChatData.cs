@@ -11,4 +11,5 @@ public class ChatData
     public string lobbyID;
     public string teamID;
     public bool isNotice = false;
+    public bool isTeam = false;
 }

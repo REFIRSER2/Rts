@@ -82,6 +82,7 @@ public class Chat_UI : UI_Base
         scrollRect.gameObject.SetActive(false);
 
         channel = 0;
+        /*
         if (SteamManager.Instance.IsStartGame())
         {
             SendSystemMessage(inChannels[channel] + " 채널에 참가하였습니다.");  
@@ -89,7 +90,7 @@ public class Chat_UI : UI_Base
         else
         {
             SendSystemMessage(lobbyChannels[channel] + " 채널에 참가하였습니다.");
-        }
+        }*/
     }
     
     private void Update()
@@ -98,6 +99,7 @@ public class Chat_UI : UI_Base
         {
             if (chatInput.isFocused && Input.GetKeyDown(KeyCode.Tab))
             {
+                /*
                 if (SteamManager.Instance.IsStartGame())
                 {
                     SendSystemMessage(inChannels[channel] + " 채널에 참가하였습니다.");  
@@ -105,7 +107,7 @@ public class Chat_UI : UI_Base
                 else
                 {
                     SendSystemMessage(lobbyChannels[channel] + " 채널에 참가하였습니다.");
-                }
+                }*/
 
                 chatLog.gameObject.SetActive(true);
                 
@@ -131,11 +133,11 @@ public class Chat_UI : UI_Base
                 {
                     if (SteamManager.Instance.IsStartGame())
                     {
-                        ChatManager.Instance.SendMessage(inChannels[channel],chatInput.text);
+                        //ChatManager.Instance.SendChat(inChannels[channel],chatInput.text);
                     }
                     else
                     {
-                        ChatManager.Instance.SendMessage(lobbyChannels[channel],chatInput.text);
+                        //ChatManager.Instance.SendChat(lobbyChannels[channel],chatInput.text);
                     }
                     
                 }

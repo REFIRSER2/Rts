@@ -38,16 +38,22 @@ public class CustomButton : MonoBehaviour, IPointerClickHandler, IPointerUpHandl
     [SerializeField] private List<CustomButton> selectList = new List<CustomButton>();
 
     [SerializeField]private bool isSelect = false;
+    public bool isDisable = false;
+    
     
     public void OnPointerClick(PointerEventData eventData)
     {
-        onClick.Invoke();
-        
-        foreach (var btn in selectList)
+        if (!isDisable)
         {
-            btn.UnSelect();
-        }   
-        this.Select();
+            onClick.Invoke();  
+            
+            foreach (var btn in selectList)
+            {
+                btn.UnSelect();
+            }   
+            this.Select();
+        }
+
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -64,7 +70,7 @@ public class CustomButton : MonoBehaviour, IPointerClickHandler, IPointerUpHandl
     {
         if (isChangeImage)
         {
-            if (highlightBackground && !isSelect)
+            if (highlightBackground && !isSelect && !isDisable)
             {
                 background.sprite = highlightBackground;
             }   
@@ -88,7 +94,7 @@ public class CustomButton : MonoBehaviour, IPointerClickHandler, IPointerUpHandl
     {
         if (isChangeImage)
         {
-            if (normalBackground != null && !isSelect)
+            if (normalBackground != null && !isSelect && !isDisable)
             {
                 background.sprite = normalBackground;
                 Debug.Log("exit");
@@ -152,6 +158,33 @@ public class CustomButton : MonoBehaviour, IPointerClickHandler, IPointerUpHandl
         }
         
         isSelect = false;
+    }
+
+    public void SetDisable(bool isDisable)
+    {
+        if (isChangeImage)
+        {
+            if (isDisable && disabledBackground != null)
+            {
+                background.sprite = disabledBackground;
+            }
+            else
+            {
+                background.sprite = normalBackground;
+            }
+        }    
+        
+        if (isChangeImageColor)
+        {
+            background.color = disabledBGColor;
+        }
+        
+        if (isChangeTextColor)
+        {
+            title_Text.color = disableColor;
+        }
+        
+        this.isDisable = isDisable;
     }
 
     #region Unity General Funcs

@@ -9,21 +9,29 @@ using UnityEngine.UI;
 public class MainMenu_UI : UI_Base
 {
     [SerializeField] private TMP_Text notice_Text;
+    [SerializeField] private GameObject roomList_OBJ;
     [SerializeField] private GameObject shop_OBJ;
     [SerializeField] private GameObject inv_OBJ;
     [SerializeField] private GameObject option_OBJ;
 
+    [SerializeField] private GameObject play_Btn;
+    [SerializeField] private GameObject leave_Btn;
+    
+    [SerializeField] private TMP_Dropdown mode_Select;
+    
     [SerializeField] private RawImage profile_Icon;
     
     [SerializeField] private List<RawImage> party_Profiles = new List<RawImage>();
     
+
     private float noticeResetTime = 0F;
     public void SetNotice(string str)
     {
         notice_Text.text = str;
     }
 
-    public void RefreshParty()
+    #region 파티 시스템
+    public async void RefreshParty()
     {
         int index = 0;
         
@@ -33,15 +41,22 @@ public class MainMenu_UI : UI_Base
             profile.gameObject.SetActive(false);
         }
         
-        foreach (var party in SteamManager.Instance.GetPartyMembers())
+        foreach (var id in PartySystem.Instance.GetPartyMembers())
         {
-            party_Profiles[index].texture = party.Value.profile;
-            party_Profiles[index].gameObject.SetActive(true);
+            Debug.Log("ID :" + id);
             
+            var image = await SteamFriends.GetLargeAvatarAsync(id);
+            if (image != null)
+            {
+                var texture = SteamManager.Instance.GetProfileIcon(image.Value);
+                party_Profiles[index].texture = texture;
+                party_Profiles[index].gameObject.SetActive(true);
+            }
+
             index++;
         }
     }
-
+    
     private async void RefreshProfile()
     {
         var image = await SteamFriends.GetLargeAvatarAsync(SteamManager.Instance.steamID);
@@ -53,7 +68,51 @@ public class MainMenu_UI : UI_Base
             profile_Icon.gameObject.SetActive(true);
         }   
     }
+    #endregion
+    
+    #region 매치메이킹
 
+    private int gameMode = 0;
+    private Action<ulong> findQuickMatchAction;
+    public void onStart()
+    {
+        switch (gameMode)
+        {
+            case 3:
+                if (!roomList_OBJ.activeSelf)
+                {
+                    roomList_OBJ.SetActive(true);
+                }   
+                break;
+        }
+    }
+    
+    public void onPlay()
+    {
+        findQuickMatchAction = (id) =>
+        {
+            play_Btn.SetActive(false); 
+            leave_Btn.SetActive(true);
+        };
+        //ServerManager.Instance.FindQuickMatch(gameMode, findQuickMatchAction);
+        //
+        //
+    }
+    
+    public void onLeave()
+    {
+        //ServerManager.Instance.LeaveQuickMatch();
+        play_Btn.SetActive(true);
+        leave_Btn.SetActive(false);
+    }
+
+    public void onSelectMode(int mode)
+    {
+        gameMode = mode;
+    }
+    #endregion
+    
+    #region 버튼 이벤트
     public void onShop()
     {
         shop_OBJ.SetActive(true);
@@ -81,6 +140,11 @@ public class MainMenu_UI : UI_Base
 
     public void onHome()
     {
+        if (roomList_OBJ != null)
+        {
+            roomList_OBJ.SetActive(false); 
+        }
+        
         if (shop_OBJ != null)
         {
             shop_OBJ.SetActive(false); 
@@ -101,9 +165,13 @@ public class MainMenu_UI : UI_Base
     {
         UI_Manager.Instance.CreatePopup<Exit_Popup>();
     }
+    #endregion
 
+    #region 유니티 기본 내장 함수
     private void Awake()
     {
+        mode_Select.onValueChanged.AddListener(onSelectMode);
+        
         RefreshParty();
         RefreshProfile();
     }
@@ -131,4 +199,5 @@ public class MainMenu_UI : UI_Base
         }
 
     }
+    #endregion
 }

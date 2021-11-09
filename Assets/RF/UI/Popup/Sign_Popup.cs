@@ -13,9 +13,13 @@ public class Sign_Popup : Popup_Base
     [SerializeField] private InputField emailInput;
     [SerializeField] private InputField pwdInput;
 
+    private Action<int> signAction;
+    
     public override void On_Open()
     {
         base.On_Open();
+
+        signAction = onSign;
     }
 
     public override void On_Close()
@@ -27,7 +31,7 @@ public class Sign_Popup : Popup_Base
     {
         if (emailInput.text != "" && pwdInput.text != "")
         {
-            MainManager.Instance.Sign(this, nickInput.text, pwdInput.text, emailInput.text);  
+            MainManager.Instance.Sign(nickInput.text, pwdInput.text, emailInput.text, signAction);  
         }
         else
         {
@@ -35,9 +39,35 @@ public class Sign_Popup : Popup_Base
         }
     }
 
-    public void onSign()
+    public void onSign(int code)
     {
-        MainManager.Instance.
+        Error_Popup error = UI_Manager.Instance.CreatePopup<Error_Popup>();
+        switch (code)
+        {
+            default:
+                error.SetTitle("오류");
+                error.SetText("알 수 없는 오류로 회원가입 할 수 없습니다");
+                break;
+            case 0:
+                UI_Manager.Instance.RemovePopup(error);
+                
+                Sign_Successful_Popup successful = UI_Manager.Instance.CreatePopup<Sign_Successful_Popup>();
+                successful.SetTitle("알림");
+                successful.SetText("회원가입을 성공적으로 마쳤습니다");
+                break;
+            case 1:
+                error.SetTitle("오류");
+                error.SetText("이메일을 형식에 맞게 입력해주세요");
+                break;
+            case 2:
+                error.SetTitle("오류");
+                error.SetText("이미 계정이 존재합니다");
+                break;
+            case 3:
+                error.SetTitle("오류");
+                error.SetText("DB 서버에 접근 할 수 없습니다.");
+                break;
+        }
     }
 
     private void Update()

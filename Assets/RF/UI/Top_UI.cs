@@ -18,6 +18,7 @@ public class Top_UI : UI_Base
 
     private void GetAction(Dictionary<string,object> data)
     {
+        Debug.Log("get action");
         SetGold(Convert.ToInt32(data["gold"]));
         SetCash(Convert.ToInt32(data["cash"]));
     }

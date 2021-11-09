@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using BackEnd;
 using UnityEngine;
 
 public class CommandManager : MonoBehaviour
@@ -33,7 +32,7 @@ public class CommandManager : MonoBehaviour
 
         if (nickName != "" && message != "")
         {
-            Backend.Chat.Whisper(nickName, message);
+            
         }
         else
         {
@@ -54,17 +53,7 @@ public class CommandManager : MonoBehaviour
 
         if (nickName != "")
         {
-            Backend.Chat.BlockUser(args, callback =>
-            {
-                if (callback)
-                {
-                    ChatManager.Instance.GetChatUI().OnNotifyMessage("시스템", args + "님을 성공적으로 차단하였습니다.");
-                }
-                else
-                {
-                    ChatManager.Instance.GetChatUI().OnNotifyMessage("시스템", "오류로 인해 " + args + "님을 차단하지 못하였습니다.");
-                }
-            });    
+  
         }
         else
         {
@@ -85,7 +74,7 @@ public class CommandManager : MonoBehaviour
 
         if (nickName != "")
         {
-            Backend.Chat.UnblockUser(nickName);    
+  
             ChatManager.Instance.GetChatUI().OnNotifyMessage("시스템", nickName + "님의 차단을 성공적으로 해제하였습니다.");
         }
         else

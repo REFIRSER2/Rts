@@ -13,11 +13,11 @@ public enum ItemType
 }
 public class InventoryManager : MonoBehaviour
 {
-    #region Singletone
+    #region 싱글톤
     public static InventoryManager Instance;
     #endregion
     
-    #region Inventory
+    #region 인벤토리
     private Dictionary<ItemType, List<string>> inventory = new Dictionary<ItemType, List<string>>();
 
     public List<string> GetInventory(ItemType type)
@@ -56,7 +56,7 @@ public class InventoryManager : MonoBehaviour
     }
     #endregion
 
-    #region Unity General Funcs
+    #region 유니티 일반 함수
     private void Awake()
     {
         if (Instance == null)

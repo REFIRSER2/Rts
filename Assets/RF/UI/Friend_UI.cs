@@ -48,13 +48,8 @@ public class Friend_UI : UI_Base
 
             if (friend.IsPlayingThisGame)
             {
-                AddFriend(friend, EnumData.Status.IsPlay);
-                continue;
-            }
-            
-            if (friend.IsOnline)
-            {
                 AddFriend(friend, EnumData.Status.Online);
+                continue;
             }
         }
     }

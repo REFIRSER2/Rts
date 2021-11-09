@@ -1939,6 +1939,22 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7061200823047103060, guid: 98ee7eda011415a44a492964018cf63d, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8429808710178351689}
+    - target: {fileID: 7061200823047103060, guid: 98ee7eda011415a44a492964018cf63d, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: onLeaveParty
+      objectReference: {fileID: 0}
+    - target: {fileID: 7061200823047103060, guid: 98ee7eda011415a44a492964018cf63d, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainMenu_UI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7061200823047103060, guid: 98ee7eda011415a44a492964018cf63d, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7775866557170033487, guid: 98ee7eda011415a44a492964018cf63d, type: 3}
       propertyPath: m_Size
       value: 1

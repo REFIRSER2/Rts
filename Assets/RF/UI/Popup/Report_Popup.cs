@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using BackEnd;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,21 +30,6 @@ public class Report_Popup : Popup_Base
                 reason += reasonList[index].text + " | ";
             }
             index++;
-        }
-
-        var report = Backend.Chat.ReportUser(nickInput.text, reason, detailInput.text);
-        {
-            UI_Manager.Instance.RemovePopup(this);
-            if (report.IsSuccess())
-            {
-                
-            }
-            else
-            {
-                onReportError(report.GetStatusCode());
-            }
-            
-            
         }
     }
 

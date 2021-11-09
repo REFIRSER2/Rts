@@ -167,8 +167,8 @@ public class SteamManager : MonoBehaviour
         {
             return;
         }
-        var invite = UI_Manager.Instance.CreatePopup<PartyInvite_Popup>();
-        invite.SetLobby(lobby);
+        //var invite = UI_Manager.Instance.CreatePopup<PartyInvite_Popup>();
+        //invite.SetLobby(lobby);
     }
 
     private void onLobbyDataChanged(Lobby lobby)

@@ -31,6 +31,12 @@ public class MainMenu_UI : UI_Base
     }
 
     #region 파티 시스템
+
+    public void onLeaveParty()
+    {
+        LobbyManager.Instance.LeaveParty(SteamManager.Instance.steamID.ToString());
+    }
+    
     public async void RefreshParty()
     {
         int index = 0;
@@ -41,11 +47,9 @@ public class MainMenu_UI : UI_Base
             profile.gameObject.SetActive(false);
         }
         
-        foreach (var id in PartySystem.Instance.GetPartyMembers())
+        foreach (var id in LobbyManager.Instance.GetPartyMembers())
         {
-            Debug.Log("ID :" + id);
-            
-            var image = await SteamFriends.GetLargeAvatarAsync(id);
+            var image = await SteamFriends.GetLargeAvatarAsync((ulong)Convert.ToInt64(id));
             if (image != null)
             {
                 var texture = SteamManager.Instance.GetProfileIcon(image.Value);
@@ -73,7 +77,7 @@ public class MainMenu_UI : UI_Base
     #region 매치메이킹
 
     private int gameMode = 0;
-    private Action<ulong> findQuickMatchAction;
+    private Action findQuickMatchAction;
     public void onStart()
     {
         switch (gameMode)
@@ -89,11 +93,7 @@ public class MainMenu_UI : UI_Base
     
     public void onPlay()
     {
-        findQuickMatchAction = (id) =>
-        {
-            play_Btn.SetActive(false); 
-            leave_Btn.SetActive(true);
-        };
+        LobbyManager.Instance.FindQuickMatch(gameMode, findQuickMatchAction);
         //ServerManager.Instance.FindQuickMatch(gameMode, findQuickMatchAction);
         //
         //
@@ -171,6 +171,13 @@ public class MainMenu_UI : UI_Base
     private void Awake()
     {
         mode_Select.onValueChanged.AddListener(onSelectMode);
+        
+        findQuickMatchAction = () =>
+        {
+            play_Btn.SetActive(false); 
+            leave_Btn.SetActive(true);
+        };
+        LobbyManager.Instance.AddQuickMatchAction(findQuickMatchAction);
         
         RefreshParty();
         RefreshProfile();

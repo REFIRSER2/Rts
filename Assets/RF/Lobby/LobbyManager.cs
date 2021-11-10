@@ -216,28 +216,64 @@ public class LobbyManager : MonoBehaviour
     
     #region 매치 시스템
 
+    private Dictionary<string, Action> matchSystemActions = new Dictionary<string, Action>();
+    private int gameMode = 0;
+    
     private void SetupMatch()
     {
+        matchSystemActions.Add("find quick match", null);
+        matchSystemActions.Add("leave quick match", null);
+        
        lobbyServer.Socket.On("find quick match", () =>
        {
            onFindQuickMatch();
        });
+       
+       lobbyServer.Socket.On("leave quick match", () =>
+       {
+           onLeaveQuickMatch();
+       });
     }
 
-    private Action findQuickMatchAction;
-    public void AddQuickMatchAction(Action action)
+    public void AddMatchAction(string key, Action action)
     {
-        findQuickMatchAction = action;
+        matchSystemActions[key] = action;
     }
-    public void FindQuickMatch(int gamemode, Action action)
+
+    private void RunMatchAction(string key)
     {
-        lobbyServer.Socket.Emit("find quick match", gamemode, GetPartyMembers());
-        
+        matchSystemActions[key].Invoke();
+    }
+
+    public void SetGamemode(int mode)
+    {
+        gameMode = mode;
+    }
+
+    public int GetGamemode()
+    {
+        return gameMode;
+    }
+    
+    public void FindQuickMatch()
+    {
+        lobbyServer.Socket.Emit("find quick match", gameMode, GetPartyMembers());
+    }
+
+    public void LeaveQuickMatch()
+    {
+        lobbyServer.Socket.Emit("leave quick match", gameMode, GetPartyMembers());
     }
     
     private void onFindQuickMatch()
     {
-        findQuickMatchAction.Invoke(); 
+        RunMatchAction("find quick match");
+        lobbyServer.Socket.Emit("join quick match", gameMode, GetPartyMembers());
+    }
+
+    private void onLeaveQuickMatch()
+    {
+        RunMatchAction("leave quick match");
     }
     #endregion
     

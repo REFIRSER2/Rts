@@ -75,12 +75,9 @@ public class MainMenu_UI : UI_Base
     #endregion
     
     #region 매치메이킹
-
-    private int gameMode = 0;
-    private Action findQuickMatchAction;
     public void onStart()
     {
-        switch (gameMode)
+        switch (LobbyManager.Instance.GetGamemode())
         {
             case 3:
                 if (!roomList_OBJ.activeSelf)
@@ -93,7 +90,7 @@ public class MainMenu_UI : UI_Base
     
     public void onPlay()
     {
-        LobbyManager.Instance.FindQuickMatch(gameMode, findQuickMatchAction);
+        LobbyManager.Instance.FindQuickMatch();
         //ServerManager.Instance.FindQuickMatch(gameMode, findQuickMatchAction);
         //
         //
@@ -101,6 +98,7 @@ public class MainMenu_UI : UI_Base
     
     public void onLeave()
     {
+        LobbyManager.Instance.LeaveQuickMatch();
         //ServerManager.Instance.LeaveQuickMatch();
         play_Btn.SetActive(true);
         leave_Btn.SetActive(false);
@@ -108,7 +106,7 @@ public class MainMenu_UI : UI_Base
 
     public void onSelectMode(int mode)
     {
-        gameMode = mode;
+        LobbyManager.Instance.SetGamemode(mode);
     }
     #endregion
     
@@ -172,12 +170,22 @@ public class MainMenu_UI : UI_Base
     {
         mode_Select.onValueChanged.AddListener(onSelectMode);
         
+        Action findQuickMatchAction;
+        Action leaveQuickMatchAction;
+        
         findQuickMatchAction = () =>
         {
             play_Btn.SetActive(false); 
             leave_Btn.SetActive(true);
         };
-        LobbyManager.Instance.AddQuickMatchAction(findQuickMatchAction);
+        leaveQuickMatchAction = () =>
+        {
+            play_Btn.SetActive(true);
+            leave_Btn.SetActive(false);
+        };
+        
+        LobbyManager.Instance.AddMatchAction("find quick match", findQuickMatchAction);
+        LobbyManager.Instance.AddMatchAction("leave quick match", leaveQuickMatchAction);
         
         RefreshParty();
         RefreshProfile();

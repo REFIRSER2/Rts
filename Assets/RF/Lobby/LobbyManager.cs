@@ -216,15 +216,14 @@ public class LobbyManager : MonoBehaviour
     
     #region 매치 시스템
 
-    private Dictionary<string, Action> matchSystemActions = new Dictionary<string, Action>();
+    public Action findQuickMatchAction;
+    public Action leaveQuickMatchAction;
+    public Action<Queue<string>> createQuickMatchAction;
     private int gameMode = 0;
     
     private void SetupMatch()
     {
-        matchSystemActions.Add("find quick match", null);
-        matchSystemActions.Add("leave quick match", null);
-        
-       lobbyServer.Socket.On("find quick match", () =>
+        lobbyServer.Socket.On("find quick match", () =>
        {
            onFindQuickMatch();
        });
@@ -233,16 +232,21 @@ public class LobbyManager : MonoBehaviour
        {
            onLeaveQuickMatch();
        });
-    }
 
-    public void AddMatchAction(string key, Action action)
-    {
-        matchSystemActions[key] = action;
-    }
-
-    private void RunMatchAction(string key)
-    {
-        matchSystemActions[key].Invoke();
+       lobbyServer.Socket.On<List<string>>("create quick match", (users) =>
+       {
+           onCreateQuickMatch(users);
+       });
+       
+       lobbyServer.Socket.On("remove quick match", () =>
+       {
+           onCancelQuickMatch();
+       });
+       
+       lobbyServer.Socket.On("accept quick match", () =>
+       {
+           onAcceptQuickMatch();
+       });
     }
 
     public void SetGamemode(int mode)
@@ -264,16 +268,41 @@ public class LobbyManager : MonoBehaviour
     {
         lobbyServer.Socket.Emit("leave quick match", gameMode, GetPartyMembers());
     }
+
+    public void CancelQuickMatch()
+    {
+        lobbyServer.Socket.Emit("remove quick match", gameMode, SteamManager.Instance.steamID.ToString());
+    }
+
+    public void AcceptQuickMatch()
+    {
+        lobbyServer.Socket.Emit("accept quick match",  SteamManager.Instance.steamID.ToString());
+    }
     
     private void onFindQuickMatch()
     {
-        RunMatchAction("find quick match");
+        findQuickMatchAction.Invoke();
         lobbyServer.Socket.Emit("join quick match", gameMode, GetPartyMembers());
     }
 
     private void onLeaveQuickMatch()
     {
-        RunMatchAction("leave quick match");
+        leaveQuickMatchAction.Invoke();
+    }
+
+    private void onCreateQuickMatch(List<string> users)
+    {
+        SteamManager.Instance.CreateLobby(users);
+    }
+
+    private void onCancelQuickMatch()
+    {
+        SteamManager.Instance.LeaveLobby();
+    }
+    
+    private void onAcceptQuickMatch()
+    {
+        
     }
     #endregion
     

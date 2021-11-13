@@ -184,8 +184,8 @@ public class MainMenu_UI : UI_Base
             leave_Btn.SetActive(false);
         };
         
-        LobbyManager.Instance.AddMatchAction("find quick match", findQuickMatchAction);
-        LobbyManager.Instance.AddMatchAction("leave quick match", leaveQuickMatchAction);
+        LobbyManager.Instance.findQuickMatchAction = findQuickMatchAction;
+        LobbyManager.Instance.leaveQuickMatchAction = leaveQuickMatchAction;
         
         RefreshParty();
         RefreshProfile();

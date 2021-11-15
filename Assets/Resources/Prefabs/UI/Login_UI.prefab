@@ -162,6 +162,7 @@ MonoBehaviour:
   disableColor: {r: 0, g: 0, b: 0, a: 0}
   selectList: []
   isSelect: 0
+  isDisable: 0
 --- !u!1 &298942253661621300
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,6 +282,7 @@ MonoBehaviour:
   disableColor: {r: 0, g: 0, b: 0, a: 0}
   selectList: []
   isSelect: 0
+  isDisable: 0
 --- !u!1 &1285820099266272350
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,6 +409,7 @@ MonoBehaviour:
   disableColor: {r: 0, g: 0, b: 0, a: 0}
   selectList: []
   isSelect: 0
+  isDisable: 0
 --- !u!1 &1720180753354165005
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,6 +712,7 @@ MonoBehaviour:
   disableColor: {r: 0, g: 0, b: 0, a: 0}
   selectList: []
   isSelect: 0
+  isDisable: 0
 --- !u!1 &1720180754893184502
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,6 +1149,7 @@ MonoBehaviour:
   disableColor: {r: 0, g: 0, b: 0, a: 0}
   selectList: []
   isSelect: 0
+  isDisable: 0
 --- !u!1 &1720180755336447228
 GameObject:
   m_ObjectHideFlags: 0

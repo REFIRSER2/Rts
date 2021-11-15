@@ -27,7 +27,7 @@ public class Error_Popup : Popup_Base
         base.On_Close();
     }
     
-    public void onClose()
+    public virtual void onClose()
     {
         this.Remove();
     }

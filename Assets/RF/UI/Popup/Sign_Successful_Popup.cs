@@ -7,6 +7,8 @@ public class Sign_Successful_Popup : Popup_Base
 {
     [SerializeField] private Text title_Text;
     [SerializeField] private Text main_Text;
+
+    private Sign_Popup signPopup;
     
     public void SetTitle(string str)
     {
@@ -18,8 +20,17 @@ public class Sign_Successful_Popup : Popup_Base
         main_Text.text = str;
     }
 
+    public void SetPopup(Sign_Popup popup)
+    {
+        signPopup = popup;
+    }
+
     public void onClose()
     {
         this.Remove();
+        if (signPopup != null)
+        {
+            UI_Manager.Instance.RemovePopup(signPopup);
+        }
     }
 }

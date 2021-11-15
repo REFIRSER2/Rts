@@ -33,11 +33,21 @@ public class PartyInvited_Popup : Popup_Base
             return;
         }
 
+        foreach (var item in LobbyManager.Instance.party_Popups)
+        {
+            UI_Manager.Instance.RemovePopup(item);
+        }
+        
         LobbyManager.Instance.JoinParty(LobbyManager.Instance.GetPartyID(),partyID);
     }
     
     public void onCancel()
     {
         UI_Manager.Instance.RemovePopup(this);
+        if (LobbyManager.Instance.party_Popups.Count > 0)
+        {
+            PartyInvited_Popup popup = LobbyManager.Instance.party_Popups.Dequeue();
+            popup.gameObject.SetActive(true);
+        }
     }
 }

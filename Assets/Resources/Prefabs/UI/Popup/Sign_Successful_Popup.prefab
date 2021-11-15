@@ -83,6 +83,7 @@ MonoBehaviour:
   disableColor: {r: 0, g: 0, b: 0, a: 0}
   selectList: []
   isSelect: 0
+  isDisable: 0
 --- !u!1 &1775868310721491989
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d28d7d300099b140b39565ac851cf9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title_Text: {fileID: 0}
+  title_Text: {fileID: 5446590850937165622}
   main_Text: {fileID: 6450718766123772935}
 --- !u!1 &1775868310937036471
 GameObject:

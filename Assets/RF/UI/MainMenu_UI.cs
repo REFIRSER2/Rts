@@ -172,6 +172,7 @@ public class MainMenu_UI : UI_Base
         
         Action findQuickMatchAction;
         Action leaveQuickMatchAction;
+        Action cancelQuickMatchAction;
         
         findQuickMatchAction = () =>
         {
@@ -183,9 +184,15 @@ public class MainMenu_UI : UI_Base
             play_Btn.SetActive(true);
             leave_Btn.SetActive(false);
         };
+        cancelQuickMatchAction = () =>
+        {
+            play_Btn.SetActive(true);
+            leave_Btn.SetActive(false);   
+        };
         
         LobbyManager.Instance.findQuickMatchAction = findQuickMatchAction;
         LobbyManager.Instance.leaveQuickMatchAction = leaveQuickMatchAction;
+        LobbyManager.Instance.cancelQuickMatchAction = cancelQuickMatchAction;
         
         RefreshParty();
         RefreshProfile();
@@ -212,7 +219,6 @@ public class MainMenu_UI : UI_Base
         {
             noticeResetTime -= Time.deltaTime;
         }
-
     }
     #endregion
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Sign_Popup : Popup_Base
@@ -54,6 +55,13 @@ public class Sign_Popup : Popup_Base
                 Sign_Successful_Popup successful = UI_Manager.Instance.CreatePopup<Sign_Successful_Popup>();
                 successful.SetTitle("알림");
                 successful.SetText("회원가입을 성공적으로 마쳤습니다");
+                
+                UI_Manager.Instance.CleanUI();
+                UI_Manager.Instance.CreateUI<MainMenu_UI>();
+                SceneManager.LoadScene("Lobby");
+
+                LobbyManager.Instance.CreateParty(SteamManager.Instance.steamID);
+                MainManager.Instance.GetProfile();
                 break;
             case 1:
                 error.SetTitle("오류");

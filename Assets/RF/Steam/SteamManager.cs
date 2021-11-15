@@ -86,16 +86,27 @@ public class SteamManager : MonoBehaviour
 
         lobbyCreatedAction = (queue, lb) =>
         {
+            Debug.Log("lobby create");
+            
+            MatchAccept_Popup popup = UI_Manager.Instance.CreatePopup<MatchAccept_Popup>();
+            popup.SetLobby(lb);
+
+            LobbyManager.Instance.CreateQuickMatch(lb.Id, steamID);
+            /*
             int count = queue.Count;
-            for (int i=0; i<count;i++);
+            for (int i=0; i<count;i++)
             {
                 string id = queue.Dequeue();
                 ulong id64 = Convert.ToUInt64(id);
                 SteamId steamID = id64;
                 Friend friend = new Friend(steamID);
 
-                lb.InviteFriend(steamID);
-            }
+                Debug.Log("friend : " + id64);
+                if (!friend.IsMe)
+                {
+                    lb.InviteFriend(steamID); 
+                }
+            }*/
         };
     }
     
@@ -121,31 +132,8 @@ public class SteamManager : MonoBehaviour
     
     public void JoinLobby(SteamId id)
     {
+        //SteamMatchmaking.JoinLobbyAsync()
         SteamMatchmaking.JoinLobbyAsync(id);
-    }
-
-    private async void RefreshLobby()
-    {
-        lobbyMembers.Clear();
-        lobbyMemberIds.Clear();
-
-        foreach (var friend in currentLobby.Members)
-        {
-            SteamLobbyClient member = new SteamLobbyClient();
-            //member.nickName = BackendManager.Instance.GetLocalNickname();
-            
-            var image = await SteamFriends.GetLargeAvatarAsync(friend.Id);
-
-            if (image != null)
-            {
-                var texture = SteamManager.Instance.GetProfileIcon(image.Value);
-                member.profile = texture;
-            }
-
-            
-            lobbyMembers.Add(friend.Id, member);
-            lobbyMemberIds.Add(friend.Id.ToString());
-        }
     }
 
     public Dictionary<SteamId, SteamLobbyClient> GetLobbyMembers()
@@ -163,7 +151,7 @@ public class SteamManager : MonoBehaviour
         Debug.Log("created");
         currentLobby = lobby;
         
-        RefreshLobby();
+        //RefreshLobby();
         
         lobbyCreatedAction.Invoke(inviteQueue, currentLobby);
     }
@@ -173,11 +161,6 @@ public class SteamManager : MonoBehaviour
         Debug.Log("entered");
         currentLobby = lobby;
 
-        RefreshLobby();
-    }
-
-    private void onLobbyInvited(Friend friend, Lobby lobby)
-    {
         if (lobby.MemberCount > 8)
         {
             return;
@@ -185,6 +168,13 @@ public class SteamManager : MonoBehaviour
 
         var matching = UI_Manager.Instance.CreatePopup<MatchAccept_Popup>();
         matching.SetLobby(lobby);
+        
+        //RefreshLobby();
+    }
+
+    private void onLobbyInvited(Friend friend, Lobby lobby)
+    {
+
         //var invite = UI_Manager.Instance.CreatePopup<PartyInvite_Popup>();
         //invite.SetLobby(lobby);
     }
@@ -197,13 +187,13 @@ public class SteamManager : MonoBehaviour
     private void onLobbyMemberJoined(Lobby lobby, Friend friend)
     {
         Debug.Log("member joined");
-        RefreshLobby();
+        //RefreshLobby();
     }
 
     private void onLobbyMemberLeave(Lobby lobby, Friend friend)
     {
         Debug.Log("member leave");
-        RefreshLobby();
+        //RefreshLobby();
     }
 
     private void onLobbyMemberDataChanged(Lobby lobby, Friend friend)
@@ -213,12 +203,12 @@ public class SteamManager : MonoBehaviour
 
     private void onLobbyMemberDisconnected(Lobby lobby, Friend friend)
     {
-        RefreshLobby();
+        //RefreshLobby();
     }
 
     private void onLobbyMemberKicked(Lobby lobby, Friend friend, Friend friend2)
     {
-        RefreshLobby();
+        //RefreshLobby();
     }
 
     public bool IsStartGame()

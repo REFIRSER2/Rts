@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Steamworks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using SocketManager = BestHTTP.SocketIO3.SocketManager;
 
 public class LobbyManager : MonoBehaviour
@@ -16,6 +17,8 @@ public class LobbyManager : MonoBehaviour
     
     private List<string> partyMembers = new List<string>();
     private int partyID = -1;
+
+    public Queue<PartyInvited_Popup> party_Popups = new Queue<PartyInvited_Popup>();
 
     private void SetupParty()
     {
@@ -185,6 +188,25 @@ public class LobbyManager : MonoBehaviour
         switch (code)
         {
             case 0:
+                if (FindObjectOfType<PartyInvited_Popup>() != null)
+                {
+                    PartyInvited_Popup q_popup = UI_Manager.Instance.CreatePopup<PartyInvited_Popup>();
+
+                    ulong q_id = Convert.ToUInt64(sender);
+                    SteamId q_steam = (SteamId) q_id;
+
+                    Friend q_friend = new Friend(q_steam);
+                
+                    q_popup.SetPartyID(party);
+                    q_popup.SetTitle("알림");
+                    q_popup.SetText(q_friend.Name + " 님이 파티 초대를 하였습니다");
+                    
+                    q_popup.gameObject.SetActive(false);
+                    
+                    party_Popups.Enqueue(q_popup);
+                    return;
+                }
+                
                 PartyInvited_Popup popup = UI_Manager.Instance.CreatePopup<PartyInvited_Popup>();
 
                 ulong id = Convert.ToUInt64(sender);
@@ -219,6 +241,9 @@ public class LobbyManager : MonoBehaviour
     public Action findQuickMatchAction;
     public Action leaveQuickMatchAction;
     public Action<Queue<string>> createQuickMatchAction;
+    public Action acceptQuickMatchAction;
+    public Action cancelQuickMatchAction;
+
     private int gameMode = 0;
     
     private void SetupMatch()
@@ -238,7 +263,7 @@ public class LobbyManager : MonoBehaviour
            onCreateQuickMatch(users);
        });
        
-       lobbyServer.Socket.On("remove quick match", () =>
+       lobbyServer.Socket.On("cancel quick match", () =>
        {
            onCancelQuickMatch();
        });
@@ -246,6 +271,16 @@ public class LobbyManager : MonoBehaviour
        lobbyServer.Socket.On("accept quick match", () =>
        {
            onAcceptQuickMatch();
+       });
+       
+       lobbyServer.Socket.On<int>("start quick match", (team) =>
+       {
+           onStartQuickMatch(team);
+       });
+       
+       lobbyServer.Socket.On<string>("invite quick match", (lb) =>
+       {
+           onInviteQuickMatch(lb);
        });
     }
 
@@ -266,17 +301,22 @@ public class LobbyManager : MonoBehaviour
 
     public void LeaveQuickMatch()
     {
-        lobbyServer.Socket.Emit("leave quick match", gameMode, GetPartyMembers());
+        lobbyServer.Socket.Emit("leave quick match", GetPartyMembers());
     }
 
     public void CancelQuickMatch()
     {
-        lobbyServer.Socket.Emit("remove quick match", gameMode, SteamManager.Instance.steamID.ToString());
+        lobbyServer.Socket.Emit("cancel quick match", SteamManager.Instance.steamID.ToString());
     }
 
     public void AcceptQuickMatch()
     {
         lobbyServer.Socket.Emit("accept quick match",  SteamManager.Instance.steamID.ToString());
+    }
+
+    public void CreateQuickMatch(ulong lb, ulong id)
+    {
+        lobbyServer.Socket.Emit("create quick match", id.ToString(), lb.ToString());
     }
     
     private void onFindQuickMatch()
@@ -297,12 +337,27 @@ public class LobbyManager : MonoBehaviour
 
     private void onCancelQuickMatch()
     {
+        cancelQuickMatchAction.Invoke();
         SteamManager.Instance.LeaveLobby();
     }
     
     private void onAcceptQuickMatch()
     {
+        acceptQuickMatchAction.Invoke();
+    }
+
+    private void onStartQuickMatch(int team)
+    {
+        SceneManager.LoadScene("Map1");
+    }
+
+    private void onInviteQuickMatch(string lb)
+    {
+        Debug.Log("quick match id : " + lb);
         
+        ulong id64 = Convert.ToUInt64(lb);
+        
+        SteamManager.Instance.JoinLobby(id64);
     }
     #endregion
     

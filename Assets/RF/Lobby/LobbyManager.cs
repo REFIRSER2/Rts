@@ -245,6 +245,7 @@ public class LobbyManager : MonoBehaviour
     public Action cancelQuickMatchAction;
 
     private int gameMode = 0;
+    private int team = -1;
     
     private void SetupMatch()
     {
@@ -346,15 +347,14 @@ public class LobbyManager : MonoBehaviour
         acceptQuickMatchAction.Invoke();
     }
 
-    private void onStartQuickMatch(int team)
+    private void onStartQuickMatch(int num)
     {
+        team = num;
         SceneManager.LoadScene("Map1");
     }
 
     private void onInviteQuickMatch(string lb)
     {
-        Debug.Log("quick match id : " + lb);
-        
         ulong id64 = Convert.ToUInt64(lb);
         
         SteamManager.Instance.JoinLobby(id64);

@@ -106,14 +106,6 @@ public class PlayerController : MonoBehaviour
     #endregion
  
     #region 드래그
-
-<<<<<<< Updated upstream
-    [SerializeField] private List<UnitBase> unitList = new List<UnitBase>();
-    [SerializeField] private List<UnitBase> selectedUnits = new List<UnitBase>();
-    [SerializeField] private List<Transform> debugCubes;
-    [SerializeField] private RectTransform dragBox;
-    private Vector2 startMousePos;
-=======
     public class Box
     {
         public Vector3 min, max;
@@ -156,7 +148,7 @@ public class PlayerController : MonoBehaviour
     
     private Box box = new Box();
     private Vector3 startPos = new Vector3(0,0,0);
->>>>>>> Stashed changes
+
     private bool isDrag = false;
     public void DragSelectStart()
     {
@@ -164,47 +156,9 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-<<<<<<< Updated upstream
-                startMousePos = Input.mousePosition;
-                dragBox.position = startMousePos;
-            }
-            
-            if (Input.GetMouseButton(0))
-            {
-                dragBox.gameObject.SetActive(true);
-                //dragBox.position = Input.mousePosition;
-
-                float width = Mathf.Abs(startMousePos.x - Input.mousePosition.x);
-                float height = Mathf.Abs(startMousePos.y - Input.mousePosition.y);
-
-                float xhalf;
-                float yhalf;
-                
-                dragBox.sizeDelta = new Vector2(width,
-                    Mathf.Abs(height));
-
-                if (startMousePos.x - Input.mousePosition.x > 0)
-                {
-                    xhalf = width / 2;
-                }
-                else
-                {
-                    xhalf = width / 2 * -1;
-                }
-                
-                if (startMousePos.y - Input.mousePosition.y > 0)
-                {
-                    yhalf = height / 2;
-                }
-                else
-                {
-                    yhalf = height / 2 * -1;
-                }
-                
-                dragBox.position = Input.mousePosition + new Vector3(xhalf, yhalf);
-=======
                 startPos = Input.mousePosition;
- 
+                dragBox.position = startPos;
+
                 selected_Units.Clear();
                 
                 Vector3 p1 = camera.ScreenToWorldPoint(Input.mousePosition + new Vector3(0,0,camera.farClipPlane));
@@ -213,7 +167,7 @@ public class PlayerController : MonoBehaviour
                     //debugCubes[0].position = hit.point;
                     box.min = hit.point;
                 }
-            }
+			}
 
             if (Input.GetMouseButton(0))
             {
@@ -230,7 +184,7 @@ public class PlayerController : MonoBehaviour
                     //debugCubes[1].position = hit.point;
                     box.max = hit.point;
                 }
->>>>>>> Stashed changes
+
             }
             else if (Input.GetMouseButtonUp(0))
             {
@@ -244,30 +198,9 @@ public class PlayerController : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     public void DragSelectEnd()
     {
-        Vector3 scrPos = dragBox.position + new Vector3(0, 0, camera.farClipPlane);
-        Vector3 centerPos = camera.ScreenToWorldPoint(scrPos);
-
         float width = Mathf.Abs(startMousePos.x - Input.mousePosition.x);
         float height = Mathf.Abs(startMousePos.y - Input.mousePosition.y);
 
-<<<<<<< Updated upstream
-        if (Physics.Raycast(camera.transform.position, centerPos, out hit, Mathf.Infinity, worldMask))
-        {
-            foreach (var unit in unitList)
-            {
-                var unitScrPos = camera.WorldToScreenPoint(unit.transform.position);
-                Debug.Log(unitScrPos.x + " >= " + -width/2);
-                Debug.Log(unitScrPos.x + " <= " + width/2);
-                Debug.Log(unitScrPos.y + " <= " + height/2);
-                Debug.Log(unitScrPos.y + " >= " + -height/2);
-                if (unitScrPos.x >= dragBox.position.x + -width / 2 && unitScrPos.y >= dragBox.position.y + -height / 2 && unitScrPos.x <= dragBox.position.x + width / 2 &&
-                    unitScrPos.y <= dragBox.position.y + height / 2)
-                {
-                    unit.gameObject.SetActive(false);
-                }
-            }
-            
-=======
         Collider[] colliders = Physics.OverlapBox(box.center, box.extents, Quaternion.identity, unitMask);
         foreach (var col in colliders)
         {
@@ -278,10 +211,8 @@ public class PlayerController : MonoBehaviour
             }
             
             selected_Units.Add(unit);
->>>>>>> Stashed changes
         }
-        
-        startMousePos = new Vector2(0,0);
+
         dragBox.gameObject.SetActive(false);
         isDrag = false;
         //if(Physics.Raycast())

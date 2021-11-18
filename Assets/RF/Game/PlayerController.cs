@@ -83,22 +83,6 @@ public class PlayerController : MonoBehaviour
         camera.fieldOfView = Mathf.Clamp(camera.fieldOfView - wheel, 20, 60);
     }
 
-    private void Click()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, camera.farClipPlane);
-            Vector3 worldPos = camera.ScreenToWorldPoint(mousePos);
-
-            if (Physics.Raycast(camera.transform.position, worldPos, out hit, Mathf.Infinity, worldMask))
-            {
-                clickEffect.transform.position = hit.point;
-                clickEffect.gameObject.SetActive(false);
-                clickEffect.gameObject.SetActive(true);  
-            }
-        }
-    }
-    
     public Camera GetCamera()
     {
         return camera;
@@ -198,9 +182,6 @@ public class PlayerController : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     public void DragSelectEnd()
     {
-        float width = Mathf.Abs(startMousePos.x - Input.mousePosition.x);
-        float height = Mathf.Abs(startMousePos.y - Input.mousePosition.y);
-
         Collider[] colliders = Physics.OverlapBox(box.center, box.extents, Quaternion.identity, unitMask);
         foreach (var col in colliders)
         {
@@ -210,6 +191,7 @@ public class PlayerController : MonoBehaviour
                 continue;
             }
             
+            unit.Select();
             selected_Units.Add(unit);
         }
 
@@ -217,6 +199,57 @@ public class PlayerController : MonoBehaviour
         isDrag = false;
         //if(Physics.Raycast())
         Debug.Log("Drag End");
+    }
+    #endregion
+    
+    #region 유닛 컨트롤
+    
+    private void Click()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, camera.farClipPlane);
+            Vector3 worldPos = camera.ScreenToWorldPoint(mousePos);
+
+            if (Physics.Raycast(camera.transform.position, worldPos, out hit, Mathf.Infinity, worldMask))
+            {
+                clickEffect.transform.position = hit.point;
+                clickEffect.gameObject.SetActive(false);
+                clickEffect.gameObject.SetActive(true);
+
+                UnitBase target = hit.transform.GetComponent<UnitBase>();
+                if (target == null)
+                {
+                    if (selected_Units.Count > 0)
+                    {
+                        foreach (var unit in selected_Units)
+                        {
+                            unit.MovePos(hit.point);
+                        }
+                    }    
+                }
+                else
+                {
+                    if (selected_Units.Count > 0)
+                    {
+                        if (target.GetTeam() == player.GetTeam())
+                        {
+                            foreach (var unit in selected_Units)
+                            {
+                                unit.MovePos(hit.point);
+                            }   
+                        }
+                        else
+                        {
+                            foreach (var unit in selected_Units)
+                            {
+                                unit.MoveTarget(target);
+                            }      
+                        }
+                    }     
+                }
+            }
+        }
     }
     #endregion
     

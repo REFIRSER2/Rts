@@ -350,7 +350,17 @@ public class LobbyManager : MonoBehaviour
     private void onStartQuickMatch(int num)
     {
         team = num;
-        SceneManager.LoadScene("Map1");
+        
+        UI_Manager.Instance.RemovePopup(FindObjectOfType<MatchAccept_Popup>());
+        UI_Manager.Instance.CleanUI();
+        
+        var loadingUI = UI_Manager.Instance.CreateUI<Loading_UI>();
+        loadingUI.SetGameMode(gameMode);
+        for (int i=0;i < SteamManager.Instance.GetLobbyMemberIds().Count;i++)
+        {
+            Debug.Log(SteamManager.Instance.GetLobbyMemberIds()[i]);
+            loadingUI.AddPlayer(i/4, Convert.ToUInt64(SteamManager.Instance.GetLobbyMemberIds()[i]));
+        }
     }
 
     private void onInviteQuickMatch(string lb)

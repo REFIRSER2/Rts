@@ -114,6 +114,11 @@ public class SteamManager : MonoBehaviour
     {
         for (int i = 0; i < users.Count; i++)
         {
+            Friend friend = new Friend(Convert.ToUInt64(users[i]));
+            if (friend.IsMe)
+            {
+                continue;
+            }
             inviteQueue.Enqueue(users[i]);
         }
         
@@ -152,7 +157,7 @@ public class SteamManager : MonoBehaviour
         currentLobby = lobby;
         
         //RefreshLobby();
-        
+
         lobbyCreatedAction.Invoke(inviteQueue, currentLobby);
     }
 
@@ -161,11 +166,21 @@ public class SteamManager : MonoBehaviour
         Debug.Log("entered");
         currentLobby = lobby;
 
+        lobbyMemberIds.Clear();
+        foreach (var item in lobby.Members)
+        {
+            lobbyMemberIds.Add(item.Id.ToString());
+        }
+        
         if (lobby.MemberCount > 8)
         {
             return;
         }
-
+        
+        if (lobby.Owner.IsMe)
+        {
+            return;
+        }
         var matching = UI_Manager.Instance.CreatePopup<MatchAccept_Popup>();
         matching.SetLobby(lobby);
         
@@ -174,7 +189,7 @@ public class SteamManager : MonoBehaviour
 
     private void onLobbyInvited(Friend friend, Lobby lobby)
     {
-
+        Debug.Log("invited");
         //var invite = UI_Manager.Instance.CreatePopup<PartyInvite_Popup>();
         //invite.SetLobby(lobby);
     }
@@ -187,11 +202,21 @@ public class SteamManager : MonoBehaviour
     private void onLobbyMemberJoined(Lobby lobby, Friend friend)
     {
         Debug.Log("member joined");
+        lobbyMemberIds.Clear();
+        foreach (var item in lobby.Members)
+        {
+            lobbyMemberIds.Add(item.Id.ToString());
+        }
         //RefreshLobby();
     }
 
     private void onLobbyMemberLeave(Lobby lobby, Friend friend)
     {
+        lobbyMemberIds.Clear();
+        foreach (var item in lobby.Members)
+        {
+            lobbyMemberIds.Add(item.Id.ToString());
+        }
         Debug.Log("member leave");
         //RefreshLobby();
     }

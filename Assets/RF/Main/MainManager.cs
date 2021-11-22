@@ -99,7 +99,7 @@ public class MainManager : MonoBehaviour
     private void onConnected(Connecting_UI connectingUI)
     {
         UI_Manager.Instance.RemoveUI(connectingUI);
-        UI_Manager.Instance.CreateUI<Login_UI>();   
+        UI_Manager.Instance.CreateUI<First_UI>();   
     }
 
     private void onDisconnected()

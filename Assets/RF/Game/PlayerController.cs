@@ -200,6 +200,11 @@ public class PlayerController : MonoBehaviour
         //if(Physics.Raycast())
         Debug.Log("Drag End");
     }
+
+    public List<UnitBase> GetUnits()
+    {
+        return my_Units;
+    }
     #endregion
     
     #region 유닛 컨트롤

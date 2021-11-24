@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using RF.Player;
+using RF.Team;
+using Sirenix.Utilities;
 using Steamworks;
 using UnityEngine;
 
@@ -21,7 +24,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        SetupTeam();
+        Team.SetUp((int)TeamEnum.RED, "레드팀");
+        Team.SetUp((int)TeamEnum.BLUE, "블루팀");
+        
+        SetupNetwork();
     }
 
     private void Update()
@@ -30,27 +36,67 @@ public class GameManager : MonoBehaviour
     }
     #endregion
     
-    #region 팀
-    private SteamId[,] teamMembers = new SteamId[2, 4];
+    #region 네트워크
 
-    private void SetupTeam()
+    private void SetupNetwork()
     {
-        var index = 0;
-        foreach (var idStr in SteamManager.Instance.GetLobbyMemberIds())
+        SteamNetworking.OnP2PSessionRequest = (steamID) =>
         {
-            ulong id = Convert.ToUInt64(idStr);
-            if (index < 4)
+            if (SteamManager.Instance.GetLobbyMemberIds().Contains(steamID.ToString()))
             {
-                teamMembers[0, index] = id;
+                SteamNetworking.AcceptP2PSessionWithUser(steamID);
             }
-            else
-            {
-                teamMembers[1, ] = id;
-            }
-            
-            index++;
-        }
+        };
+        
     }
+
+    private void HandleMessage(SteamId id, byte[] data)
+    {
+        
+    }
+    #endregion
+    
+    #region 플레이어 관리
+    private int playerIndex = 0;
+    private int aliveIndex = 0;
+    private int deathIndex = 0;
+    
+    private Player[] players = new Player[8];
+    private Player[] alives = new Player[8];
+    private Player[] deaths = new Player[8];
+    
+    public Player[] GetPlayers()
+    {
+        return players;
+    }
+
+    public Player[] AlivePlayers()
+    {
+        return alives;
+    }
+
+    public Player[] DeathPlayers()
+    {
+        return deaths;
+    }
+    
+    public void SpawnPlayer()
+    {
+        
+        
+        //OnPlayerSpawn();
+    }
+    
+    public virtual void OnPlayerSpawn(Player ply)
+    {
+        players[playerIndex + 1] = ply;
+
+        playerIndex++;
+    }
+    #endregion
+    
+    #region 팀
+
     #endregion
     
     #region 참가

@@ -153,7 +153,6 @@ public class SteamManager : MonoBehaviour
 
     private void onLobbyCreated(Result result, Lobby lobby)
     {
-        Debug.Log("created");
         currentLobby = lobby;
         
         //RefreshLobby();
@@ -165,7 +164,7 @@ public class SteamManager : MonoBehaviour
     {
         Debug.Log("entered");
         currentLobby = lobby;
-
+        
         lobbyMemberIds.Clear();
         foreach (var item in lobby.Members)
         {
@@ -183,7 +182,6 @@ public class SteamManager : MonoBehaviour
         }
         var matching = UI_Manager.Instance.CreatePopup<MatchAccept_Popup>();
         matching.SetLobby(lobby);
-        
         //RefreshLobby();
     }
 
@@ -240,6 +238,10 @@ public class SteamManager : MonoBehaviour
     {
         return false;
     }
+    #endregion
+    
+    #region Steam Networking
+
     #endregion
 
     #region Unity General Funcs

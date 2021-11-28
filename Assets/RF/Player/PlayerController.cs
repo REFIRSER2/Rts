@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using RF.Debug;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,7 +27,7 @@ namespace RF.Player
         [SerializeField] private float borderWidth = 10F;
         [SerializeField] private float borderHeight = 10F;
     
-        [SerializeField] private Camera camera;
+        [SerializeField] private Camera cam;
         [SerializeField] private RectTransform mouseCursor;
         [SerializeField] private GameObject clickEffect;
         [SerializeField] private GameObject debugCube;
@@ -53,20 +54,20 @@ namespace RF.Player
         
             if (Input.mousePosition.x >= (Screen.width-borderWidth))
             {
-                camera.transform.localPosition += new Vector3(Time.deltaTime*moveSensivity, 0, 0);
+                cam.transform.localPosition += new Vector3(Time.deltaTime*moveSensivity, 0, 0);
             }
             else if (Input.mousePosition.x <= (0 + borderWidth))
             {
-                camera.transform.localPosition -= new Vector3(Time.deltaTime*moveSensivity, 0, 0);
+                cam.transform.localPosition -= new Vector3(Time.deltaTime*moveSensivity, 0, 0);
             }
 
             if (Input.mousePosition.y >= (Screen.height - borderHeight))
             {
-                camera.transform.localPosition += new Vector3(0, 0, Time.deltaTime*moveSensivity);
+                cam.transform.localPosition += new Vector3(0, 0, Time.deltaTime*moveSensivity);
             }
             else if (Input.mousePosition.y < (0+borderHeight))
             {
-                camera.transform.localPosition -= new Vector3(0, 0, Time.deltaTime*moveSensivity);  
+                cam.transform.localPosition -= new Vector3(0, 0, Time.deltaTime*moveSensivity);  
             }
 
             Vector2 mousePos = Input.mousePosition;
@@ -79,12 +80,12 @@ namespace RF.Player
         {
             float wheel = Input.GetAxis("Mouse ScrollWheel") * zoomSensivity;
 
-            camera.fieldOfView = Mathf.Clamp(camera.fieldOfView - wheel, 20, 60);
+            cam.fieldOfView = Mathf.Clamp(cam.fieldOfView - wheel, 20, 60);
         }
 
         public Camera GetCamera()
         {
-            return camera;
+            return cam;
         }
         #endregion
  
@@ -144,8 +145,8 @@ namespace RF.Player
 
                     selected_Units.Clear();
                 
-                    Vector3 p1 = camera.ScreenToWorldPoint(Input.mousePosition + new Vector3(0,0,camera.farClipPlane));
-                    if (Physics.Raycast(camera.transform.position, p1, out hit, Mathf.Infinity, worldMask))
+                    Vector3 p1 = cam.ScreenToWorldPoint(Input.mousePosition + new Vector3(0,0,cam.farClipPlane));
+                    if (Physics.Raycast(cam.transform.position, p1, out hit, Mathf.Infinity, worldMask))
                     {
                         //debugCubes[0].position = hit.point;
                         box.min = hit.point;
@@ -161,8 +162,8 @@ namespace RF.Player
                     dragBox.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
                     dragBox.anchoredPosition = (Vector2)startPos + new Vector2(width/2, height/2);
 
-                    Vector3 p1 = camera.ScreenToWorldPoint(Input.mousePosition + new Vector3(0,0,camera.farClipPlane));
-                    if (Physics.Raycast(camera.transform.position, p1, out hit, Mathf.Infinity, worldMask))
+                    Vector3 p1 = cam.ScreenToWorldPoint(Input.mousePosition + new Vector3(0,0,cam.farClipPlane));
+                    if (Physics.Raycast(cam.transform.position, p1, out hit, Mathf.Infinity, worldMask))
                     {
                         //debugCubes[1].position = hit.point;
                         box.max = hit.point;
@@ -197,7 +198,7 @@ namespace RF.Player
             dragBox.gameObject.SetActive(false);
             isDrag = false;
             //if(Physics.Raycast())
-            Debug.Log("Drag End");
+            DebugManager.Instance.Debug("Player Controller", "드래그 종료");
         }
 
         public List<UnitBase> GetUnits()
@@ -212,10 +213,10 @@ namespace RF.Player
         {
             if (Input.GetMouseButtonDown(1))
             {
-                Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, camera.farClipPlane);
-                Vector3 worldPos = camera.ScreenToWorldPoint(mousePos);
+                Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.farClipPlane);
+                Vector3 worldPos = cam.ScreenToWorldPoint(mousePos);
 
-                if (Physics.Raycast(camera.transform.position, worldPos, out hit, Mathf.Infinity, worldMask))
+                if (Physics.Raycast(cam.transform.position, worldPos, out hit, Mathf.Infinity, worldMask))
                 {
                     clickEffect.transform.position = hit.point;
                     clickEffect.gameObject.SetActive(false);

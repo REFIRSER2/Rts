@@ -91,6 +91,7 @@ public class MainMenu_UI : UI_Base
     public void onPlay()
     {
         LobbyManager.Instance.FindQuickMatch();
+        //LobbyManager.Instance.FindQuickMatch();
         //ServerManager.Instance.FindQuickMatch(gameMode, findQuickMatchAction);
         //
         //
@@ -98,7 +99,7 @@ public class MainMenu_UI : UI_Base
     
     public void onLeave()
     {
-        LobbyManager.Instance.LeaveQuickMatch();
+        //LobbyManager.Instance.LeaveQuickMatch();
         //ServerManager.Instance.LeaveQuickMatch();
         play_Btn.SetActive(true);
         leave_Btn.SetActive(false);

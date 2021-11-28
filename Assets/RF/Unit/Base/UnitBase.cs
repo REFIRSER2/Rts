@@ -41,10 +41,11 @@ public class UnitBase : MonoBehaviour
 
     public virtual void onEnterState(UnitState st)
     {
+        /*
         switch (st)
         {
             
-        }
+        }*/
     }
 
     public virtual void onStateBehaviour(UnitState st)

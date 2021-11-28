@@ -1,9 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
+using Photon.Realtime;
+using RF.Photon;
 using Steamworks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 using SocketManager = BestHTTP.SocketIO3.SocketManager;
 
 public class LobbyManager : MonoBehaviour
@@ -56,9 +60,9 @@ public class LobbyManager : MonoBehaviour
             onInvited(code, id, party);
         });
         
-        lobbyServer.Socket.On<int, List<string>>("join party", (party, members) =>
+        lobbyServer.Socket.On<int, List<string>, Dictionary<SteamId, SteamLobbyClient>>("join party", (party, members, membersData) =>
         {
-            onJoinParty(party, members);
+            onJoinParty(party, members, membersData);
         });
         
         lobbyServer.Socket.On<string>("joined party member", (id) =>
@@ -79,7 +83,7 @@ public class LobbyManager : MonoBehaviour
     public void CreateParty(ulong id)
     {
         Debug.Log("create party");
-        lobbyServer.Socket.Emit("create party", id.ToString());
+        lobbyServer.Socket.Emit("create party", id.ToString(), SteamManager.Instance.GetLobbyMembers());
     }
 
     public void LeaveParty(ulong id)
@@ -99,7 +103,7 @@ public class LobbyManager : MonoBehaviour
 
     public void JoinParty(int oldID, int newID)
     {
-        lobbyServer.Socket.Emit("join party", SteamManager.Instance.steamID.ToString(),oldID, newID);
+        lobbyServer.Socket.Emit("join party", SteamManager.Instance.GetLobbyMembers(), SteamManager.Instance.steamID.ToString(),oldID, newID);
     }
 
     public void LeaveParty(string id)
@@ -143,13 +147,13 @@ public class LobbyManager : MonoBehaviour
         RefreshParty();
     }
 
-    private void onJoinParty(int id, List<string> members)
+    private void onJoinParty(int id, List<string> members, Dictionary<SteamId, SteamLobbyClient> membersData)
     {
         partyID = id;
         partyMembers = members;
 
-        Debug.Log(partyMembers.Count);
-        
+        SteamManager.Instance.SetLobbyMembers(membersData);
+
         RefreshParty();
     }
     
@@ -246,43 +250,21 @@ public class LobbyManager : MonoBehaviour
 
     private int gameMode = 0;
     private int team = -1;
+    private int rank = 0;
+    private int mmr = 0;
+
+    public void RefreshMatch()
+    {
+        lobbyServer.Socket.Emit("get rank");
+
+    }
     
     private void SetupMatch()
     {
-        lobbyServer.Socket.On("find quick match", () =>
-       {
-           onFindQuickMatch();
-       });
-       
-       lobbyServer.Socket.On("leave quick match", () =>
-       {
-           onLeaveQuickMatch();
-       });
-
-       lobbyServer.Socket.On<List<string>>("create quick match", (users) =>
-       {
-           onCreateQuickMatch(users);
-       });
-       
-       lobbyServer.Socket.On("cancel quick match", () =>
-       {
-           onCancelQuickMatch();
-       });
-       
-       lobbyServer.Socket.On("accept quick match", () =>
-       {
-           onAcceptQuickMatch();
-       });
-       
-       lobbyServer.Socket.On<int>("start quick match", (team) =>
-       {
-           onStartQuickMatch(team);
-       });
-       
-       lobbyServer.Socket.On<string>("invite quick match", (lb) =>
-       {
-           onInviteQuickMatch(lb);
-       });
+        lobbyServer.Socket.On<int>("get rank", (num) =>
+        {
+            rank = num;
+        });
     }
 
     public void SetGamemode(int mode)
@@ -294,80 +276,23 @@ public class LobbyManager : MonoBehaviour
     {
         return gameMode;
     }
-    
+
     public void FindQuickMatch()
     {
-        lobbyServer.Socket.Emit("find quick match", gameMode, GetPartyMembers());
-    }
+        lobbyServer.Socket.Emit("find quick match");
 
-    public void LeaveQuickMatch()
-    {
-        lobbyServer.Socket.Emit("leave quick match", GetPartyMembers());
-    }
-
-    public void CancelQuickMatch()
-    {
-        lobbyServer.Socket.Emit("cancel quick match", SteamManager.Instance.steamID.ToString());
+        PhotonManager.Instance.CreateQuickRoom(rank, gameMode);
+        //PhotonNetwork.JoinOrCreateRoom();
     }
 
     public void AcceptQuickMatch()
     {
-        lobbyServer.Socket.Emit("accept quick match",  SteamManager.Instance.steamID.ToString());
-    }
-
-    public void CreateQuickMatch(ulong lb, ulong id)
-    {
-        lobbyServer.Socket.Emit("create quick match", id.ToString(), lb.ToString());
+        
     }
     
-    private void onFindQuickMatch()
+    public void CancelQuickMatch()
     {
-        findQuickMatchAction.Invoke();
-        lobbyServer.Socket.Emit("join quick match", gameMode, GetPartyMembers());
-    }
-
-    private void onLeaveQuickMatch()
-    {
-        leaveQuickMatchAction.Invoke();
-    }
-
-    private void onCreateQuickMatch(List<string> users)
-    {
-        SteamManager.Instance.CreateLobby(users);
-    }
-
-    private void onCancelQuickMatch()
-    {
-        cancelQuickMatchAction.Invoke();
-        SteamManager.Instance.LeaveLobby();
-    }
-    
-    private void onAcceptQuickMatch()
-    {
-        acceptQuickMatchAction.Invoke();
-    }
-
-    private void onStartQuickMatch(int num)
-    {
-        team = num;
         
-        UI_Manager.Instance.RemovePopup(FindObjectOfType<MatchAccept_Popup>());
-        UI_Manager.Instance.CleanUI();
-        
-        var loadingUI = UI_Manager.Instance.CreateUI<Loading_UI>();
-        loadingUI.SetGameMode(gameMode);
-        for (int i=0;i < SteamManager.Instance.GetLobbyMemberIds().Count;i++)
-        {
-            Debug.Log(SteamManager.Instance.GetLobbyMemberIds()[i]);
-            loadingUI.AddPlayer(i/4, Convert.ToUInt64(SteamManager.Instance.GetLobbyMemberIds()[i]));
-        }
-    }
-
-    private void onInviteQuickMatch(string lb)
-    {
-        ulong id64 = Convert.ToUInt64(lb);
-        
-        SteamManager.Instance.JoinLobby(id64);
     }
     #endregion
     

@@ -100,8 +100,9 @@ public class MainMenu_UI : UI_Base
         play_Btn.SetActive(false);
         leave_Btn.SetActive(true);
         
-        PhotonManager.Instance.CreateQuickRoom(MainManager.Instance.userInfo.rank,LobbyManager.Instance.GetGameMode());
-        LobbyManager.Instance.RequestMemberFollow();
+        LobbyManager.Instance.FindQuickMatch();
+        //PhotonManager.Instance.CreateQuickRoom(MainManager.Instance.userInfo.rank,LobbyManager.Instance.GetGameMode());
+        //LobbyManager.Instance.RequestMemberFollow();
         
         //StartCoroutine("FindQuickMatch");
         //matchTimer_Text.gameObject.SetActive(true);
@@ -114,10 +115,12 @@ public class MainMenu_UI : UI_Base
     
     public void onLeave()
     {
-        //LobbyManager.Instance.LeaveQuickMatch();
+        
         //ServerManager.Instance.LeaveQuickMatch();
         play_Btn.SetActive(true);
         leave_Btn.SetActive(false);
+        
+        LobbyManager.Instance.LeaveQuickMatch();
         
         //StopCoroutine("FindQuickMatch");
     }
@@ -187,31 +190,22 @@ public class MainMenu_UI : UI_Base
     private void Awake()
     {
         mode_Select.onValueChanged.AddListener(onSelectMode);
-        
-        /*
-        Action findQuickMatchAction;
-        Action leaveQuickMatchAction;
-        Action cancelQuickMatchAction;
-        
-        findQuickMatchAction = () =>
+
+        LobbyManager.Instance.findQuickMatchAction = () =>
         {
             play_Btn.SetActive(false); 
             leave_Btn.SetActive(true);
-        };
-        leaveQuickMatchAction = () =>
+        };;
+        LobbyManager.Instance.leaveQuickMatchAction = () =>
         {
             play_Btn.SetActive(true);
             leave_Btn.SetActive(false);
-        };
-        cancelQuickMatchAction = () =>
+        };;
+        LobbyManager.Instance.cancelQuickMatchAction = () =>
         {
             play_Btn.SetActive(true);
             leave_Btn.SetActive(false);   
-        };
-        
-        LobbyManager.Instance.findQuickMatchAction = findQuickMatchAction;
-        LobbyManager.Instance.leaveQuickMatchAction = leaveQuickMatchAction;
-        LobbyManager.Instance.cancelQuickMatchAction = cancelQuickMatchAction;*/
+        };;
         
         RefreshParty();
         RefreshProfile();

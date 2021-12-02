@@ -171,6 +171,18 @@ public class SteamManager : MonoBehaviour
         return lobbyMembers;
     }
 
+    public List<string> GetLobbyMemberIds()
+    {
+        List<string> ids = new List<string>();
+
+        foreach (var item in GetLobbyMembers())
+        {
+            ids.Add(item.Value.steamID.Value.ToString());
+        }
+
+        return ids;
+    }
+
     public void SetLobbyMembers(Dictionary<SteamId, SteamLobbyClient> members)
     {
         lobbyMembers = members;

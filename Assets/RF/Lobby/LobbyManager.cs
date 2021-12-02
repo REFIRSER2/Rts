@@ -282,7 +282,7 @@ public class LobbyManager : MonoBehaviour
     {
         partyMembers = members;
     }
-    #endregion
+    #endregion*/
     
     #region 매치 시스템
 
@@ -292,7 +292,6 @@ public class LobbyManager : MonoBehaviour
     public Action acceptQuickMatchAction;
     public Action cancelQuickMatchAction;
 
-    private int gameMode = 0;
     private int team = -1;
     private int rank = 0;
     private int mmr = 0;
@@ -309,6 +308,26 @@ public class LobbyManager : MonoBehaviour
         {
             rank = num;
         });
+        
+        lobbyServer.Socket.On("find quick match", () =>
+        {
+            findQuickMatchAction.Invoke();
+        });
+        
+        lobbyServer.Socket.On("leave quick match", () =>
+        {
+            leaveQuickMatchAction.Invoke();
+        });
+        
+        lobbyServer.Socket.On("invite quick match", () =>
+        {
+            
+        });
+        
+        lobbyServer.Socket.On<List<string>>("create quick match", (ids) =>
+        {
+            
+        });
     }
 
     public void SetGamemode(int mode)
@@ -324,22 +343,26 @@ public class LobbyManager : MonoBehaviour
     public void FindQuickMatch()
     {
         lobbyServer.Socket.Emit("find quick match");
-
         PhotonManager.Instance.CreateQuickRoom(rank, gameMode);
         //PhotonNetwork.JoinOrCreateRoom();
     }
 
+    public void LeaveQuickMatch()
+    {
+        lobbyServer.Socket.Emit("leave quick match", SteamManager.Instance.GetLobbyMemberIds());
+    }
+
     public void AcceptQuickMatch()
     {
-        
+        lobbyServer.Socket.Emit("accept quick match");
     }
     
     public void CancelQuickMatch()
     {
-        
+        lobbyServer.Socket.Emit("cancel quick match");
     }
     #endregion
-    */
+    
     
     #region 게임모드
     private int gameMode = 0;
@@ -368,6 +391,7 @@ public class LobbyManager : MonoBehaviour
     {
         SetupLobby();
         SetupParty();
+        SetupMatch();
         //SetupMatch();
     }
 

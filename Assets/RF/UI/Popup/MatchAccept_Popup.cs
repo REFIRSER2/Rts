@@ -32,23 +32,23 @@ public class MatchAccept_Popup : Popup_Base
         acceptBtn_Disable.SetActive(true);
         cancelBtn_Disable.SetActive(true);
         
-        /*
+        
         LobbyManager.Instance.acceptQuickMatchAction = () =>
         {
             isReady = true;
         };
         
-        LobbyManager.Instance.AcceptQuickMatch();*/
+        LobbyManager.Instance.AcceptQuickMatch();
     }
 
     public void onCancel()
     {
         //LobbyManager.Instance.CancelQuickMatch();
         UI_Manager.Instance.RemovePopup(this);  
-        if (PhotonManager.Instance.GetRoom() != null)
+        /*if (PhotonManager.Instance.GetRoom() != null)
         {
             PhotonManager.Instance.LeaveRoom();
-        }
+        }*/
     }
     #endregion
 
@@ -76,11 +76,11 @@ public class MatchAccept_Popup : Popup_Base
         yield return new WaitForSeconds(10F);
         if (!isReady)
         {
-            if (PhotonManager.Instance.GetRoom() != null)
+            /*if (PhotonManager.Instance.GetRoom() != null)
             {
                 PhotonManager.Instance.LeaveRoom();
-            }
-            //LobbyManager.Instance.CancelQuickMatch();
+            }*/
+            LobbyManager.Instance.CancelQuickMatch();
         }
         UI_Manager.Instance.RemovePopup(this);   
     }

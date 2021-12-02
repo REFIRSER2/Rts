@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -80,25 +81,14 @@ namespace RF.Photon
         #region 룸
         public void CreateQuickRoom(int rank, int gameMode)
         {
-            /*
-            Hashtable expectedCustomRoomProperties = new Hashtable(){{"rank", rank}, {"gameMode", gameMode}};
+            Hashtable expectedCustomRoomProperties = new Hashtable(){};
             RoomOptions options = new RoomOptions();
             options.IsOpen = true;
             options.IsVisible = false;
             options.MaxPlayers = 8;
-            options.CustomRoomProperties = new Hashtable() {{"rank", rank}, {"gameMode", gameMode}};
-            options.CustomRoomPropertiesForLobby = new string[] {"rank", "gameMode"};
             options.PublishUserId = true;
 
-            string[] members = new string[SteamManager.Instance.GetLobbyMembers().Count];
-            var index = 0;
-            foreach (var item in SteamManager.Instance.GetLobbyMembers())
-            {
-                members[index] = item.Value.photonID;
-                index++;
-            }
-            
-            PhotonNetwork.JoinRandomOrCreateRoom(expectedCustomRoomProperties, 8, MatchmakingMode.FillRoom, null, null, null, options, members);*/
+            PhotonNetwork.JoinRandomOrCreateRoom(expectedCustomRoomProperties, 8, MatchmakingMode.FillRoom, null, null, null, options, SteamManager.Instance.GetLobbyMemberIds().ToArray());
         }
 
         public void FindFriends(string id)

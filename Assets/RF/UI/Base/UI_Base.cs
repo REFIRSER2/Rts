@@ -20,7 +20,7 @@ public class UI_Base : MonoBehaviour
 
     public void Remove()
     {
-        UI_Manager.Instance.RemoveUI(this);
+        //UI_Manager.Instance.ReleaseUI<this>();
     }
     #endregion
     

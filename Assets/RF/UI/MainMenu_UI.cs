@@ -82,10 +82,6 @@ public class MainMenu_UI : UI_Base
     #endregion
     
     #region 매치메이킹
-
-    [SerializeField] private TMP_Text matchTimer_Text;
-    private int matchTimer = 0;
-    
     public void onStart()
     {
         switch (LobbyManager.Instance.GetGameMode())
@@ -107,8 +103,8 @@ public class MainMenu_UI : UI_Base
         PhotonManager.Instance.CreateQuickRoom(MainManager.Instance.userInfo.rank,LobbyManager.Instance.GetGameMode());
         LobbyManager.Instance.RequestMemberFollow();
         
-        StartCoroutine("FindQuickMatch");
-        matchTimer_Text.gameObject.SetActive(true);
+        //StartCoroutine("FindQuickMatch");
+        //matchTimer_Text.gameObject.SetActive(true);
         //LobbyManager.Instance.FindQuickMatch();
         //LobbyManager.Instance.FindQuickMatch();
         //ServerManager.Instance.FindQuickMatch(gameMode, findQuickMatchAction);
@@ -123,19 +119,7 @@ public class MainMenu_UI : UI_Base
         play_Btn.SetActive(true);
         leave_Btn.SetActive(false);
         
-        StopCoroutine("FindQuickMatch");
-        matchTimer = 0;
-        matchTimer_Text.text = TimeSpan.FromSeconds(matchTimer).ToString(@"hh\:mm\:ss");
-        matchTimer_Text.gameObject.SetActive(false);
-    }
-
-    IEnumerator FindQuickMatch()
-    {
-        yield return new WaitForSeconds(1F);
-        matchTimer++;
-        matchTimer_Text.text = TimeSpan.FromSeconds(matchTimer).ToString(@"hh\:mm\:ss");
-
-        StartCoroutine("FindQuickMatch");
+        //StopCoroutine("FindQuickMatch");
     }
 
     public void onSelectMode(int mode)

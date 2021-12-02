@@ -103,12 +103,14 @@ namespace RF.Photon
 
         public void FindFriends(string id)
         {
+            UnityEngine.Debug.Log("find friends");
+            
             if (id == PhotonNetwork.LocalPlayer.UserId)
             {
                 return;
             }
             
-            UnityEngine.Debug.Log("find friends");
+            
             
             string[] ids = new string[1];
             ids[0] = id;
@@ -124,6 +126,8 @@ namespace RF.Photon
         public override void OnJoinedRoom()
         {
             base.OnJoinedRoom();
+            UI_Manager.Instance.ReleaseUI<MainMenu_UI>();
+            //UI_Manager.Instance.
         }
 
         public override void OnLeftRoom()
@@ -163,7 +167,10 @@ namespace RF.Photon
 
             foreach (var friend in friendList)
             {
-                UnityEngine.Debug.Log(friend.Room);
+                if (friend.IsInRoom)
+                {
+                    PhotonNetwork.JoinRoom(friend.Room);
+                }
             }
             UnityEngine.Debug.Log("친구 새로고침");
         }

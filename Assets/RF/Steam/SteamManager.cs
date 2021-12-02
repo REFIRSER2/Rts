@@ -5,6 +5,7 @@ using RF.Photon;
 using UnityEngine;
 using Steamworks;
 using Steamworks.Data;
+using UnityEngine.SceneManagement;
 using Color = UnityEngine.Color;
 
 public class SteamManager : MonoBehaviour
@@ -223,6 +224,11 @@ public class SteamManager : MonoBehaviour
 
     private void onLobbyInvited(Friend friend, Lobby lobby)
     {
+        if (SceneManager.GetActiveScene().name != "Lobby")
+        {
+            return;
+        }
+        
         var invite = UI_Manager.Instance.CreatePopup<PartyInvited_Popup>();
         invite.SetLobby(lobby);
         invite.SetTitle("알림");

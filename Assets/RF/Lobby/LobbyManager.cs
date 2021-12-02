@@ -39,13 +39,17 @@ public class LobbyManager : MonoBehaviour
 
     public void RequestMemberFollow()
     {
-        SteamId[] id = new SteamId[SteamManager.Instance.GetLobbyMembers().Count];
+        string[] id = new string[SteamManager.Instance.GetLobbyMembers().Count];
         var index = 0;
         foreach (var item in SteamManager.Instance.GetLobbyMembers())
         {
-            id[index] = item.Value.steamID;
+            id[index] = item.Value.steamID.ToString();
             index++;
         }
+        
+        Debug.Log(PhotonManager.Instance.GetID());
+        Debug.Log(SteamManager.Instance.steamID.Value);
+        Debug.Log(id[0]);
         lobbyServer.Socket.Emit("follow room", PhotonManager.Instance.GetID(), id);
     }
 

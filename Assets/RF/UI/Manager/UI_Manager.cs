@@ -16,7 +16,7 @@ public class UI_Manager : SerializedMonoBehaviour
     [SerializeField] private Transform ui_Layer;
     [SerializeField] private Transform popup_Layer;
 
-    private List<UI_Base> uiPool_List = new List<UI_Base>();
+    private Dictionary<string, UI_Base> uiPool_List = new Dictionary<string, UI_Base>();
     private List<Popup_Base> popupPool_List = new List<Popup_Base>();
     private List<UIItem_Base> uiItemPool_List = new List<UIItem_Base>();
     
@@ -38,32 +38,52 @@ public class UI_Manager : SerializedMonoBehaviour
             name = typeof(T).Name;
         }
 
-        GameObject obj = Instantiate(Resources.Load($"Prefabs/UI/{name}")) as GameObject;
-        obj.transform.SetParent(ui_Layer, false);
-        T ui = obj.GetComponent<T>();
+        T ui = null;
         
-        uiPool_List.Add(ui);
+        if (!uiPool_List.ContainsKey(name))
+        {
+            GameObject obj = Instantiate(Resources.Load($"Prefabs/UI/{name}")) as GameObject;
+            obj.transform.SetParent(ui_Layer, false);
+            ui = obj.GetComponent<T>();
+            
+            uiPool_List.Add(name, ui);
+        }
+        else
+        {
+            uiPool_List[name].gameObject.SetActive(true);
+            uiPool_List[name].On_Open();
+        }
 
         return ui;
     }
-
-    public void RemoveUI(UI_Base ui)
+    
+    public void ReleaseUI<T>() where T : UI_Base
     {
-        if (uiPool_List.Contains(ui))
+        if (string.IsNullOrEmpty(name))
         {
-            uiPool_List.Remove(ui);
+            name = typeof(T).Name;
         }
-        ui.gameObject.SetActive(false);
-        //Destroy();
+
+        T ui = null;
+        
+        if (uiPool_List.ContainsKey(name))
+        {
+            uiPool_List[name].On_Close();
+            uiPool_List[name].gameObject.SetActive(false);
+            
+            uiPool_List[name].transform.SetParent(ui_Pool_OBJ.transform);
+        }
     }
 
     public void CleanUI()
     {
         int max = uiPool_List.Count;
-        for (int i=0;i<max;i++)
+        foreach (var item in uiPool_List)
         {
-            RemoveUI(uiPool_List[i]);
+            Destroy(item.Value);
         }
+        
+        uiPool_List.Clear();
     }
 
     public T CreatePopup<T>(string name = "") where T : Popup_Base

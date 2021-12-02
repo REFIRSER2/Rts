@@ -31,7 +31,7 @@ public class MainManager : MonoBehaviour
         connecting_UI = UI_Manager.Instance.CreateUI<Connecting_UI>();
         mainServer.Socket.On("connect", () =>
         {
-            onConnected(connecting_UI);
+            onConnected();
         });
         
         mainServer.Socket.On("disconnect", () =>
@@ -92,9 +92,9 @@ public class MainManager : MonoBehaviour
         };
     }
 
-    private void onConnected(Connecting_UI connectingUI)
+    private void onConnected()
     {
-        UI_Manager.Instance.RemoveUI(connectingUI);
+        UI_Manager.Instance.ReleaseUI<Connecting_UI>();
         UI_Manager.Instance.CreateUI<First_UI>();   
     }
 

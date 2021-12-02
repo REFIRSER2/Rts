@@ -9,12 +9,14 @@ using UnityEngine.UI;
 
 public class Friend_UI : UI_Base
 {
+    #region 변수
     [SerializeField] private Transform content;
 
     [SerializeField] private List<RawImage> squad_Profiles = new List<RawImage>();
     [SerializeField] private float refresh_Time = 5F;
 
     private Dictionary<SteamId, Friend_Item> friendItems = new Dictionary<SteamId, Friend_Item>();
+    #endregion
     
     #region 오픈/클로즈 오버라이드
     public override void On_Open()

@@ -221,8 +221,10 @@ public class SteamManager : MonoBehaviour
 
     private void onLobbyInvited(Friend friend, Lobby lobby)
     {
-        var invite = UI_Manager.Instance.CreatePopup<PartyInvite_Popup>();
+        var invite = UI_Manager.Instance.CreatePopup<PartyInvited_Popup>();
         invite.SetLobby(lobby);
+        invite.SetTitle("알림");
+        invite.SetText(friend.Name + "님이 당신을 파티에 초대하였습니다.");
     }
 
     private void onLobbyDataChanged(Lobby lobby)

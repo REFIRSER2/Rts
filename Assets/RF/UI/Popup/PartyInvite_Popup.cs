@@ -6,11 +6,12 @@ using UnityEngine.UI;
 
 public class PartyInvite_Popup : Popup_Base
 {
+    #region 변수
     [SerializeField] private Text title_Text;
     [SerializeField] private Text main_Text;
-
-    private Lobby lobby;
+    #endregion
     
+   #region UI 정보
     public void SetTitle(string str)
     {
         title_Text.text = str;
@@ -20,19 +21,12 @@ public class PartyInvite_Popup : Popup_Base
     {
         main_Text.text = str;
     }
+    #endregion
 
-    public void SetLobby(Lobby lb)
-    {
-        lobby = lb;
-    }
-
-    public void onAccept()
-    {
-        SteamManager.Instance.JoinLobby(lobby.Id);
-    }
-
+    #region 클릭 이벤트
     public void onCancel()
     {
         UI_Manager.Instance.RemovePopup(this);
     }
+    #endregion
 }

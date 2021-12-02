@@ -65,6 +65,10 @@ public class Friend_Item : UIItem_Base
     public void onClick()
     {
         SteamManager.Instance.InviteLobby(friend);
+
+        var popup = UI_Manager.Instance.CreatePopup<PartyInvite_Popup>();
+        popup.SetTitle("알림");
+        popup.SetText(friend.Name + "님을 파티에 초대하였습니다.");
     }
     #endregion
 

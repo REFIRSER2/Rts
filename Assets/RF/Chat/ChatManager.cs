@@ -86,7 +86,7 @@ public class ChatManager : MonoBehaviour
     public void SendChat(string channel, string msg, bool isTeam)
     {
         ChatData data = new ChatData();
-        data.nickName = MainManager.Instance.userProfile.nickName;
+        data.nickName = MainManager.Instance.userInfo.nickName;
         data.channel = channel;
         data.message = msg;
         data.isTeam = isTeam;
@@ -98,7 +98,7 @@ public class ChatManager : MonoBehaviour
     public void SendChat(string msg, bool isTeam)
     {
         ChatData data = new ChatData();
-        data.nickName = MainManager.Instance.userProfile.nickName;
+        data.nickName = MainManager.Instance.userInfo.nickName;
         data.message = msg;
         data.lobbyID = SteamManager.Instance.currentLobby.Id.ToString();
         data.isTeam = isTeam;

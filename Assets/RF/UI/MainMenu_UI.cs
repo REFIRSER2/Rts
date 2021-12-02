@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using RF.Photon;
 using Steamworks;
 using TMPro;
 using UnityEngine;
@@ -8,6 +9,7 @@ using UnityEngine.UI;
 
 public class MainMenu_UI : UI_Base
 {
+    #region 변수
     [SerializeField] private TMP_Text notice_Text;
     [SerializeField] private GameObject roomList_OBJ;
     [SerializeField] private GameObject shop_OBJ;
@@ -22,19 +24,26 @@ public class MainMenu_UI : UI_Base
     [SerializeField] private RawImage profile_Icon;
     
     [SerializeField] private List<RawImage> party_Profiles = new List<RawImage>();
-    
+    #endregion
 
+
+
+    #region 공지
     private float noticeResetTime = 0F;
     public void SetNotice(string str)
     {
         notice_Text.text = str;
     }
 
+    #endregion
+
+
     #region 파티 시스템
 
     public void onLeaveParty()
     {
-        LobbyManager.Instance.LeaveParty(SteamManager.Instance.steamID.ToString());
+        SteamManager.Instance.LeaveLobby();
+        //LobbyManager.Instance.LeaveParty(SteamManager.Instance.steamID.ToString());
     }
     
     public async void RefreshParty()
@@ -47,9 +56,9 @@ public class MainMenu_UI : UI_Base
             profile.gameObject.SetActive(false);
         }
         
-        foreach (var id in LobbyManager.Instance.GetPartyMembers())
+        foreach (var item in SteamManager.Instance.GetLobbyMembers())
         {
-            var image = await SteamFriends.GetLargeAvatarAsync((ulong)Convert.ToInt64(id));
+            var image = await SteamFriends.GetLargeAvatarAsync(item.Key);
             if (image != null)
             {
                 var texture = SteamManager.Instance.GetProfileIcon(image.Value);
@@ -75,9 +84,13 @@ public class MainMenu_UI : UI_Base
     #endregion
     
     #region 매치메이킹
+
+    [SerializeField] private TMP_Text matchTimer_Text;
+    private int matchTimer = 0;
+    
     public void onStart()
     {
-        switch (LobbyManager.Instance.GetGamemode())
+        switch (LobbyManager.Instance.GetGameMode())
         {
             case 3:
                 if (!roomList_OBJ.activeSelf)
@@ -90,7 +103,11 @@ public class MainMenu_UI : UI_Base
     
     public void onPlay()
     {
-        LobbyManager.Instance.FindQuickMatch();
+        PhotonManager.Instance.CreateQuickRoom(MainManager.Instance.userInfo.rank,LobbyManager.Instance.GetGameMode());
+
+        StartCoroutine("FindQuickMatch");
+        matchTimer_Text.gameObject.SetActive(true);
+        //LobbyManager.Instance.FindQuickMatch();
         //LobbyManager.Instance.FindQuickMatch();
         //ServerManager.Instance.FindQuickMatch(gameMode, findQuickMatchAction);
         //
@@ -103,11 +120,23 @@ public class MainMenu_UI : UI_Base
         //ServerManager.Instance.LeaveQuickMatch();
         play_Btn.SetActive(true);
         leave_Btn.SetActive(false);
+        
+        StopCoroutine("FindQuickMatch");
+        matchTimer = 0;
+        matchTimer_Text.text = string.Format("{0}:{1}", matchTimer%3600/60, matchTimer%3600%60);
+        matchTimer_Text.gameObject.SetActive(false);
+    }
+
+    IEnumerator FindQuickMatch()
+    {
+        yield return new WaitForSeconds(1F);
+        matchTimer++;
+        matchTimer_Text.text = string.Format("{0}:{1}", matchTimer%3600/60, matchTimer%3600%60);
     }
 
     public void onSelectMode(int mode)
     {
-        LobbyManager.Instance.SetGamemode(mode);
+        LobbyManager.Instance.SetGameMode(mode);
     }
     #endregion
     
@@ -171,6 +200,7 @@ public class MainMenu_UI : UI_Base
     {
         mode_Select.onValueChanged.AddListener(onSelectMode);
         
+        /*
         Action findQuickMatchAction;
         Action leaveQuickMatchAction;
         Action cancelQuickMatchAction;
@@ -193,7 +223,7 @@ public class MainMenu_UI : UI_Base
         
         LobbyManager.Instance.findQuickMatchAction = findQuickMatchAction;
         LobbyManager.Instance.leaveQuickMatchAction = leaveQuickMatchAction;
-        LobbyManager.Instance.cancelQuickMatchAction = cancelQuickMatchAction;
+        LobbyManager.Instance.cancelQuickMatchAction = cancelQuickMatchAction;*/
         
         RefreshParty();
         RefreshProfile();

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class Friend_Item : UIItem_Base
 {
+    #region 변수
     [SerializeField] private Text nickname_Text;
     [SerializeField] private Text status_Text;
 
@@ -14,9 +15,11 @@ public class Friend_Item : UIItem_Base
     
     [SerializeField] private Color online_Color;
     [SerializeField] private Color isPlay_Color;
-
+    #endregion
+    
+    #region UI 정보 설정
     private EnumData.Status status;
-
+    
     private Friend friend;
 
     public void SetFriend(Friend fr)
@@ -56,18 +59,19 @@ public class Friend_Item : UIItem_Base
             profile_Icon.texture = texture;
         }
     }
+    #endregion
 
+    #region 클릭 이벤트
     public void onClick()
     {
-        LobbyManager.Instance.InviteParty(friend.Id.ToString());
-        /*
-        SteamManager.Instance.currentLobby.InviteFriend(friend.Id);
-        friend.SendMessage(SteamManager.Instance.Nickname + " 님이 게임에 초대하였습니다.");
-        ChatManager.Instance.SendSystemMessage(friend.Name + "님을 파티에 초대하였습니다." );*/
+        SteamManager.Instance.InviteLobby(friend);
     }
+    #endregion
 
+    #region 유니티 기본 내장 함수
     private void Awake()
     {
         
     }
+    #endregion
 }

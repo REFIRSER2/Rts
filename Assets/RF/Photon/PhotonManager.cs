@@ -90,6 +90,58 @@ namespace RF.Photon
         }
         #endregion
         
+        #region 룸
+
+        public override void OnCreatedRoom()
+        {
+            base.OnCreatedRoom();
+        }
+
+        public override void OnJoinedRoom()
+        {
+            base.OnJoinedRoom();
+        }
+
+        public override void OnLeftRoom()
+        {
+            base.OnLeftRoom();
+        }
+
+        public override void OnPlayerEnteredRoom(global::Photon.Realtime.Player newPlayer)
+        {
+            base.OnPlayerEnteredRoom(newPlayer);
+
+            if (PhotonNetwork.CurrentRoom.PlayerCount == 8)
+            {
+                //var matching = UI_Manager.Instance.CreatePopup<MatchAccept_Popup>();
+                //matching.SetLobby(lobby);
+            }
+        }
+
+        public override void OnPlayerLeftRoom(global::Photon.Realtime.Player otherPlayer)
+        {
+            base.OnPlayerLeftRoom(otherPlayer);
+        }
+
+        public Room GetRoom()
+        {
+            return PhotonNetwork.CurrentRoom;
+        }
+
+        public void LeaveRoom()
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+
+        #endregion
+        
+        #region ID
+        public string GetID()
+        {
+            return PhotonNetwork.LocalPlayer.UserId;
+        }
+        #endregion
+        
         #region 유니티 기본 내장 함수
         private void Awake()
         {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UserProfile
+public class UserInfo
 {
     public string nickName = "";
     public int rank = 0;

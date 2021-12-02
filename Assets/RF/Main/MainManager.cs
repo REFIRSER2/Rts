@@ -16,7 +16,7 @@ public class MainManager : MonoBehaviour
     #region Main DB
     private SocketManager mainServer;
 
-    public UserProfile userProfile = new UserProfile();
+    public UserInfo userInfo = new UserInfo();
     
     private Connecting_UI connecting_UI;
     
@@ -26,12 +26,9 @@ public class MainManager : MonoBehaviour
     
     private void Setup()
     {
-        Debug.Log("setup main");
         mainServer = SocketConnectManager.Instance.GetMainServer();
-        Debug.Log(mainServer);
-        
+
         connecting_UI = UI_Manager.Instance.CreateUI<Connecting_UI>();
-        Debug.Log("setup main");
         mainServer.Socket.On("connect", () =>
         {
             onConnected(connecting_UI);
@@ -44,7 +41,6 @@ public class MainManager : MonoBehaviour
         
         mainServer.Socket.On<int>("login", (code) =>
         {
-            Debug.Log("login");
             onLogin(code);
         });
         
@@ -89,10 +85,10 @@ public class MainManager : MonoBehaviour
         mainServer.Socket.Emit("profile", SteamManager.Instance.steamID.ToString());
         callback_profile = (data) =>
         {
-            userProfile.nickName = data["nickname"].ToString();
-            userProfile.rank = Convert.ToInt32(data["rank"]);
-            userProfile.rankPt = Convert.ToInt32(data["rankpoint"]);
-            userProfile.mmr = Convert.ToInt32(data["mmr"]);
+            userInfo.nickName = data["nickname"].ToString();
+            userInfo.rank = Convert.ToInt32(data["rank"]);
+            userInfo.rankPt = Convert.ToInt32(data["rankpoint"]);
+            userInfo.mmr = Convert.ToInt32(data["mmr"]);
         };
     }
 
@@ -104,7 +100,8 @@ public class MainManager : MonoBehaviour
 
     private void onDisconnected()
     {
-        LobbyManager.Instance.LeaveParty(SteamManager.Instance.steamID.ToString());
+        SteamManager.Instance.LeaveLobby();
+        //LobbyManager.Instance.LeaveParty(SteamManager.Instance.steamID.ToString());
         
         UI_Manager.Instance.CleanUI();
         connecting_UI = UI_Manager.Instance.CreateUI<Connecting_UI>();
@@ -112,7 +109,6 @@ public class MainManager : MonoBehaviour
 
     private void onLogin(int code)
     {
-        Debug.Log(code);
         Error_Popup error;
         switch (code)
         {
@@ -122,14 +118,11 @@ public class MainManager : MonoBehaviour
                 error.SetText("알 수 없는 오류로 로그인 할 수 없습니다");
                 break;
             case 0:
-                Debug.Log("test");
                 UI_Manager.Instance.CleanUI();
                 UI_Manager.Instance.CreateUI<MainMenu_UI>();
                 SceneManager.LoadScene("Lobby");
                 
-                Debug.Log("test3");
-                
-                LobbyManager.Instance.CreateParty(SteamManager.Instance.steamID);
+                //LobbyManager.Instance.CreateParty(SteamManager.Instance.steamID);
                 GetProfile();
                 break;
             case 1:
@@ -213,7 +206,8 @@ public class MainManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        LobbyManager.Instance.LeaveParty(SteamManager.Instance.steamID.ToString());
+        //LobbyManager.Instance.LeaveParty(SteamManager.Instance.steamID.ToString());
+        SteamManager.Instance.LeaveLobby();
     }
 
     #endregion

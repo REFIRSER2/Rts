@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class Sign_Popup : Popup_Base
 {
+    #region 변수
     [SerializeField] private List<InputField> inputField_List;
     
     [SerializeField] private InputField nickInput;
@@ -15,7 +16,9 @@ public class Sign_Popup : Popup_Base
     [SerializeField] private InputField pwdInput;
 
     private Action<int> signAction;
+    #endregion
     
+    #region 오픈/클로즈 오버라이드
     public override void On_Open()
     {
         base.On_Open();
@@ -27,7 +30,9 @@ public class Sign_Popup : Popup_Base
     {
         base.On_Close();
     }
+    #endregion
 
+    #region 클릭 이벤트
     public void onApply()
     {
         if (emailInput.text != "" && pwdInput.text != "")
@@ -39,7 +44,9 @@ public class Sign_Popup : Popup_Base
             
         }
     }
+    #endregion
 
+    #region 회원가입 액션
     public void onSign(int code)
     {
         Error_Popup error = UI_Manager.Instance.CreatePopup<Error_Popup>();
@@ -60,7 +67,7 @@ public class Sign_Popup : Popup_Base
                 UI_Manager.Instance.CreateUI<MainMenu_UI>();
                 SceneManager.LoadScene("Lobby");
 
-                LobbyManager.Instance.CreateParty(SteamManager.Instance.steamID);
+                //LobbyManager.Instance.CreateParty(SteamManager.Instance.steamID);
                 MainManager.Instance.GetProfile();
                 break;
             case 1:
@@ -77,7 +84,9 @@ public class Sign_Popup : Popup_Base
                 break;
         }
     }
+    #endregion
 
+    #region 유니티 기본 내장 함수
     private void Update()
     {
         int index = -1;
@@ -107,4 +116,5 @@ public class Sign_Popup : Popup_Base
                 }
             }
     }
+    #endregion
 }

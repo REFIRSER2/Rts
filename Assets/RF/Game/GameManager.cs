@@ -40,13 +40,14 @@ public class GameManager : MonoBehaviour
 
     private void SetupNetwork()
     {
+        /*
         SteamNetworking.OnP2PSessionRequest = (steamID) =>
         {
             if (SteamManager.Instance.GetLobbyMemberIds().Contains(steamID.ToString()))
             {
                 SteamNetworking.AcceptP2PSessionWithUser(steamID);
             }
-        };
+        };*/
         
     }
 
@@ -107,13 +108,14 @@ public class GameManager : MonoBehaviour
     private bool isEnd;
     private void UpdateGame()
     {
+        /*
         if (SteamManager.Instance.GetLobbyMemberIds().Count <= 1)
         {
             if (!isEnd)
             {
                 EndGame();    
             }
-        }
+        }*/
     }
     #endregion
     

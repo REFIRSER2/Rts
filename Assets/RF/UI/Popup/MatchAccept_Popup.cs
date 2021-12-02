@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using RF.Photon;
 using Steamworks.Data;
 using UnityEngine;
 using Image = UnityEngine.UI.Image;
 
 public class MatchAccept_Popup : Popup_Base
 {
+    #region 변수
     [SerializeField] private GameObject acceptBtn;
     [SerializeField] private GameObject cancelBtn;
     [SerializeField] private GameObject acceptBtn_Disable;
@@ -20,7 +22,9 @@ public class MatchAccept_Popup : Popup_Base
     private Lobby lobby;
     
     private bool isReady = false;
+    #endregion
     
+    #region 클릭 이벤트
     public void onAccept()
     {
         acceptBtn.SetActive(false);
@@ -28,26 +32,33 @@ public class MatchAccept_Popup : Popup_Base
         acceptBtn_Disable.SetActive(true);
         cancelBtn_Disable.SetActive(true);
         
+        /*
         LobbyManager.Instance.acceptQuickMatchAction = () =>
         {
             isReady = true;
         };
         
-        LobbyManager.Instance.AcceptQuickMatch();
+        LobbyManager.Instance.AcceptQuickMatch();*/
     }
 
     public void onCancel()
     {
-        LobbyManager.Instance.CancelQuickMatch();
+        //LobbyManager.Instance.CancelQuickMatch();
         UI_Manager.Instance.RemovePopup(this);  
+        if (PhotonManager.Instance.GetRoom() != null)
+        {
+            PhotonManager.Instance.LeaveRoom();
+        }
     }
+    #endregion
 
-    public void SetLobby(Lobby lb)
+    /*public void SetLobby(Lobby lb)
     {
         lobby = lb;
         StartCoroutine(AutoCancel());
-    }
+    }*/
 
+    #region 유니티 기본 내장 함수
     private void Update()
     {
         timer += Time.deltaTime;
@@ -57,14 +68,21 @@ public class MatchAccept_Popup : Popup_Base
             progress2.fillAmount = 1 - (((timer)/10F));
         }
     }
+    #endregion
 
+    #region 자동 취소
     IEnumerator AutoCancel()
     {
         yield return new WaitForSeconds(10F);
         if (!isReady)
         {
-            LobbyManager.Instance.CancelQuickMatch();
+            if (PhotonManager.Instance.GetRoom() != null)
+            {
+                PhotonManager.Instance.LeaveRoom();
+            }
+            //LobbyManager.Instance.CancelQuickMatch();
         }
         UI_Manager.Instance.RemovePopup(this);   
     }
+    #endregion
 }

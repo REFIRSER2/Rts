@@ -15,7 +15,7 @@ public class LobbyManager : MonoBehaviour
     #region 싱글톤
     public static LobbyManager Instance;
     #endregion
-
+    /*
     #region 파티 시스템
     private SocketManager lobbyServer;
     
@@ -83,7 +83,7 @@ public class LobbyManager : MonoBehaviour
     public void CreateParty(ulong id)
     {
         Debug.Log("create party");
-        lobbyServer.Socket.Emit("create party", id.ToString(), SteamManager.Instance.GetLobbyMembers());
+        //lobbyServer.Socket.Emit("create party", id.ToString(), SteamManager.Instance.GetLobbyMembers());
     }
 
     public void LeaveParty(ulong id)
@@ -237,7 +237,7 @@ public class LobbyManager : MonoBehaviour
     public void JoinParty(List<ulong> members)
     {
         partyMembers = members;
-    }*/
+    }
     #endregion
     
     #region 매치 시스템
@@ -295,6 +295,21 @@ public class LobbyManager : MonoBehaviour
         
     }
     #endregion
+    */
+    
+    #region 게임모드
+    private int gameMode = 0;
+
+    public void SetGameMode(int num)
+    {
+        gameMode = num;
+    }
+    
+    public int GetGameMode()
+    {
+        return gameMode;
+    }
+    #endregion
     
     #region 유니티 기본 함수
     private void Awake()
@@ -307,8 +322,8 @@ public class LobbyManager : MonoBehaviour
 
     private void Start()
     {
-        SetupParty();
-        SetupMatch();
+        //SetupParty();
+        //SetupMatch();
     }
 
     #endregion

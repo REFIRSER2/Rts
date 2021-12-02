@@ -122,6 +122,7 @@ public class MainManager : MonoBehaviour
                 UI_Manager.Instance.CreateUI<MainMenu_UI>();
                 SceneManager.LoadScene("Lobby");
                 
+                LobbyManager.Instance.JoinSocketChannel(SteamManager.Instance.steamID.ToString());
                 //LobbyManager.Instance.CreateParty(SteamManager.Instance.steamID);
                 GetProfile();
                 break;

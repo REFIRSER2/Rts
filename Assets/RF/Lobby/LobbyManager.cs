@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
 using Photon.Realtime;
 using RF.Photon;
@@ -15,6 +16,45 @@ public class LobbyManager : MonoBehaviour
     #region 싱글톤
     public static LobbyManager Instance;
     #endregion
+
+    #region 로비
+
+    private SocketManager lobbyServer;
+
+    private void SetupLobby()
+    {
+        lobbyServer = SocketConnectManager.Instance.GetLobbyServer();
+    }
+    
+    #endregion
+    
+    #region 파티 시스템
+    private void SetupParty()
+    {
+        lobbyServer.Socket.On<string>("follow room", (id) =>
+        {
+            PhotonManager.Instance.FindFriends(id);
+        });
+    }
+
+    public void RequestMemberFollow()
+    {
+        SteamId[] id = new SteamId[SteamManager.Instance.GetLobbyMembers().Count];
+        var index = 0;
+        foreach (var item in SteamManager.Instance.GetLobbyMembers())
+        {
+            id[index] = item.Value.steamID;
+            index++;
+        }
+        lobbyServer.Socket.Emit("follow room", PhotonManager.Instance.GetID(), id);
+    }
+
+    public void JoinSocketChannel(string id)
+    {
+        lobbyServer.Socket.Emit("join channel", id);
+    }
+    #endregion
+    
     /*
     #region 파티 시스템
     private SocketManager lobbyServer;
@@ -322,7 +362,8 @@ public class LobbyManager : MonoBehaviour
 
     private void Start()
     {
-        //SetupParty();
+        SetupLobby();
+        SetupParty();
         //SetupMatch();
     }
 

@@ -101,8 +101,12 @@ public class MainMenu_UI : UI_Base
     
     public void onPlay()
     {
+        play_Btn.SetActive(false);
+        leave_Btn.SetActive(true);
+        
         PhotonManager.Instance.CreateQuickRoom(MainManager.Instance.userInfo.rank,LobbyManager.Instance.GetGameMode());
-
+        LobbyManager.Instance.RequestMemberFollow();
+        
         StartCoroutine("FindQuickMatch");
         matchTimer_Text.gameObject.SetActive(true);
         //LobbyManager.Instance.FindQuickMatch();
@@ -121,7 +125,7 @@ public class MainMenu_UI : UI_Base
         
         StopCoroutine("FindQuickMatch");
         matchTimer = 0;
-        matchTimer_Text.text = string.Format("{0}:{1}", matchTimer%3600/60, matchTimer%3600%60);
+        matchTimer_Text.text = TimeSpan.FromSeconds(matchTimer).ToString(@"hh\:mm\:ss");
         matchTimer_Text.gameObject.SetActive(false);
     }
 
@@ -129,7 +133,9 @@ public class MainMenu_UI : UI_Base
     {
         yield return new WaitForSeconds(1F);
         matchTimer++;
-        matchTimer_Text.text = string.Format("{0}:{1}", matchTimer%3600/60, matchTimer%3600%60);
+        matchTimer_Text.text = TimeSpan.FromSeconds(matchTimer).ToString(@"hh\:mm\:ss");
+
+        StartCoroutine("FindQuickMatch");
     }
 
     public void onSelectMode(int mode)

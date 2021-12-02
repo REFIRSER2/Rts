@@ -53,7 +53,8 @@ public class UI_Manager : SerializedMonoBehaviour
         {
             uiPool_List.Remove(ui);
         }
-        Destroy(ui.gameObject);
+        ui.gameObject.SetActive(false);
+        //Destroy();
     }
 
     public void CleanUI()

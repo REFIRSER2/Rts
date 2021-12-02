@@ -204,6 +204,8 @@ public class SteamManager : MonoBehaviour
             client.steamID = item.Id;
             lobbyMembers.Add(item.Id, client);
         }
+        
+        FindObjectOfType<MainMenu_UI>().RefreshParty();
 
         /*
         if (lobby.MemberCount > 8)
@@ -250,6 +252,8 @@ public class SteamManager : MonoBehaviour
             client.steamID = item.Id;
             lobbyMembers.Add(item.Id, client);
         }
+        
+        FindObjectOfType<MainMenu_UI>().RefreshParty();
         //RefreshLobby();
     }
 
@@ -263,6 +267,8 @@ public class SteamManager : MonoBehaviour
             client.steamID = item.Id;
             lobbyMembers.Add(item.Id, client);
         }
+        
+        FindObjectOfType<MainMenu_UI>().RefreshParty();
         //RefreshLobby();
     }
 
@@ -273,11 +279,13 @@ public class SteamManager : MonoBehaviour
 
     private void onLobbyMemberDisconnected(Lobby lobby, Friend friend)
     {
+        FindObjectOfType<MainMenu_UI>().RefreshParty();
         //RefreshLobby();
     }
 
     private void onLobbyMemberKicked(Lobby lobby, Friend friend, Friend friend2)
     {
+        FindObjectOfType<MainMenu_UI>().RefreshParty();
         //RefreshLobby();
     }
 

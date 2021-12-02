@@ -26,8 +26,6 @@ public class MainMenu_UI : UI_Base
     [SerializeField] private List<RawImage> party_Profiles = new List<RawImage>();
     #endregion
 
-
-
     #region 공지
     private float noticeResetTime = 0F;
     public void SetNotice(string str)

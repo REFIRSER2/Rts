@@ -40,8 +40,8 @@ public class MainMenu_UI : UI_Base
 
     public void onLeaveParty()
     {
-        SteamManager.Instance.LeaveLobby();
-        //LobbyManager.Instance.LeaveParty(SteamManager.Instance.steamID.ToString());
+        //SteamManager.Instance.LeaveLobby();
+        LobbyManager.Instance.LeaveParty(SteamManager.Instance.steamID.ToString());
     }
     
     public async void RefreshParty()
@@ -54,9 +54,9 @@ public class MainMenu_UI : UI_Base
             profile.gameObject.SetActive(false);
         }
         
-        foreach (var item in SteamManager.Instance.GetLobbyMembers())
+        foreach (var item in LobbyManager.Instance.GetPartyMembers())
         {
-            var image = await SteamFriends.GetLargeAvatarAsync(item.Key);
+            var image = await SteamFriends.GetLargeAvatarAsync(Convert.ToUInt64(item));
             if (image != null)
             {
                 var texture = SteamManager.Instance.GetProfileIcon(image.Value);

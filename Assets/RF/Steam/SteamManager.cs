@@ -66,13 +66,13 @@ public class SteamManager : MonoBehaviour
     
     #region 스팀 로비
     public Lobby currentLobby;
-    public readonly int maxMembers = 4;
+    public readonly int maxMembers = 8;
 
-    //public Action<Queue<string>, Lobby> lobbyCreatedAction;
+    public Action<Queue<string>, Lobby> lobbyCreatedAction;
     
     private Dictionary<SteamId, SteamLobbyClient> lobbyMembers = new Dictionary<SteamId, SteamLobbyClient>();
-    //private List<string> lobbyMemberIds = new List<string>();
-    //private Queue<string> inviteQueue = new Queue<string>();
+    private List<string> lobbyMemberIds = new List<string>();
+    private Queue<string> inviteQueue = new Queue<string>();
     
     private void SetupLobby()
     {
@@ -87,15 +87,13 @@ public class SteamManager : MonoBehaviour
         SteamMatchmaking.OnLobbyMemberKicked += onLobbyMemberKicked;
 
         CreateLobby();
-        /*
+        
         lobbyCreatedAction = (queue, lb) =>
         {
-            Debug.Log("lobby create");
-            
             MatchAccept_Popup popup = UI_Manager.Instance.CreatePopup<MatchAccept_Popup>();
             popup.SetLobby(lb);
 
-            LobbyManager.Instance.CreateQuickMatch(lb.Id, steamID);
+            LobbyManager.Instance.CreateQuickMatch(lb, steamID);
             /*
             int count = queue.Count;
             for (int i=0; i<count;i++)
@@ -110,8 +108,8 @@ public class SteamManager : MonoBehaviour
                 {
                     lb.InviteFriend(steamID); 
                 }
-            }
-        };*/
+            }*/
+        };
     }
     
     public void CreateLobby()
@@ -129,9 +127,9 @@ public class SteamManager : MonoBehaviour
         SteamMatchmaking.CreateLobbyAsync(maxMembers);
     }
     
-    /*public void CreateLobby(List<string> users)
+    public void CreateLobby(List<string> users)
     {
-        /*for (int i = 0; i < users.Count; i++)
+        for (int i = 0; i < users.Count; i++)
         {
             Friend friend = new Friend(Convert.ToUInt64(users[i]));
             if (friend.IsMe)
@@ -142,12 +140,12 @@ public class SteamManager : MonoBehaviour
         }
         
         SteamMatchmaking.CreateLobbyAsync(maxMembers);
-    }*/
+    }
 
     public void LeaveLobby()
     {
         currentLobby.Leave();
-        CreateLobby();
+        //CreateLobby();
     }
 
     public void JoinLobby(Lobby lb)
@@ -197,10 +195,8 @@ public class SteamManager : MonoBehaviour
     private void onLobbyCreated(Result result, Lobby lobby)
     {
         currentLobby = lobby;
-        
-        //RefreshLobby();
 
-        //lobbyCreatedAction.Invoke(inviteQueue, currentLobby);
+        lobbyCreatedAction.Invoke(inviteQueue, currentLobby);
     }
 
     private void onLobbyEntered(Lobby lobby)
@@ -218,7 +214,7 @@ public class SteamManager : MonoBehaviour
             lobbyMembers.Add(item.Id, client);
         }
         
-        FindObjectOfType<MainMenu_UI>().RefreshParty();
+        //FindObjectOfType<MainMenu_UI>().RefreshParty();
 
         /*
         if (lobby.MemberCount > 8)
@@ -241,23 +237,13 @@ public class SteamManager : MonoBehaviour
             return;
         }
         
-        var invite = UI_Manager.Instance.CreatePopup<PartyInvited_Popup>();
-        invite.SetLobby(lobby);
-        invite.SetTitle("알림");
-        invite.SetText(friend.Name + "님이 당신을 파티에 초대하였습니다.");
+        MatchAccept_Popup popup = UI_Manager.Instance.CreatePopup<MatchAccept_Popup>();
+        popup.SetLobby(lobby);
     }
 
     private void onLobbyDataChanged(Lobby lobby)
     {
-        foreach (var item in lobby.Members)
-        {
-            if (lobbyMembers.ContainsKey(item.Id))
-            {
-                lobbyMembers[item.Id].photonID = lobby.GetMemberData(item, "photonID");
-                lobbyMembers[item.Id].steamID = item.Id;
-                
-            }
-        }
+
     }
 
     private void onLobbyMemberJoined(Lobby lobby, Friend friend)
@@ -271,7 +257,7 @@ public class SteamManager : MonoBehaviour
             lobbyMembers.Add(item.Id, client);
         }
         
-        FindObjectOfType<MainMenu_UI>().RefreshParty();
+        //FindObjectOfType<MainMenu_UI>().RefreshParty();
         //RefreshLobby();
     }
 
@@ -286,7 +272,7 @@ public class SteamManager : MonoBehaviour
             lobbyMembers.Add(item.Id, client);
         }
         
-        FindObjectOfType<MainMenu_UI>().RefreshParty();
+        //FindObjectOfType<MainMenu_UI>().RefreshParty();
         //RefreshLobby();
     }
 
@@ -297,13 +283,14 @@ public class SteamManager : MonoBehaviour
 
     private void onLobbyMemberDisconnected(Lobby lobby, Friend friend)
     {
-        FindObjectOfType<MainMenu_UI>().RefreshParty();
+        //FindObjectOfType<MainMenu_UI>().RefreshParty();
         //RefreshLobby();
     }
 
     private void onLobbyMemberKicked(Lobby lobby, Friend friend, Friend friend2)
     {
-        FindObjectOfType<MainMenu_UI>().RefreshParty();
+        
+        //FindObjectOfType<MainMenu_UI>().RefreshParty();
         //RefreshLobby();
     }
 

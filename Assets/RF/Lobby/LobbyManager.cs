@@ -6,15 +6,24 @@ using Photon.Pun;
 using Photon.Realtime;
 using RF.Photon;
 using Steamworks;
+using Steamworks.Data;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using SocketManager = BestHTTP.SocketIO3.SocketManager;
 
+public class PartyMemberData
+{
+    public string id = "";
+    public string steamID = "";
+}
+
 public class LobbyManager : MonoBehaviour
 {
     #region 싱글톤
+
     public static LobbyManager Instance;
+
     #endregion
 
     #region 로비
@@ -25,45 +34,14 @@ public class LobbyManager : MonoBehaviour
     {
         lobbyServer = SocketConnectManager.Instance.GetLobbyServer();
     }
-    
-    #endregion
-    
-    #region 파티 시스템
-    private void SetupParty()
-    {
-        lobbyServer.Socket.On<string>("follow room", (id) =>
-        {
-            PhotonManager.Instance.FindFriends(id);
-        });
-    }
 
-    public void RequestMemberFollow()
-    {
-        string[] id = new string[SteamManager.Instance.GetLobbyMembers().Count];
-        var index = 0;
-        foreach (var item in SteamManager.Instance.GetLobbyMembers())
-        {
-            id[index] = item.Value.steamID.ToString();
-            index++;
-        }
-        
-        Debug.Log(PhotonManager.Instance.GetID());
-        Debug.Log(SteamManager.Instance.steamID.Value);
-        Debug.Log(id[0]);
-        lobbyServer.Socket.Emit("follow room", PhotonManager.Instance.GetID(), id);
-    }
-
-    public void JoinSocketChannel(string id)
-    {
-        lobbyServer.Socket.Emit("join channel", id);
-    }
     #endregion
-    
-    /*
+
+
     #region 파티 시스템
-    private SocketManager lobbyServer;
-    
+
     private List<string> partyMembers = new List<string>();
+    private List<string> partyMemberIds = new List<string>();
     private int partyID = -1;
 
     public Queue<PartyInvited_Popup> party_Popups = new Queue<PartyInvited_Popup>();
@@ -72,53 +50,37 @@ public class LobbyManager : MonoBehaviour
     {
         lobbyServer = SocketConnectManager.Instance.GetLobbyServer();
 
-        lobbyServer.Socket.On("connect", () =>
-        {
-            
-        });
-        
-        lobbyServer.Socket.On<int, List<string>>("create party", (id, members) =>
+        lobbyServer.Socket.On("connect", () => { });
+
+        lobbyServer.Socket.On<int, List<string>, List<string>>("create party", (id, members, ids) =>
         {
             Debug.Log("Create party");
-            onCreateParty(id, members);
+            onCreateParty(id, members, ids);
         });
 
         lobbyServer.Socket.On("leave party", () =>
         {
             Debug.Log("Leave party");
-            onLeaveParty();   
+            onLeaveParty();
         });
 
-        lobbyServer.Socket.On<string>("leave party member", (id) =>
-        {
-            onLeavePartyMember(id);
-        });
+        lobbyServer.Socket.On<string>("leave party member", (id) => { onLeavePartyMember(id); });
 
-        lobbyServer.Socket.On<int, string>("invite party", (code, id) =>
-        {
-            onInvite(code, id);
-        });
+        lobbyServer.Socket.On<int, string>("invite party", (code, id) => { onInvite(code, id); });
 
-        lobbyServer.Socket.On<int, string, int>("invited party", (code, id, party) =>
-        {
-            onInvited(code, id, party);
-        });
-        
-        lobbyServer.Socket.On<int, List<string>, Dictionary<SteamId, SteamLobbyClient>>("join party", (party, members, membersData) =>
-        {
-            onJoinParty(party, members, membersData);
-        });
-        
-        lobbyServer.Socket.On<string>("joined party member", (id) =>
-        {
-            onJoinPartyMember(id);
-        });
+        lobbyServer.Socket.On<int, string, int>("invited party", (code, id, party) => { onInvited(code, id, party); });
+
+        lobbyServer.Socket.On<int, List<string>, Dictionary<SteamId, SteamLobbyClient>>("join party",
+            (party, members, membersData) => { onJoinParty(party, members, membersData); });
+
+        lobbyServer.Socket.On<string>("joined party member", (id) => { onJoinPartyMember(id); });
     }
 
     public int GetPartyID()
     {
         return partyID;
     }
+
     public List<string> GetPartyMembers()
     {
         return partyMembers;
@@ -127,7 +89,7 @@ public class LobbyManager : MonoBehaviour
     public void CreateParty(ulong id)
     {
         Debug.Log("create party");
-        //lobbyServer.Socket.Emit("create party", id.ToString(), SteamManager.Instance.GetLobbyMembers());
+        lobbyServer.Socket.Emit("create party", id.ToString(), PhotonNetwork.LocalPlayer.UserId);
     }
 
     public void LeaveParty(ulong id)
@@ -136,7 +98,7 @@ public class LobbyManager : MonoBehaviour
         {
             return;
         }
-        
+
         lobbyServer.Socket.Emit("leave party", id);
     }
 
@@ -147,26 +109,28 @@ public class LobbyManager : MonoBehaviour
 
     public void JoinParty(int oldID, int newID)
     {
-        lobbyServer.Socket.Emit("join party", SteamManager.Instance.GetLobbyMembers(), SteamManager.Instance.steamID.ToString(),oldID, newID);
+        lobbyServer.Socket.Emit("join party", SteamManager.Instance.GetLobbyMembers(),
+            SteamManager.Instance.steamID.ToString(), oldID, newID);
     }
 
     public void LeaveParty(string id)
     {
-        lobbyServer.Socket.Emit("leave party", id,GetPartyID());
+        lobbyServer.Socket.Emit("leave party", id, GetPartyID());
     }
 
     private void RefreshParty()
     {
         if (FindObjectOfType<MainMenu_UI>() != null)
         {
-            FindObjectOfType<MainMenu_UI>().RefreshParty();   
-        }    
+            FindObjectOfType<MainMenu_UI>().RefreshParty();
+        }
     }
-    
-    private void onCreateParty(int id, List<string> members)
+
+    private void onCreateParty(int id, List<string> members, List<string> ids)
     {
         partyID = id;
         partyMembers = members;
+        partyMemberIds = ids;
 
         RefreshParty();
     }
@@ -175,9 +139,9 @@ public class LobbyManager : MonoBehaviour
     {
         partyID = -1;
         partyMembers.Clear();
-        
+
         CreateParty(SteamManager.Instance.steamID);
-        
+
         RefreshParty();
     }
 
@@ -187,7 +151,7 @@ public class LobbyManager : MonoBehaviour
         {
             partyMembers.Remove(id);
         }
-        
+
         RefreshParty();
     }
 
@@ -200,13 +164,13 @@ public class LobbyManager : MonoBehaviour
 
         RefreshParty();
     }
-    
+
     private void onJoinPartyMember(string id)
     {
         partyMembers.Add(id);
-        
+
         Debug.Log(id);
-        
+
         RefreshParty();
     }
 
@@ -221,16 +185,16 @@ public class LobbyManager : MonoBehaviour
                 SteamId steam = (SteamId) id;
 
                 Friend friend = new Friend(steam);
-                
+
                 Debug.Log(friend.Name);
-                
+
                 popup.SetTitle("알림");
                 popup.SetText(friend.Name + " 님을 초대하였습니다");
                 break;
         }
 
     }
-    
+
     private void onInvited(int code, string sender, int party)
     {
         switch (code)
@@ -244,47 +208,33 @@ public class LobbyManager : MonoBehaviour
                     SteamId q_steam = (SteamId) q_id;
 
                     Friend q_friend = new Friend(q_steam);
-                
+
                     q_popup.SetPartyID(party);
                     q_popup.SetTitle("알림");
                     q_popup.SetText(q_friend.Name + " 님이 파티 초대를 하였습니다");
-                    
+
                     q_popup.gameObject.SetActive(false);
-                    
+
                     party_Popups.Enqueue(q_popup);
                     return;
                 }
-                
+
                 PartyInvited_Popup popup = UI_Manager.Instance.CreatePopup<PartyInvited_Popup>();
 
                 ulong id = Convert.ToUInt64(sender);
                 SteamId steam = (SteamId) id;
 
                 Friend friend = new Friend(steam);
-                
+
                 popup.SetPartyID(party);
                 popup.SetTitle("알림");
                 popup.SetText(friend.Name + " 님이 파티 초대를 하였습니다");
                 break;
-        }    
+        }
     }
+    #endregion
     
-    /*
-    public void CreateParty(ulong id)
-    {
-        partyMembers.Clear();
-        partyMembers.Add(id);
-
-        FindObjectOfType<MainMenu_UI>().RefreshParty();
-    }
-
-    public void JoinParty(List<ulong> members)
-    {
-        partyMembers = members;
-    }
-    #endregion*/
-    
-    #region 매치 시스템
+        #region 매치 시스템
 
     public Action findQuickMatchAction;
     public Action leaveQuickMatchAction;
@@ -317,16 +267,44 @@ public class LobbyManager : MonoBehaviour
         lobbyServer.Socket.On("leave quick match", () =>
         {
             leaveQuickMatchAction.Invoke();
+            //PhotonManager.Instance.LeaveRoom();
         });
         
-        lobbyServer.Socket.On("invite quick match", () =>
+        lobbyServer.Socket.On<Lobby>("invite quick match", (lobby) =>
         {
+            MatchAccept_Popup popup = UI_Manager.Instance.CreatePopup<MatchAccept_Popup>();
+            popup.SetLobby(lobby);
+        });
+
+        lobbyServer.Socket.On<List<string>, string>("create quick match", (users,roomName ) =>
+        {
+            SteamManager.Instance.CreateLobby(users);
             
         });
         
-        lobbyServer.Socket.On<List<string>>("create quick match", (ids) =>
+        lobbyServer.Socket.On<string,List<string>, List<string>>("start quick match", (name, team1, team2) =>
         {
-            
+            if (!PhotonNetwork.InRoom)
+            {
+                PhotonNetwork.JoinRoom(name);
+            }
+        });
+        
+        lobbyServer.Socket.On<string>("make quick match room", (name) =>
+        {
+            PhotonManager.Instance.CreateQuickRoom(name);
+
+            lobbyServer.Socket.Emit("start quick match", name, SteamManager.Instance.steamID.Value.ToString());
+        });
+        
+        lobbyServer.Socket.On("accept quick match", () =>
+        {
+            acceptQuickMatchAction.Invoke();
+        });
+        
+        lobbyServer.Socket.On("cancel quick match", () =>
+        {
+            SteamManager.Instance.LeaveLobby();
         });
     }
 
@@ -342,24 +320,30 @@ public class LobbyManager : MonoBehaviour
 
     public void FindQuickMatch()
     {
-        lobbyServer.Socket.Emit("find quick match");
-        PhotonManager.Instance.CreateQuickRoom(rank, gameMode);
+        lobbyServer.Socket.Emit("find quick match", gameMode, GetPartyMembers());
+        
         //PhotonNetwork.JoinOrCreateRoom();
     }
 
     public void LeaveQuickMatch()
     {
-        lobbyServer.Socket.Emit("leave quick match", SteamManager.Instance.GetLobbyMemberIds());
+        lobbyServer.Socket.Emit("leave quick match", gameMode, GetPartyMembers());
+        PhotonManager.Instance.LeaveRoom();
     }
 
     public void AcceptQuickMatch()
     {
-        lobbyServer.Socket.Emit("accept quick match");
+        lobbyServer.Socket.Emit("accept quick match", SteamManager.Instance.steamID.Value.ToString());
     }
     
     public void CancelQuickMatch()
     {
-        lobbyServer.Socket.Emit("cancel quick match");
+        lobbyServer.Socket.Emit("cancel quick match", SteamManager.Instance.steamID.Value.ToString());
+    }
+
+    public void CreateQuickMatch(Lobby lobby, SteamId id)
+    {
+        lobbyServer.Socket.Emit("create quick match",id.ToString(), lobby);
     }
     #endregion
     
@@ -397,3 +381,23 @@ public class LobbyManager : MonoBehaviour
 
     #endregion
 }
+
+
+    
+    /*
+    public void CreateParty(ulong id)
+    {
+        partyMembers.Clear();
+        partyMembers.Add(id);
+
+        FindObjectOfType<MainMenu_UI>().RefreshParty();
+    }
+
+    public void JoinParty(List<ulong> members)
+    {
+        partyMembers = members;
+    }
+    #endregion
+    
+
+}*/

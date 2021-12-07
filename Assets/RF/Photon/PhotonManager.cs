@@ -79,7 +79,7 @@ namespace RF.Photon
         #endregion
         
         #region 룸
-        public void CreateQuickRoom(int rank, int gameMode)
+        public void CreateQuickRoom(string name)
         {
             Hashtable expectedCustomRoomProperties = new Hashtable(){};
             RoomOptions options = new RoomOptions();
@@ -88,7 +88,7 @@ namespace RF.Photon
             options.MaxPlayers = 8;
             options.PublishUserId = true;
 
-            PhotonNetwork.JoinRandomOrCreateRoom(expectedCustomRoomProperties, 8, MatchmakingMode.FillRoom, null, null, null, options, SteamManager.Instance.GetLobbyMemberIds().ToArray());
+            PhotonNetwork.CreateRoom(name, options, null, SteamManager.Instance.GetLobbyMemberIds().ToArray());
         }
 
         public void FindFriends(string id)

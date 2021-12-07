@@ -19,11 +19,11 @@ public class PartyInvited_Popup : Popup_Base
         lobby = lb;
     }
     
-    /*private int partyID = -1;
+    private int partyID = -1;
     public void SetPartyID(int id)
     {
         partyID = id;
-    }*/
+    }
     
     public void SetTitle(string str)
     {

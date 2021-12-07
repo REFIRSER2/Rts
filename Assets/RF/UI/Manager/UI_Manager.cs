@@ -57,7 +57,7 @@ public class UI_Manager : SerializedMonoBehaviour
         return ui;
     }
     
-    public void ReleaseUI<T>() where T : UI_Base
+    public void ReleaseUI<T>(string name = "") where T : UI_Base
     {
         if (string.IsNullOrEmpty(name))
         {
@@ -65,6 +65,9 @@ public class UI_Manager : SerializedMonoBehaviour
         }
 
         T ui = null;
+        
+        Debug.Log(name);
+        Debug.Log(uiPool_List.ContainsKey(name));
         
         if (uiPool_List.ContainsKey(name))
         {

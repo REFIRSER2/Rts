@@ -31,6 +31,7 @@ public class MainManager : MonoBehaviour
         connecting_UI = UI_Manager.Instance.CreateUI<Connecting_UI>();
         mainServer.Socket.On("connect", () =>
         {
+            
             onConnected();
         });
         
@@ -56,6 +57,7 @@ public class MainManager : MonoBehaviour
         
         mainServer.Socket.On<int, string>("profile", (code, json) =>
         {
+            Debug.Log("on Get Profile");
             onGetProfile(code, json);
         });
     }
@@ -89,19 +91,22 @@ public class MainManager : MonoBehaviour
             userInfo.rank = Convert.ToInt32(data["rank"]);
             userInfo.rankPt = Convert.ToInt32(data["rankpoint"]);
             userInfo.mmr = Convert.ToInt32(data["mmr"]);
+            
+            Debug.Log("request complete : " + userInfo.nickName);
         };
     }
 
     private void onConnected()
     {
+        Debug.Log("onconnected");
         UI_Manager.Instance.ReleaseUI<Connecting_UI>();
         UI_Manager.Instance.CreateUI<First_UI>();   
     }
 
     private void onDisconnected()
     {
-        SteamManager.Instance.LeaveLobby();
-        //LobbyManager.Instance.LeaveParty(SteamManager.Instance.steamID.ToString());
+        //SteamManager.Instance.LeaveLobby();
+        LobbyManager.Instance.LeaveParty(SteamManager.Instance.steamID.ToString());
         
         UI_Manager.Instance.CleanUI();
         connecting_UI = UI_Manager.Instance.CreateUI<Connecting_UI>();
@@ -122,8 +127,8 @@ public class MainManager : MonoBehaviour
                 UI_Manager.Instance.CreateUI<MainMenu_UI>();
                 SceneManager.LoadScene("Lobby");
                 
-                LobbyManager.Instance.JoinSocketChannel(SteamManager.Instance.steamID.ToString());
-                //LobbyManager.Instance.CreateParty(SteamManager.Instance.steamID);
+                //LobbyManager.Instance.JoinSocketChannel(SteamManager.Instance.steamID.ToString());
+                LobbyManager.Instance.CreateParty(SteamManager.Instance.steamID);
                 GetProfile();
                 break;
             case 1:
@@ -175,6 +180,8 @@ public class MainManager : MonoBehaviour
     {
         var dataStr = "";
         Dictionary<string, object> data = null;
+        
+        Debug.Log("code : " + code);
         
         switch (code)
         {

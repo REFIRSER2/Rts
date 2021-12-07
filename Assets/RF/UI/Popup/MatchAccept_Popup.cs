@@ -36,6 +36,7 @@ public class MatchAccept_Popup : Popup_Base
         LobbyManager.Instance.acceptQuickMatchAction = () =>
         {
             isReady = true;
+            SteamManager.Instance.JoinLobby(lobby);
         };
         
         LobbyManager.Instance.AcceptQuickMatch();
@@ -43,7 +44,7 @@ public class MatchAccept_Popup : Popup_Base
 
     public void onCancel()
     {
-        //LobbyManager.Instance.CancelQuickMatch();
+        LobbyManager.Instance.CancelQuickMatch();
         UI_Manager.Instance.RemovePopup(this);  
         /*if (PhotonManager.Instance.GetRoom() != null)
         {
@@ -52,11 +53,11 @@ public class MatchAccept_Popup : Popup_Base
     }
     #endregion
 
-    /*public void SetLobby(Lobby lb)
+    public void SetLobby(Lobby lb)
     {
         lobby = lb;
         StartCoroutine(AutoCancel());
-    }*/
+    }
 
     #region 유니티 기본 내장 함수
     private void Update()

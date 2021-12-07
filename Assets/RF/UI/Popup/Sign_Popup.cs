@@ -67,7 +67,7 @@ public class Sign_Popup : Popup_Base
                 UI_Manager.Instance.CreateUI<MainMenu_UI>();
                 SceneManager.LoadScene("Lobby");
 
-                //LobbyManager.Instance.CreateParty(SteamManager.Instance.steamID);
+                LobbyManager.Instance.CreateParty(SteamManager.Instance.steamID);
                 MainManager.Instance.GetProfile();
                 break;
             case 1:

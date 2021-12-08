@@ -33,18 +33,18 @@ public class MatchAccept_Popup : Popup_Base
         cancelBtn_Disable.SetActive(true);
         
         
-        LobbyManager.Instance.acceptQuickMatchAction = () =>
+        MatchManager.Instance.acceptQuickMatchAction = () =>
         {
             isReady = true;
             SteamManager.Instance.JoinLobby(lobby);
         };
         
-        LobbyManager.Instance.AcceptQuickMatch();
+        MatchManager.Instance.AcceptQuickMatch();
     }
 
     public void onCancel()
     {
-        LobbyManager.Instance.CancelQuickMatch();
+        MatchManager.Instance.CancelQuickMatch();
         UI_Manager.Instance.RemovePopup(this);  
         /*if (PhotonManager.Instance.GetRoom() != null)
         {
@@ -81,7 +81,7 @@ public class MatchAccept_Popup : Popup_Base
             {
                 PhotonManager.Instance.LeaveRoom();
             }*/
-            LobbyManager.Instance.CancelQuickMatch();
+            MatchManager.Instance.CancelQuickMatch();
         }
         UI_Manager.Instance.RemovePopup(this);   
     }

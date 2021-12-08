@@ -79,6 +79,10 @@ namespace RF.Photon
         #endregion
         
         #region 룸
+
+        public List<Player.Player> redTeams = new List<Player.Player>();
+        public List<Player.Player> blueTeams = new List<Player.Player>();
+
         public void CreateQuickRoom(string name)
         {
             Hashtable expectedCustomRoomProperties = new Hashtable(){};
@@ -99,9 +103,7 @@ namespace RF.Photon
             {
                 return;
             }
-            
-            
-            
+
             string[] ids = new string[1];
             ids[0] = id;
             UnityEngine.Debug.Log(ids[0]);
@@ -111,11 +113,16 @@ namespace RF.Photon
         public override void OnCreatedRoom()
         {
             base.OnCreatedRoom();
+            if (PhotonNetwork.CurrentRoom.Name.Contains("Quick"))
+            {
+                MatchManager.Instance.CreateQuickMatchRoom();
+            }   
         }
 
         public override void OnJoinedRoom()
         {
             base.OnJoinedRoom();
+            UI_Manager.Instance.CleanPopup();
             UI_Manager.Instance.ReleaseUI<MainMenu_UI>();
             //UI_Manager.Instance.
         }

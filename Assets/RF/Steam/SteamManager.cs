@@ -86,14 +86,14 @@ public class SteamManager : MonoBehaviour
         SteamMatchmaking.OnLobbyMemberDisconnected += onLobbyMemberDisconnected;
         SteamMatchmaking.OnLobbyMemberKicked += onLobbyMemberKicked;
 
-        CreateLobby();
+        //CreateLobby();
         
         lobbyCreatedAction = (queue, lb) =>
         {
             MatchAccept_Popup popup = UI_Manager.Instance.CreatePopup<MatchAccept_Popup>();
             popup.SetLobby(lb);
 
-            LobbyManager.Instance.CreateQuickMatch(lb, steamID);
+            MatchManager.Instance.CreateQuickMatch(lb, steamID);
             /*
             int count = queue.Count;
             for (int i=0; i<count;i++)
@@ -127,16 +127,16 @@ public class SteamManager : MonoBehaviour
         SteamMatchmaking.CreateLobbyAsync(maxMembers);
     }
     
-    public void CreateLobby(List<string> users)
+    public void CreateLobby(List<MemberData> users)
     {
         for (int i = 0; i < users.Count; i++)
         {
-            Friend friend = new Friend(Convert.ToUInt64(users[i]));
+            Friend friend = new Friend(Convert.ToUInt64(users[i].steamID));
             if (friend.IsMe)
             {
                 continue;
             }
-            inviteQueue.Enqueue(users[i]);
+            inviteQueue.Enqueue(users[i].steamID);
         }
         
         SteamMatchmaking.CreateLobbyAsync(maxMembers);
@@ -185,6 +185,20 @@ public class SteamManager : MonoBehaviour
     {
         lobbyMembers = members;
     }
+    
+    public void SetLobbyMembers(List<MemberData> memberDatas)
+    {
+        lobbyMembers = new Dictionary<SteamId, SteamLobbyClient>();
+        
+        foreach (var item in memberDatas)
+        {
+            SteamLobbyClient client = new SteamLobbyClient();
+            client.steamID = Convert.ToUInt64(item.steamID);
+            client.photonID = item.id;
+            
+            lobbyMembers.Add(client.steamID, client);
+        }
+    }
 
     /*
     public List<string> GetLobbyMemberIds()
@@ -232,13 +246,8 @@ public class SteamManager : MonoBehaviour
 
     private void onLobbyInvited(Friend friend, Lobby lobby)
     {
-        if (SceneManager.GetActiveScene().name != "Lobby")
-        {
-            return;
-        }
-        
-        MatchAccept_Popup popup = UI_Manager.Instance.CreatePopup<MatchAccept_Popup>();
-        popup.SetLobby(lobby);
+        //MatchAccept_Popup popup = UI_Manager.Instance.CreatePopup<MatchAccept_Popup>();
+        //popup.SetLobby(lobby);
     }
 
     private void onLobbyDataChanged(Lobby lobby)

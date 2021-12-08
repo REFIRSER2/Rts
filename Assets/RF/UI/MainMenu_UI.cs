@@ -56,7 +56,7 @@ public class MainMenu_UI : UI_Base
         
         foreach (var item in LobbyManager.Instance.GetPartyMembers())
         {
-            var image = await SteamFriends.GetLargeAvatarAsync(Convert.ToUInt64(item));
+            var image = await SteamFriends.GetLargeAvatarAsync(Convert.ToUInt64(item.steamID));
             if (image != null)
             {
                 var texture = SteamManager.Instance.GetProfileIcon(image.Value);
@@ -84,7 +84,7 @@ public class MainMenu_UI : UI_Base
     #region 매치메이킹
     public void onStart()
     {
-        switch (LobbyManager.Instance.GetGameMode())
+        switch (MatchManager.Instance.GetGameMode())
         {
             case 3:
                 if (!roomList_OBJ.activeSelf)
@@ -100,7 +100,7 @@ public class MainMenu_UI : UI_Base
         play_Btn.SetActive(false);
         leave_Btn.SetActive(true);
         
-        LobbyManager.Instance.FindQuickMatch();
+        MatchManager.Instance.FindQuickMatch();
         //PhotonManager.Instance.CreateQuickRoom(MainManager.Instance.userInfo.rank,LobbyManager.Instance.GetGameMode());
         //LobbyManager.Instance.RequestMemberFollow();
         
@@ -120,14 +120,14 @@ public class MainMenu_UI : UI_Base
         play_Btn.SetActive(true);
         leave_Btn.SetActive(false);
         
-        LobbyManager.Instance.LeaveQuickMatch();
+        MatchManager.Instance.LeaveQuickMatch();
         
         //StopCoroutine("FindQuickMatch");
     }
 
     public void onSelectMode(int mode)
     {
-        LobbyManager.Instance.SetGameMode(mode);
+        MatchManager.Instance.SetGameMode(mode);
     }
     #endregion
     
@@ -191,17 +191,17 @@ public class MainMenu_UI : UI_Base
     {
         mode_Select.onValueChanged.AddListener(onSelectMode);
 
-        LobbyManager.Instance.findQuickMatchAction = () =>
+        MatchManager.Instance.findQuickMatchAction = () =>
         {
             play_Btn.SetActive(false); 
             leave_Btn.SetActive(true);
         };;
-        LobbyManager.Instance.leaveQuickMatchAction = () =>
+        MatchManager.Instance.leaveQuickMatchAction = () =>
         {
             play_Btn.SetActive(true);
             leave_Btn.SetActive(false);
         };;
-        LobbyManager.Instance.cancelQuickMatchAction = () =>
+        MatchManager.Instance.cancelQuickMatchAction = () =>
         {
             play_Btn.SetActive(true);
             leave_Btn.SetActive(false);   

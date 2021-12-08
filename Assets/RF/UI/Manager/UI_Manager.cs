@@ -83,7 +83,7 @@ public class UI_Manager : SerializedMonoBehaviour
         int max = uiPool_List.Count;
         foreach (var item in uiPool_List)
         {
-            Destroy(item.Value);
+            Destroy(item.Value.gameObject);
         }
         
         uiPool_List.Clear();
@@ -113,7 +113,7 @@ public class UI_Manager : SerializedMonoBehaviour
     public void CleanPopup()
     {
         int index = 0;
-        while (popupPool_List.Count == 0)
+        while (popupPool_List.Count != 0)
         {
             var obj = popupPool_List[index].gameObject;
             popupPool_List.RemoveAt(index);

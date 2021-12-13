@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using RF.Photon;
+using Steamworks;
 using Steamworks.Data;
 using UnityEngine;
 using Image = UnityEngine.UI.Image;
@@ -19,7 +20,7 @@ public class MatchAccept_Popup : Popup_Base
     
     private float timer = 0F;
     
-    private Lobby lobby;
+    private SteamId lobby;
     
     private bool isReady = false;
     #endregion
@@ -53,7 +54,7 @@ public class MatchAccept_Popup : Popup_Base
     }
     #endregion
 
-    public void SetLobby(Lobby lb)
+    public void SetLobby(SteamId lb)
     {
         lobby = lb;
         StartCoroutine(AutoCancel());

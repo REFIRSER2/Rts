@@ -73,10 +73,10 @@ public class MatchManager : MonoBehaviour
             
         });
         
-        lobbyServer.Socket.On<Lobby>("invite quick match", (lobby) =>
+        lobbyServer.Socket.On<string>("invite quick match", (lobby) =>
         {
             MatchAccept_Popup popup = UI_Manager.Instance.CreatePopup<MatchAccept_Popup>();
-            popup.SetLobby(lobby);
+            popup.SetLobby(Convert.ToUInt64(lobby));
         });
 
         lobbyServer.Socket.On<List<MemberData>, string>("create quick match lobby", (users,roomName ) =>
@@ -98,8 +98,6 @@ public class MatchManager : MonoBehaviour
         
         lobbyServer.Socket.On<string>("create quick match room", (name) =>
         {
-            
-            
             PhotonManager.Instance.CreateQuickRoom(name);
 
             Debug.Log("Create Quick Match Room");
@@ -158,9 +156,11 @@ public class MatchManager : MonoBehaviour
         lobbyServer.Socket.Emit("cancel quick match", localData);
     }
 
-    public void CreateQuickMatch(Lobby lobby, SteamId id)
+    public void CreateQuickMatch(Lobby lobby)
     {
-        lobbyServer.Socket.Emit("create quick match lobby",localData, lobby);
+        Debug.Log("Create quick match lobby");
+        //lobbyServer.Socket.Emit("create quick match lobby",localData, lobby);
+        lobbyServer.Socket.Emit("create quick match lobby", localData, lobby.Id.Value.ToString());
     }
 
     public void CreateQuickMatchRoom()

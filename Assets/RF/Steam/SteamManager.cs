@@ -91,11 +91,9 @@ public class SteamManager : MonoBehaviour
         lobbyCreatedAction = (queue, lb) =>
         {
             MatchAccept_Popup popup = UI_Manager.Instance.CreatePopup<MatchAccept_Popup>();
-            popup.SetLobby(lb);
+            popup.SetLobby(lb.Id);
 
-            Debug.Log("matchmanger create quick match");
-            
-            MatchManager.Instance.CreateQuickMatch(lb, steamID);
+            MatchManager.Instance.CreateQuickMatch(lb);
             /*
             int count = queue.Count;
             for (int i=0; i<count;i++)
@@ -132,7 +130,7 @@ public class SteamManager : MonoBehaviour
     public void CreateLobby(List<MemberData> users)
     {
         Debug.Log("Create lobby");
-        for (int i = 0; i < users.Count; i++)
+        /*for (int i = 0; i < users.Count; i++)
         {
             if (users[i].steamID == "bot")
             {
@@ -145,7 +143,7 @@ public class SteamManager : MonoBehaviour
                 continue;
             }
             inviteQueue.Enqueue(users[i].steamID);
-        }
+        }*/
         
         SteamMatchmaking.CreateLobbyAsync(maxMembers);
     }

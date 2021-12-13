@@ -93,6 +93,8 @@ public class SteamManager : MonoBehaviour
             MatchAccept_Popup popup = UI_Manager.Instance.CreatePopup<MatchAccept_Popup>();
             popup.SetLobby(lb);
 
+            Debug.Log("matchmanger create quick match");
+            
             MatchManager.Instance.CreateQuickMatch(lb, steamID);
             /*
             int count = queue.Count;

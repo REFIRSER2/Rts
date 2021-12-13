@@ -143,6 +143,7 @@ public class MatchManager : MonoBehaviour
     public void LeaveQuickMatch()
     {
         lobbyServer.Socket.Emit("leave quick match", gameMode, LobbyManager.Instance.GetLobbyMembers());
+        SteamManager.Instance.LeaveLobby();
         //PhotonManager.Instance.LeaveRoom();
     }
 

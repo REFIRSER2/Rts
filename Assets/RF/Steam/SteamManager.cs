@@ -131,6 +131,11 @@ public class SteamManager : MonoBehaviour
     {
         for (int i = 0; i < users.Count; i++)
         {
+            if (users[i].steamID == "bot")
+            {
+                continue;
+            }
+            
             Friend friend = new Friend(Convert.ToUInt64(users[i].steamID));
             if (friend.IsMe)
             {

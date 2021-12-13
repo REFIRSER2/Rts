@@ -242,6 +242,8 @@ public class LobbyManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            
+            Debug.Log("lobby manager instance set");
         }
     }
 

@@ -131,6 +131,9 @@ public class MatchManager : MonoBehaviour
         localData.id = PhotonNetwork.LocalPlayer.UserId;
         localData.steamID = SteamManager.Instance.steamID.Value.ToString();
         
+        Debug.Log(LobbyManager.Instance);
+        Debug.Log("find quick match");
+        
         LobbyManager.Instance.SetLobbyMembers(LobbyManager.Instance.GetPartyMembers());
         lobbyServer.Socket.Emit("find quick match", gameMode, LobbyManager.Instance.GetLobbyMembers());
         

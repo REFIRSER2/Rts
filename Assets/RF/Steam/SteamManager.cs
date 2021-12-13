@@ -129,6 +129,7 @@ public class SteamManager : MonoBehaviour
     
     public void CreateLobby(List<MemberData> users)
     {
+        Debug.Log("Create lobby");
         for (int i = 0; i < users.Count; i++)
         {
             if (users[i].steamID == "bot")

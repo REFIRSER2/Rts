@@ -83,7 +83,7 @@ namespace RF.Photon
         public List<Player.Player> redTeams = new List<Player.Player>();
         public List<Player.Player> blueTeams = new List<Player.Player>();
 
-        public void CreateQuickRoom(string name)
+        public void CreateQuickRoom(string roomName)
         {
             Hashtable expectedCustomRoomProperties = new Hashtable(){};
             RoomOptions options = new RoomOptions();
@@ -92,7 +92,7 @@ namespace RF.Photon
             options.MaxPlayers = 8;
             options.PublishUserId = true;
 
-            PhotonNetwork.CreateRoom(name, options, null, SteamManager.Instance.GetLobbyMemberIds().ToArray());
+            PhotonNetwork.CreateRoom(roomName, options, null, SteamManager.Instance.GetLobbyMemberIds().ToArray());
         }
 
         public void FindFriends(string id)

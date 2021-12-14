@@ -84,23 +84,26 @@ public class MatchManager : MonoBehaviour
             SteamManager.Instance.CreateLobby(users);
         });
         
-        lobbyServer.Socket.On<string,List<MemberData>, List<MemberData>>("start quick match", (name, team1, team2) =>
+        lobbyServer.Socket.On<string,List<MemberData>, List<MemberData>>("start quick match", (roomName, team1, team2) =>
         {
             Debug.Log("start quick match");
+            Debug.Log(PhotonNetwork.InRoom);
+            Debug.Log(roomName);
             
             UI_Manager.Instance.CleanPopup();
             
             if (!PhotonNetwork.InRoom)
             {
-                PhotonNetwork.JoinRoom(name);
+                Debug.Log(roomName);
+                PhotonNetwork.JoinRoom(roomName);
                 //PhotonManager.Instance.redTeams = team1;
                // PhotonManager.Instance.blueTeams = team2;
             }
         });
         
-        lobbyServer.Socket.On<string>("create quick match room", (name) =>
+        lobbyServer.Socket.On<string>("create quick match room", (roomName) =>
         {
-            PhotonManager.Instance.CreateQuickRoom(name);
+            PhotonManager.Instance.CreateQuickRoom(roomName);
 
             Debug.Log("Create Quick Match Room");
         });

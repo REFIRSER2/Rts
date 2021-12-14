@@ -84,7 +84,7 @@ public class MatchManager : MonoBehaviour
             SteamManager.Instance.CreateLobby(users);
         });
         
-        lobbyServer.Socket.On<string,List<string>, List<string>>("start quick match", (name, team1, team2) =>
+        lobbyServer.Socket.On<string,List<MemberData>, List<MemberData>>("start quick match", (name, team1, team2) =>
         {
             UI_Manager.Instance.CleanPopup();
             
@@ -165,6 +165,7 @@ public class MatchManager : MonoBehaviour
 
     public void CreateQuickMatchRoom()
     {
+        Debug.Log("create quick match room");
         lobbyServer.Socket.Emit("start quick match", name, localData);
     }
     #endregion

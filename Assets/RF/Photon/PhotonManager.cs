@@ -124,6 +124,8 @@ namespace RF.Photon
             base.OnJoinedRoom();
             UI_Manager.Instance.CleanPopup();
             UI_Manager.Instance.ReleaseUI<MainMenu_UI>();
+
+            UI_Manager.Instance.CreateUI<Loading_UI>();
             //UI_Manager.Instance.
         }
 

@@ -172,7 +172,6 @@ public class MatchManager : MonoBehaviour
 
     public void CreateQuickMatchRoom()
     {
-        Debug.Log("create quick match room");
         lobbyServer.Socket.Emit("start quick match", PhotonNetwork.CurrentRoom.Name, localData);
     }
     #endregion

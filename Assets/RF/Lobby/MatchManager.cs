@@ -86,6 +86,8 @@ public class MatchManager : MonoBehaviour
         
         lobbyServer.Socket.On<string,List<MemberData>, List<MemberData>>("start quick match", (name, team1, team2) =>
         {
+            Debug.Log("start quick match");
+            
             UI_Manager.Instance.CleanPopup();
             
             if (!PhotonNetwork.InRoom)

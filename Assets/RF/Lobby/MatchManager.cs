@@ -81,6 +81,8 @@ public class MatchManager : MonoBehaviour
 
         lobbyServer.Socket.On<List<MemberData>, string>("create quick match lobby", (users,roomName ) =>
         {
+            Debug.Log("Create quick match lobby : " + roomName);
+            
             SteamManager.Instance.CreateLobby(users);
         });
         
@@ -171,7 +173,7 @@ public class MatchManager : MonoBehaviour
     public void CreateQuickMatchRoom()
     {
         Debug.Log("create quick match room");
-        lobbyServer.Socket.Emit("start quick match", name, localData);
+        lobbyServer.Socket.Emit("start quick match", PhotonNetwork.CurrentRoom.Name, localData);
     }
     #endregion
     

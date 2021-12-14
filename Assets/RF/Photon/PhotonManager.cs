@@ -80,8 +80,8 @@ namespace RF.Photon
         
         #region 룸
 
-        public List<Player.Player> redTeams = new List<Player.Player>();
-        public List<Player.Player> blueTeams = new List<Player.Player>();
+        public List<MemberData> redTeams = new List<MemberData>();
+        public List<MemberData> blueTeams = new List<MemberData>();
 
         public void CreateQuickRoom(string roomName)
         {
@@ -125,7 +125,17 @@ namespace RF.Photon
             UI_Manager.Instance.CleanPopup();
             UI_Manager.Instance.ReleaseUI<MainMenu_UI>();
 
-            UI_Manager.Instance.CreateUI<Loading_UI>();
+            Loading_UI loadingUI = UI_Manager.Instance.CreateUI<Loading_UI>();
+            foreach (var member in redTeams)
+            {
+                loadingUI.AddPlayer(0, Convert.ToUInt64(member.steamID));
+            }
+            
+            foreach (var member in blueTeams)
+            {
+                loadingUI.AddPlayer(1, Convert.ToUInt64(member.steamID)); 
+            }
+            
             //UI_Manager.Instance.
         }
 

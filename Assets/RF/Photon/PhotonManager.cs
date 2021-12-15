@@ -115,7 +115,6 @@ namespace RF.Photon
             base.OnCreatedRoom();
             if (PhotonNetwork.CurrentRoom.Name.Contains("Quick"))
             {
-                PhotonNetwork.Instantiate("LoadingPlayer", new Vector3(0,0,0),Quaternion.identity);
                 MatchManager.Instance.CreateQuickMatchRoom();
             }   
         }
@@ -132,6 +131,9 @@ namespace RF.Photon
                 UI_Manager.Instance.ReleaseUI<MainMenu_UI>();
 
                 Loading_UI loadingUI = UI_Manager.Instance.CreateUI<Loading_UI>();
+                
+                PhotonNetwork.Instantiate("LoadingPlayer", new Vector3(0,0,0),Quaternion.identity);
+                
                 foreach (var member in redTeams)
                 {
                     UnityEngine.Debug.Log(member.steamID);

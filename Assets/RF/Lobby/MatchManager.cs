@@ -98,8 +98,8 @@ public class MatchManager : MonoBehaviour
             {
                 Debug.Log(roomName);
                 PhotonNetwork.JoinRoom(roomName);
-                //PhotonManager.Instance.redTeams = team1;
-               // PhotonManager.Instance.blueTeams = team2;
+                PhotonManager.Instance.redTeams = team1;
+                PhotonManager.Instance.blueTeams = team2;
             }
         });
         

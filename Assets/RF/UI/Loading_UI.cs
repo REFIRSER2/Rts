@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using Steamworks;
 using TMPro;
 using UnityEngine;
@@ -63,7 +64,7 @@ public class Loading_UI : UI_Base
         base.On_Open();
 
         loading_Text.text = loading_String;
-        
+
         StartCoroutine("loading_Anim");
     }
     

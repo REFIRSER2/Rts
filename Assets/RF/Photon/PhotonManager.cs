@@ -115,6 +115,7 @@ namespace RF.Photon
             base.OnCreatedRoom();
             if (PhotonNetwork.CurrentRoom.Name.Contains("Quick"))
             {
+                PhotonNetwork.Instantiate("LoadingPlayer", new Vector3(0,0,0),Quaternion.identity);
                 MatchManager.Instance.CreateQuickMatchRoom();
             }   
         }
@@ -128,12 +129,32 @@ namespace RF.Photon
             Loading_UI loadingUI = UI_Manager.Instance.CreateUI<Loading_UI>();
             foreach (var member in redTeams)
             {
-                loadingUI.AddPlayer(0, Convert.ToUInt64(member.steamID));
+                UnityEngine.Debug.Log(member.steamID);
+
+
+                if (member.steamID == "bot")
+                {
+                    
+                }
+                else
+                {
+                    loadingUI.AddPlayer(0, Convert.ToUInt64(member.steamID)); 
+                }
+               
             }
             
             foreach (var member in blueTeams)
             {
-                loadingUI.AddPlayer(1, Convert.ToUInt64(member.steamID)); 
+                UnityEngine.Debug.Log(member.steamID);
+                
+                if (member.steamID == "bot")
+                {
+                    
+                }
+                else
+                {
+                    loadingUI.AddPlayer(1, Convert.ToUInt64(member.steamID)); 
+                }
             }
             
             //UI_Manager.Instance.
@@ -148,6 +169,8 @@ namespace RF.Photon
         {
             base.OnPlayerEnteredRoom(newPlayer);
 
+            PhotonNetwork.Instantiate("LoadingPlayer", new Vector3(0,0,0),Quaternion.identity);
+            
             if (PhotonNetwork.CurrentRoom.PlayerCount == 8)
             {
                 //var matching = UI_Manager.Instance.CreatePopup<MatchAccept_Popup>();

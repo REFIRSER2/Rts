@@ -88,10 +88,6 @@ public class MatchManager : MonoBehaviour
         
         lobbyServer.Socket.On<string,List<MemberData>, List<MemberData>>("start quick match", (roomName, team1, team2) =>
         {
-            Debug.Log("start quick match");
-            Debug.Log(PhotonNetwork.InRoom);
-            Debug.Log(roomName);
-            
             UI_Manager.Instance.CleanPopup();
             
             if (!PhotonNetwork.InRoom)
@@ -100,6 +96,42 @@ public class MatchManager : MonoBehaviour
                 PhotonNetwork.JoinRoom(roomName);
                 PhotonManager.Instance.redTeams = team1;
                 PhotonManager.Instance.blueTeams = team2;
+            }
+            else
+            {
+                UI_Manager.Instance.CleanPopup();
+                UI_Manager.Instance.ReleaseUI<MainMenu_UI>();
+
+                Loading_UI loadingUI = UI_Manager.Instance.CreateUI<Loading_UI>();
+                foreach (var member in team1)
+                {
+                    UnityEngine.Debug.Log(member.steamID);
+
+
+                    if (member.steamID == "bot")
+                    {
+                    
+                    }
+                    else
+                    {
+                        loadingUI.AddPlayer(0, Convert.ToUInt64(member.steamID)); 
+                    }
+               
+                }
+            
+                foreach (var member in team2)
+                {
+                    UnityEngine.Debug.Log(member.steamID);
+                
+                    if (member.steamID == "bot")
+                    {
+                    
+                    }
+                    else
+                    {
+                        loadingUI.AddPlayer(1, Convert.ToUInt64(member.steamID)); 
+                    }
+                }
             }
         });
         

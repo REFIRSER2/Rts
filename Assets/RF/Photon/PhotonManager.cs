@@ -123,39 +123,46 @@ namespace RF.Photon
         public override void OnJoinedRoom()
         {
             base.OnJoinedRoom();
-            UI_Manager.Instance.CleanPopup();
-            UI_Manager.Instance.ReleaseUI<MainMenu_UI>();
-
-            Loading_UI loadingUI = UI_Manager.Instance.CreateUI<Loading_UI>();
-            foreach (var member in redTeams)
-            {
-                UnityEngine.Debug.Log(member.steamID);
-
-
-                if (member.steamID == "bot")
-                {
-                    
-                }
-                else
-                {
-                    loadingUI.AddPlayer(0, Convert.ToUInt64(member.steamID)); 
-                }
-               
-            }
             
-            foreach (var member in blueTeams)
+            UnityEngine.Debug.Log("게임 참가");
+
+            if (!PhotonNetwork.IsMasterClient)
             {
-                UnityEngine.Debug.Log(member.steamID);
-                
-                if (member.steamID == "bot")
+                UI_Manager.Instance.CleanPopup();
+                UI_Manager.Instance.ReleaseUI<MainMenu_UI>();
+
+                Loading_UI loadingUI = UI_Manager.Instance.CreateUI<Loading_UI>();
+                foreach (var member in redTeams)
                 {
+                    UnityEngine.Debug.Log(member.steamID);
+
+
+                    if (member.steamID == "bot")
+                    {
                     
+                    }
+                    else
+                    {
+                        loadingUI.AddPlayer(0, Convert.ToUInt64(member.steamID)); 
+                    }
+               
                 }
-                else
+            
+                foreach (var member in blueTeams)
                 {
-                    loadingUI.AddPlayer(1, Convert.ToUInt64(member.steamID)); 
-                }
+                    UnityEngine.Debug.Log(member.steamID);
+                
+                    if (member.steamID == "bot")
+                    {
+                    
+                    }
+                    else
+                    {
+                        loadingUI.AddPlayer(1, Convert.ToUInt64(member.steamID)); 
+                    }
+                }  
             }
+
             
             //UI_Manager.Instance.
         }

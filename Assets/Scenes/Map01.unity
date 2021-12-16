@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1047,7 +1047,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1549465565}
   - component: {fileID: 1549465566}
-  - component: {fileID: 1549465567}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -1085,7 +1084,7 @@ MonoBehaviour:
   moveSensivity: 20
   borderWidth: 10
   borderHeight: 10
-  camera: {fileID: 1844997043}
+  cam: {fileID: 1844997043}
   mouseCursor: {fileID: 244500085}
   clickEffect: {fileID: 1131049273}
   debugCube: {fileID: 0}
@@ -1100,19 +1099,6 @@ MonoBehaviour:
   unitMask:
     serializedVersion: 2
     m_Bits: 256
---- !u!114 &1549465567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1549465564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ee92ec20f6f6184f8d792cd15a25542, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fogCamera: {fileID: 1119930773}
 --- !u!1 &1644184720
 GameObject:
   m_ObjectHideFlags: 0

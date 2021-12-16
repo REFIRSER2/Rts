@@ -7,6 +7,7 @@ namespace RF.Player
 {
     public class PlayerController : MonoBehaviour
     {
+        /*
         #region 플레이어
         private Player player;
 
@@ -278,6 +279,6 @@ namespace RF.Player
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(box.center, box.size);
         }
-        #endregion
+        #endregion*/
     }
 }

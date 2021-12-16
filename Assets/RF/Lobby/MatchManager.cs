@@ -111,7 +111,7 @@ public class MatchManager : MonoBehaviour
 
                     if (member.steamID == "bot")
                     {
-                    
+                        loadingUI.AddPlayer(0, "AI"); 
                     }
                     else
                     {
@@ -126,7 +126,7 @@ public class MatchManager : MonoBehaviour
                 
                     if (member.steamID == "bot")
                     {
-                    
+                        loadingUI.AddPlayer(1, "AI"); 
                     }
                     else
                     {

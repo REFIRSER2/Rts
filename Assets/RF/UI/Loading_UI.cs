@@ -56,6 +56,23 @@ public class Loading_UI : UI_Base
                 break;
         }
     }
+    
+    public void AddPlayer(int team, string bot)
+    {
+        switch (team)
+        {
+            case 0:
+                var left = UI_Manager.Instance.CreateUIItem<LoadingLeft_Item>();
+                left.transform.SetParent(leftGroup);
+                left.SetNickName("AI");
+                break;
+            case 1:
+                var right = UI_Manager.Instance.CreateUIItem<LoadingRight_Item>();
+                right.transform.SetParent(rightGroup);
+                right.SetNickName("AI");
+                break;
+        }
+    }
 
     public void SetGameMode(int num)
     {

@@ -21,6 +21,8 @@ public class Loading_UI : UI_Base
     [SerializeField] private Transform leftGroup;
     [SerializeField] private Transform rightGroup;
 
+    public LoadingPlayer player;
+    
     public async void AddPlayer(int team, ulong id)
     {
         switch (team)
@@ -92,6 +94,11 @@ public class Loading_UI : UI_Base
                     ao.allowSceneActivation = false;
                     this.Remove();
                 }
+            }
+
+            if (player != null)
+            {
+                player.loadingProgress = progress;
             }
 
             progress_Bar.value = progress;

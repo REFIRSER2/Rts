@@ -83,6 +83,8 @@ namespace RF.Photon
         public List<MemberData> redTeams = new List<MemberData>();
         public List<MemberData> blueTeams = new List<MemberData>();
 
+        public List<LoadingPlayer> loadingPlayers = new List<LoadingPlayer>();
+
         public void CreateQuickRoom(string roomName)
         {
             Hashtable expectedCustomRoomProperties = new Hashtable(){};
@@ -130,9 +132,14 @@ namespace RF.Photon
                 UI_Manager.Instance.CleanPopup();
                 UI_Manager.Instance.ReleaseUI<MainMenu_UI>();
 
-                Loading_UI loadingUI = UI_Manager.Instance.CreateUI<Loading_UI>();
+                GameObject loadingPlayer = PhotonNetwork.Instantiate("LoadingPlayer", new Vector3(0,0,0),Quaternion.identity);
                 
-                PhotonNetwork.Instantiate("LoadingPlayer", new Vector3(0,0,0),Quaternion.identity);
+                Loading_UI loadingUI = UI_Manager.Instance.CreateUI<Loading_UI>();
+                loadingUI.player = loadingPlayer.GetComponent<LoadingPlayer>();
+                
+                
+                
+                
                 
                 foreach (var member in redTeams)
                 {

@@ -177,8 +177,6 @@ namespace RF.Photon
         public override void OnPlayerEnteredRoom(global::Photon.Realtime.Player newPlayer)
         {
             base.OnPlayerEnteredRoom(newPlayer);
-
-            PhotonNetwork.Instantiate("LoadingPlayer", new Vector3(0,0,0),Quaternion.identity);
             
             if (PhotonNetwork.CurrentRoom.PlayerCount == 8)
             {

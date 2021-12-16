@@ -70,9 +70,7 @@ public class Loading_UI : UI_Base
         
         GameObject loadingPlayer = PhotonNetwork.Instantiate("LoadingPlayer", new Vector3(0,0,0),Quaternion.identity);
         player = loadingPlayer.GetComponent<LoadingPlayer>();
-        
-        Debug.Log("player create");
-        
+
         StartCoroutine("loading_Anim");
     }
     

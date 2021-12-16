@@ -71,6 +71,8 @@ public class Loading_UI : UI_Base
         GameObject loadingPlayer = PhotonNetwork.Instantiate("LoadingPlayer", new Vector3(0,0,0),Quaternion.identity);
         player = loadingPlayer.GetComponent<LoadingPlayer>();
         
+        Debug.Log("player create");
+        
         StartCoroutine("loading_Anim");
     }
     
@@ -98,6 +100,7 @@ public class Loading_UI : UI_Base
                     bool check = true;
                     foreach (var ply in PhotonManager.Instance.loadingPlayers)
                     {
+                        Debug.Log("another : " + ply.loadingProgress);
                         if (ply.loadingProgress < 1F)
                         {
                             check = false;

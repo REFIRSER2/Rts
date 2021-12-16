@@ -72,7 +72,7 @@ public class Loading_UI : UI_Base
     
     IEnumerator loading_Anim()
     {
-        yield return new WaitForSeconds(1F);
+        yield return new WaitForSeconds(3F);
         var ao = SceneManager.LoadSceneAsync("Map0" + (gamemode+1));
         ao.allowSceneActivation = false;
         

@@ -132,15 +132,8 @@ namespace RF.Photon
                 UI_Manager.Instance.CleanPopup();
                 UI_Manager.Instance.ReleaseUI<MainMenu_UI>();
 
-                GameObject loadingPlayer = PhotonNetwork.Instantiate("LoadingPlayer", new Vector3(0,0,0),Quaternion.identity);
-                
                 Loading_UI loadingUI = UI_Manager.Instance.CreateUI<Loading_UI>();
-                loadingUI.player = loadingPlayer.GetComponent<LoadingPlayer>();
-                
-                
-                
-                
-                
+
                 foreach (var member in redTeams)
                 {
                     UnityEngine.Debug.Log(member.steamID);

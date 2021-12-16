@@ -66,7 +66,10 @@ public class Loading_UI : UI_Base
         base.On_Open();
 
         loading_Text.text = loading_String;
-
+        
+        GameObject loadingPlayer = PhotonNetwork.Instantiate("LoadingPlayer", new Vector3(0,0,0),Quaternion.identity);
+        player = loadingPlayer.GetComponent<LoadingPlayer>();
+        
         StartCoroutine("loading_Anim");
     }
     

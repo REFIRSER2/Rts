@@ -103,6 +103,10 @@ public class MatchManager : MonoBehaviour
                 UI_Manager.Instance.ReleaseUI<MainMenu_UI>();
 
                 Loading_UI loadingUI = UI_Manager.Instance.CreateUI<Loading_UI>();
+                
+                
+                
+                
                 foreach (var member in team1)
                 {
                     UnityEngine.Debug.Log(member.steamID);

@@ -25,14 +25,10 @@ public class LoadingPlayer : MonoBehaviour, IPunObservable, IPunInstantiateMagic
         if (stream.IsWriting)
         {
             stream.SendNext(loadingProgress);
-            
-            Debug.Log("send Progress : " + loadingProgress);
         }
         else
         {
             loadingProgress = (float)stream.ReceiveNext();
-            
-            Debug.Log("Receive Progress : " + loadingProgress);
         }
     }
 

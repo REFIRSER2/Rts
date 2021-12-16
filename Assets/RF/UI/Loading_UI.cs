@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using RF.Photon;
 using Steamworks;
 using TMPro;
 using UnityEngine;
@@ -94,7 +95,17 @@ public class Loading_UI : UI_Base
                 progress = Mathf.Clamp(progress+Time.deltaTime*4F, 0F, 1F);
                 if (progress >= 1F)
                 {
-                    ao.allowSceneActivation = false;
+                    bool check = true;
+                    foreach (var ply in PhotonManager.Instance.loadingPlayers)
+                    {
+                        if (ply.loadingProgress < 1F)
+                        {
+                            check = false;
+                            break;
+                        }                        
+                    }
+                    
+                    ao.allowSceneActivation = check;
                     this.Remove();
                 }
             }

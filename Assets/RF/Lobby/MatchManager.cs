@@ -104,6 +104,7 @@ public class MatchManager : MonoBehaviour
 
                 Loading_UI loadingUI = UI_Manager.Instance.CreateUI<Loading_UI>();
 
+                int index = 0;
                 foreach (var member in team1)
                 {
                     UnityEngine.Debug.Log(member.steamID);
@@ -117,7 +118,8 @@ public class MatchManager : MonoBehaviour
                     {
                         loadingUI.AddPlayer(0, Convert.ToUInt64(member.steamID)); 
                     }
-               
+
+                    index++;
                 }
             
                 foreach (var member in team2)
@@ -132,6 +134,8 @@ public class MatchManager : MonoBehaviour
                     {
                         loadingUI.AddPlayer(1, Convert.ToUInt64(member.steamID)); 
                     }
+
+                    index++;
                 }
             }
         });

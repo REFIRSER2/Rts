@@ -35,6 +35,7 @@ public class Loading_UI : UI_Base
                 left.SetNickName(lFriend.Name);
                 
                 var lImage = await SteamFriends.GetLargeAvatarAsync((ulong)Convert.ToInt64(id));
+                
                 if (lImage != null)
                 {
                     var texture = SteamManager.Instance.GetProfileIcon(lImage.Value);
@@ -48,6 +49,7 @@ public class Loading_UI : UI_Base
                 right.SetNickName(rFriend.Name);
                 
                 var rImage = await SteamFriends.GetLargeAvatarAsync((ulong)Convert.ToInt64(id));
+
                 if (rImage != null)
                 {
                     var texture = SteamManager.Instance.GetProfileIcon(rImage.Value);
@@ -88,10 +90,10 @@ public class Loading_UI : UI_Base
         GameObject loadingPlayer = PhotonNetwork.Instantiate("LoadingPlayer", new Vector3(0,0,0),Quaternion.identity);
         player = loadingPlayer.GetComponent<LoadingPlayer>();
 
-        StartCoroutine("loading_Anim");
+        StartCoroutine("loading_Think");
     }
     
-    IEnumerator loading_Anim()
+    IEnumerator loading_Think()
     {
         yield return new WaitForSeconds(3F);
         var ao = SceneManager.LoadSceneAsync("Map0" + (gamemode+1));
@@ -115,14 +117,18 @@ public class Loading_UI : UI_Base
                     bool check = true;
                     foreach (var ply in PhotonManager.Instance.loadingPlayers)
                     {
-                        Debug.Log("another : " + ply.loadingProgress);
-                        if (ply.loadingProgress < 1F)
+                        if (ply == null)
+                        {
+                            continue;
+                        }
+                        
+                        if (ply.loadingProgress < 1F && !ply.isTimeOut)
                         {
                             check = false;
                             break;
                         }                        
                     }
-                    
+
                     ao.allowSceneActivation = check;
                     this.Remove();
                 }
@@ -135,7 +141,7 @@ public class Loading_UI : UI_Base
 
             progress_Bar.value = progress;
             progress_Text.text = Mathf.Ceil(progress * 100) + "%";
-
+            
             if (dot_String.Length >= 3)
             {
                 dot_String = "";
@@ -144,5 +150,12 @@ public class Loading_UI : UI_Base
 
             loading_Text.text = loading_String + " " + dot_String;
         }
+
+        if (player != null)
+        {
+            PhotonNetwork.Destroy(player.gameObject);
+        }
+        
+        UI_Manager.Instance.CleanUI();
     }
 }

@@ -95,7 +95,6 @@ public class UnitBase : MonoBehaviour
     [SerializeField] private GameObject selectedRing;
     [SerializeField] private AIPath aiPath;
     [SerializeField] private UnitBase moveTarget;
-    [SerializeField] private FieldOfView fov;
     
     public void Select()
     {

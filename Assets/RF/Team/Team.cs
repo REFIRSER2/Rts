@@ -3,42 +3,43 @@ using UnityEngine;
 
 namespace RF.Team
 {
-    public static class Team
+    public class Team
     {
-        private static Dictionary<int, TeamData> teamDatas = new Dictionary<int, TeamData>();
+        private Dictionary<int, TeamData> teamDatas = new Dictionary<int, TeamData>();
 
-        public static void SetUp(int index, string name)
+        public void SetUp(int index, string name, List<Transform> spawnPoints)
         {
             TeamData data = new TeamData();
             data.name = name;
-
+            data.spawnPoints = spawnPoints;
+            
             if (!teamDatas.ContainsKey(index))
             {
                 teamDatas.Add(index, data);
             }
         }
 
-        public static void AddPlayer(int index, Player.Player ply)
+        public void AddPlayer(int index, Player.Player ply)
         {
             if (!teamDatas.ContainsKey(index))
             {
                 return;
             }
             
-            if (teamDatas.ContainsKey(ply.GetTeam()))
+            if (teamDatas.ContainsKey(ply.GetPlayerData().GetTeam()))
             {
-                if (teamDatas[ply.GetTeam()].members.Contains(ply))
+                if (teamDatas[ply.GetPlayerData().GetTeam()].members.Contains(ply))
                 {
-                    teamDatas[ply.GetTeam()].members.Remove(ply);
+                    teamDatas[ply.GetPlayerData().GetTeam()].members.Remove(ply);
                 }
             }
             
             teamDatas[index].members.Add(ply);
         }
 
-        public static void RemovePlayer(int index, Player.Player ply)
+        public void RemovePlayer(int index, Player.Player ply)
         {
-            ply.SetTeam((int)TeamEnum.UNASSIGNED);
+            ply.GetPlayerData().SetTeam((int)TeamEnum.UNASSIGNED);
             
             if (!teamDatas.ContainsKey(index))
             {
@@ -48,7 +49,7 @@ namespace RF.Team
             teamDatas[index].members.Remove(ply);
         }
 
-        public static string GetName(int index)
+        public string GetName(int index)
         {
             if (teamDatas.ContainsKey(index))
             {
@@ -58,7 +59,7 @@ namespace RF.Team
             return "NONE";
         }
 
-        public static List<Player.Player> GetMembers(int index)
+        public List<Player.Player> GetMembers(int index)
         {
             if (teamDatas.ContainsKey(index))
             {
@@ -68,7 +69,7 @@ namespace RF.Team
             return null;
         }
         
-        public static Dictionary<int, TeamData> GetTeams()
+        public Dictionary<int, TeamData> GetTeams()
         {
             return teamDatas;
         }
@@ -85,7 +86,8 @@ namespace RF.Team
     public class TeamData
     {
         public string name;
-
+        public List<Transform> spawnPoints;
+        
         public List<Player.Player> members = new List<Player.Player>();
     }
 }

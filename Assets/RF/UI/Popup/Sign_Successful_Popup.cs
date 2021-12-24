@@ -1,36 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Sign_Successful_Popup : Popup_Base
+namespace RF.UI.Popup
 {
-    [SerializeField] private Text title_Text;
-    [SerializeField] private Text main_Text;
-
-    private Sign_Popup signPopup;
-    
-    public void SetTitle(string str)
+    public class Sign_Successful_Popup : UI_Popup_Base
     {
-        title_Text.text = str;
-    }
-
-    public void SetText(string str)
-    {
-        main_Text.text = str;
-    }
-
-    public void SetPopup(Sign_Popup popup)
-    {
-        signPopup = popup;
-    }
-
-    public void onClose()
-    {
-        this.Remove();
-        if (signPopup != null)
+        #region 기본 내장 함수
+        private void Start()
         {
-            UI_Manager.Instance.RemovePopup(signPopup);
+
         }
+        #endregion
+
+        #region 오버라이드
+
+        public override void On_Open()
+        {
+            base.On_Open();
+        }
+
+        public override void On_Close()
+        {
+            base.On_Close();
+        }
+
+        public override void On_Refresh()
+        {
+            base.On_Refresh();
+        }
+
+        public override void OnAccept()
+        {
+            base.OnAccept();
+            
+        }
+
+        public override void OnDecline()
+        {
+            base.OnDecline();
+        }
+
+        #endregion
     }
 }

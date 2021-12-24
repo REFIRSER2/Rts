@@ -477,7 +477,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7856135209252791443}
-  - component: {fileID: 355655455371926153}
   m_Layer: 5
   m_Name: Part_Button
   m_TagString: Untagged
@@ -505,50 +504,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &355655455371926153
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 722244337426221383}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31691372e3d9ce1489ecb117da268d2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -302008819221608926}
-        m_TargetAssemblyTypeName: Shop_UI, Assembly-CSharp
-        m_MethodName: onCat
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  isChangeImage: 1
-  background: {fileID: 8968647172671653492}
-  normalBackground: {fileID: 21300000, guid: 8ad1cf266540b744bb09daee284096ef, type: 3}
-  highlightBackground: {fileID: 21300000, guid: a7fef2044bbf6b74083c83cf4c07cd16, type: 3}
-  selectedBackground: {fileID: 21300000, guid: a0f7afe5bf5b2ce40bcc88bed8f45344, type: 3}
-  disabledBackground: {fileID: 0}
-  isChangeTextColor: 1
-  title_Text: {fileID: 4648722731226250790}
-  normalColor: {r: 0.4117647, g: 0.65882355, b: 0.9137255, a: 1}
-  highlightColor: {r: 0, g: 0.78039217, b: 1, a: 1}
-  selectedColor: {r: 0, g: 0.78039217, b: 1, a: 1}
-  disableColor: {r: 0, g: 0, b: 0, a: 0}
-  selectList:
-  - {fileID: 355655455371926153}
-  - {fileID: 8237165092129529302}
-  - {fileID: 3538308115425684872}
-  isSelect: 1
 --- !u!1 &764808405674723581
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,7 +549,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5954226840104886217}
-  - component: {fileID: 3935439130075633814}
   m_Layer: 5
   m_Name: W
   m_TagString: Untagged
@@ -622,35 +576,6 @@ RectTransform:
   m_AnchoredPosition: {x: 100, y: -25}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3935439130075633814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 865750975327855199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31691372e3d9ce1489ecb117da268d2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onClick:
-    m_PersistentCalls:
-      m_Calls: []
-  isChangeImage: 1
-  background: {fileID: 8835463359917084687}
-  normalBackground: {fileID: 21300000, guid: 8ad1cf266540b744bb09daee284096ef, type: 3}
-  highlightBackground: {fileID: 21300000, guid: a0f7afe5bf5b2ce40bcc88bed8f45344, type: 3}
-  selectedBackground: {fileID: 0}
-  disabledBackground: {fileID: 0}
-  isChangeTextColor: 1
-  title_Text: {fileID: 7911824479551057194}
-  normalColor: {r: 0.4117647, g: 0.65882355, b: 0.9137255, a: 1}
-  highlightColor: {r: 0, g: 0.78039217, b: 1, a: 1}
-  selectedColor: {r: 0, g: 0, b: 0, a: 0}
-  disableColor: {r: 0, g: 0, b: 0, a: 0}
-  selectList: []
-  isSelect: 0
 --- !u!1 &902802666158690784
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,7 +622,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5579972736858829112}
-  - component: {fileID: 3538308115425684872}
   m_Layer: 5
   m_Name: Ship_Button
   m_TagString: Untagged
@@ -725,50 +649,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3538308115425684872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 905416648297159132}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31691372e3d9ce1489ecb117da268d2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -302008819221608926}
-        m_TargetAssemblyTypeName: Shop_UI, Assembly-CSharp
-        m_MethodName: onCat
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  isChangeImage: 1
-  background: {fileID: 7631944102969706918}
-  normalBackground: {fileID: 21300000, guid: 8ad1cf266540b744bb09daee284096ef, type: 3}
-  highlightBackground: {fileID: 21300000, guid: a7fef2044bbf6b74083c83cf4c07cd16, type: 3}
-  selectedBackground: {fileID: 21300000, guid: a0f7afe5bf5b2ce40bcc88bed8f45344, type: 3}
-  disabledBackground: {fileID: 0}
-  isChangeTextColor: 1
-  title_Text: {fileID: 7671275726428498596}
-  normalColor: {r: 0.4117647, g: 0.65882355, b: 0.9137255, a: 1}
-  highlightColor: {r: 0, g: 0.78039217, b: 1, a: 1}
-  selectedColor: {r: 0, g: 0.78039217, b: 1, a: 1}
-  disableColor: {r: 0, g: 0, b: 0, a: 0}
-  selectList:
-  - {fileID: 355655455371926153}
-  - {fileID: 8237165092129529302}
-  - {fileID: 3538308115425684872}
-  isSelect: 0
 --- !u!1 &917685984063862674
 GameObject:
   m_ObjectHideFlags: 0
@@ -1297,7 +1177,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1968503609294563426}
-  - component: {fileID: 6876317679766468911}
   m_Layer: 5
   m_Name: Medium
   m_TagString: Untagged
@@ -1325,35 +1204,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6876317679766468911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1518662594886884460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31691372e3d9ce1489ecb117da268d2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onClick:
-    m_PersistentCalls:
-      m_Calls: []
-  isChangeImage: 1
-  background: {fileID: 8738110780931228144}
-  normalBackground: {fileID: 21300000, guid: 8ad1cf266540b744bb09daee284096ef, type: 3}
-  highlightBackground: {fileID: 21300000, guid: a0f7afe5bf5b2ce40bcc88bed8f45344, type: 3}
-  selectedBackground: {fileID: 0}
-  disabledBackground: {fileID: 0}
-  isChangeTextColor: 1
-  title_Text: {fileID: 7911824479551057194}
-  normalColor: {r: 0.4117647, g: 0.65882355, b: 0.9137255, a: 1}
-  highlightColor: {r: 0, g: 0.78039217, b: 1, a: 1}
-  selectedColor: {r: 0, g: 0, b: 0, a: 0}
-  disableColor: {r: 0, g: 0, b: 0, a: 0}
-  selectList: []
-  isSelect: 0
 --- !u!1 &1692851035801468389
 GameObject:
   m_ObjectHideFlags: 0
@@ -1844,7 +1694,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2104601139004805293}
-  - component: {fileID: 5684443149912318889}
   m_Layer: 5
   m_Name: Large_Button
   m_TagString: Untagged
@@ -1872,35 +1721,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5684443149912318889
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1976277710298008323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31691372e3d9ce1489ecb117da268d2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onClick:
-    m_PersistentCalls:
-      m_Calls: []
-  isChangeImage: 1
-  background: {fileID: 3615869945922608999}
-  normalBackground: {fileID: 21300000, guid: 8ad1cf266540b744bb09daee284096ef, type: 3}
-  highlightBackground: {fileID: 21300000, guid: a0f7afe5bf5b2ce40bcc88bed8f45344, type: 3}
-  selectedBackground: {fileID: 0}
-  disabledBackground: {fileID: 0}
-  isChangeTextColor: 1
-  title_Text: {fileID: 7911824479551057194}
-  normalColor: {r: 0.4117647, g: 0.65882355, b: 0.9137255, a: 1}
-  highlightColor: {r: 0, g: 0.78039217, b: 1, a: 1}
-  selectedColor: {r: 0, g: 0, b: 0, a: 0}
-  disableColor: {r: 0, g: 0, b: 0, a: 0}
-  selectList: []
-  isSelect: 0
 --- !u!1 &2008441793137817175
 GameObject:
   m_ObjectHideFlags: 0
@@ -2426,7 +2246,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 503168746682343931}
-  - component: {fileID: 5617800025150718708}
   m_Layer: 5
   m_Name: Page_Button
   m_TagString: Untagged
@@ -2454,47 +2273,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5617800025150718708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2764855990874374383}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31691372e3d9ce1489ecb117da268d2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -302008819221608926}
-        m_TargetAssemblyTypeName: Shop_UI, Assembly-CSharp
-        m_MethodName: onSlot
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  isChangeImage: 0
-  background: {fileID: 0}
-  normalBackground: {fileID: 0}
-  highlightBackground: {fileID: 0}
-  selectedBackground: {fileID: 0}
-  disabledBackground: {fileID: 0}
-  isChangeTextColor: 0
-  title_Text: {fileID: 0}
-  normalColor: {r: 0, g: 0, b: 0, a: 0}
-  highlightColor: {r: 0, g: 0, b: 0, a: 0}
-  selectedColor: {r: 0, g: 0, b: 0, a: 0}
-  disableColor: {r: 0, g: 0, b: 0, a: 0}
-  selectList: []
-  isSelect: 0
 --- !u!1 &2802559586676857768
 GameObject:
   m_ObjectHideFlags: 0
@@ -4117,7 +3895,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6467472242512657851}
-  - component: {fileID: 816590115761277226}
   m_Layer: 5
   m_Name: Large_Button
   m_TagString: Untagged
@@ -4145,35 +3922,6 @@ RectTransform:
   m_AnchoredPosition: {x: 510, y: -25}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &816590115761277226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4727290121955270729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31691372e3d9ce1489ecb117da268d2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onClick:
-    m_PersistentCalls:
-      m_Calls: []
-  isChangeImage: 1
-  background: {fileID: 8835463359917084687}
-  normalBackground: {fileID: 21300000, guid: 8ad1cf266540b744bb09daee284096ef, type: 3}
-  highlightBackground: {fileID: 21300000, guid: a0f7afe5bf5b2ce40bcc88bed8f45344, type: 3}
-  selectedBackground: {fileID: 0}
-  disabledBackground: {fileID: 0}
-  isChangeTextColor: 1
-  title_Text: {fileID: 7911824479551057194}
-  normalColor: {r: 0.4117647, g: 0.65882355, b: 0.9137255, a: 1}
-  highlightColor: {r: 0, g: 0.78039217, b: 1, a: 1}
-  selectedColor: {r: 0, g: 0, b: 0, a: 0}
-  disableColor: {r: 0, g: 0, b: 0, a: 0}
-  selectList: []
-  isSelect: 0
 --- !u!1 &4763758122577072837
 GameObject:
   m_ObjectHideFlags: 0
@@ -4660,7 +4408,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2303776799205784815}
-  - component: {fileID: 2620711573871444602}
   m_Layer: 5
   m_Name: Small_Button
   m_TagString: Untagged
@@ -4688,35 +4435,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2620711573871444602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4925018597282165218}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31691372e3d9ce1489ecb117da268d2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onClick:
-    m_PersistentCalls:
-      m_Calls: []
-  isChangeImage: 1
-  background: {fileID: 8835463359917084687}
-  normalBackground: {fileID: 21300000, guid: 8ad1cf266540b744bb09daee284096ef, type: 3}
-  highlightBackground: {fileID: 21300000, guid: a0f7afe5bf5b2ce40bcc88bed8f45344, type: 3}
-  selectedBackground: {fileID: 0}
-  disabledBackground: {fileID: 0}
-  isChangeTextColor: 1
-  title_Text: {fileID: 7911824479551057194}
-  normalColor: {r: 0.4117647, g: 0.65882355, b: 0.9137255, a: 1}
-  highlightColor: {r: 0, g: 0.78039217, b: 1, a: 1}
-  selectedColor: {r: 0, g: 0, b: 0, a: 0}
-  disableColor: {r: 0, g: 0, b: 0, a: 0}
-  selectList: []
-  isSelect: 0
 --- !u!1 &5080478868553654178
 GameObject:
   m_ObjectHideFlags: 0
@@ -4802,7 +4520,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3227078728487254893}
-  - component: {fileID: -302008819221608926}
   m_Layer: 5
   m_Name: Shop_UI
   m_TagString: Untagged
@@ -4830,29 +4547,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -60}
   m_SizeDelta: {x: 0, y: -120}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &-302008819221608926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5446946256871186832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10ad5ebf27ca70c4bb5a9fe54dd81773, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shop_Content: {fileID: 2441767957890054751}
-  subCat_List:
-  - {fileID: 1892979354372316245}
-  - {fileID: 2435948212880914744}
-  - {fileID: 5704900537814338291}
-  pageButton_List:
-  - {fileID: 2764855990874374383}
-  - {fileID: 6540182590327227844}
-  - {fileID: 927415824591294135}
-  - {fileID: 7752987404127028826}
-  itemInfo: {fileID: 4649589452352430766}
 --- !u!1 &5527730520589972536
 GameObject:
   m_ObjectHideFlags: 0
@@ -4951,7 +4645,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7871417158580401288}
-  - component: {fileID: 8237165092129529302}
   m_Layer: 5
   m_Name: Accessary_Button
   m_TagString: Untagged
@@ -4979,50 +4672,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8237165092129529302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5538213978624012880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31691372e3d9ce1489ecb117da268d2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -302008819221608926}
-        m_TargetAssemblyTypeName: Shop_UI, Assembly-CSharp
-        m_MethodName: onCat
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  isChangeImage: 1
-  background: {fileID: 5585803687423367870}
-  normalBackground: {fileID: 21300000, guid: 8ad1cf266540b744bb09daee284096ef, type: 3}
-  highlightBackground: {fileID: 21300000, guid: a7fef2044bbf6b74083c83cf4c07cd16, type: 3}
-  selectedBackground: {fileID: 21300000, guid: a0f7afe5bf5b2ce40bcc88bed8f45344, type: 3}
-  disabledBackground: {fileID: 0}
-  isChangeTextColor: 1
-  title_Text: {fileID: 9073119654746837239}
-  normalColor: {r: 0.4117647, g: 0.65882355, b: 0.9137255, a: 1}
-  highlightColor: {r: 0, g: 0.78039217, b: 1, a: 1}
-  selectedColor: {r: 0, g: 0.78039217, b: 1, a: 1}
-  disableColor: {r: 0, g: 0, b: 0, a: 0}
-  selectList:
-  - {fileID: 355655455371926153}
-  - {fileID: 8237165092129529302}
-  - {fileID: 3538308115425684872}
-  isSelect: 0
 --- !u!1 &5659890125185940157
 GameObject:
   m_ObjectHideFlags: 0
@@ -5496,7 +5145,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1071325909572655204}
-  - component: {fileID: 5620789925006425156}
   m_Layer: 5
   m_Name: Medium
   m_TagString: Untagged
@@ -5524,35 +5172,6 @@ RectTransform:
   m_AnchoredPosition: {x: 305, y: -25}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5620789925006425156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6204316055911418756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31691372e3d9ce1489ecb117da268d2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onClick:
-    m_PersistentCalls:
-      m_Calls: []
-  isChangeImage: 1
-  background: {fileID: 8835463359917084687}
-  normalBackground: {fileID: 21300000, guid: 8ad1cf266540b744bb09daee284096ef, type: 3}
-  highlightBackground: {fileID: 21300000, guid: a0f7afe5bf5b2ce40bcc88bed8f45344, type: 3}
-  selectedBackground: {fileID: 0}
-  disabledBackground: {fileID: 0}
-  isChangeTextColor: 1
-  title_Text: {fileID: 7911824479551057194}
-  normalColor: {r: 0.4117647, g: 0.65882355, b: 0.9137255, a: 1}
-  highlightColor: {r: 0, g: 0.78039217, b: 1, a: 1}
-  selectedColor: {r: 0, g: 0, b: 0, a: 0}
-  disableColor: {r: 0, g: 0, b: 0, a: 0}
-  selectList: []
-  isSelect: 0
 --- !u!1 &6213063648220225801
 GameObject:
   m_ObjectHideFlags: 0
@@ -5641,7 +5260,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3250382476074304057}
-  - component: {fileID: 2463089166418424505}
   m_Layer: 5
   m_Name: W
   m_TagString: Untagged
@@ -5669,35 +5287,6 @@ RectTransform:
   m_AnchoredPosition: {x: 100, y: -25}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2463089166418424505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6303032413815200627}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31691372e3d9ce1489ecb117da268d2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onClick:
-    m_PersistentCalls:
-      m_Calls: []
-  isChangeImage: 1
-  background: {fileID: 8835463359917084687}
-  normalBackground: {fileID: 21300000, guid: 8ad1cf266540b744bb09daee284096ef, type: 3}
-  highlightBackground: {fileID: 21300000, guid: a0f7afe5bf5b2ce40bcc88bed8f45344, type: 3}
-  selectedBackground: {fileID: 0}
-  disabledBackground: {fileID: 0}
-  isChangeTextColor: 1
-  title_Text: {fileID: 7911824479551057194}
-  normalColor: {r: 0.4117647, g: 0.65882355, b: 0.9137255, a: 1}
-  highlightColor: {r: 0, g: 0.78039217, b: 1, a: 1}
-  selectedColor: {r: 0, g: 0, b: 0, a: 0}
-  disableColor: {r: 0, g: 0, b: 0, a: 0}
-  selectList: []
-  isSelect: 0
 --- !u!1 &6474416921147555893
 GameObject:
   m_ObjectHideFlags: 0
@@ -6163,7 +5752,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8364112774590504630}
-  - component: {fileID: 400704149471317584}
   m_Layer: 5
   m_Name: Medium
   m_TagString: Untagged
@@ -6191,35 +5779,6 @@ RectTransform:
   m_AnchoredPosition: {x: 305, y: -25}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &400704149471317584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6914105709000628733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31691372e3d9ce1489ecb117da268d2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onClick:
-    m_PersistentCalls:
-      m_Calls: []
-  isChangeImage: 1
-  background: {fileID: 8835463359917084687}
-  normalBackground: {fileID: 21300000, guid: 8ad1cf266540b744bb09daee284096ef, type: 3}
-  highlightBackground: {fileID: 21300000, guid: a0f7afe5bf5b2ce40bcc88bed8f45344, type: 3}
-  selectedBackground: {fileID: 0}
-  disabledBackground: {fileID: 0}
-  isChangeTextColor: 1
-  title_Text: {fileID: 7911824479551057194}
-  normalColor: {r: 0.4117647, g: 0.65882355, b: 0.9137255, a: 1}
-  highlightColor: {r: 0, g: 0.78039217, b: 1, a: 1}
-  selectedColor: {r: 0, g: 0, b: 0, a: 0}
-  disableColor: {r: 0, g: 0, b: 0, a: 0}
-  selectList: []
-  isSelect: 0
 --- !u!1 &7086696640300062753
 GameObject:
   m_ObjectHideFlags: 0
@@ -7267,7 +6826,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1991150492979820003}
-  - component: {fileID: 7949491350892545253}
   m_Layer: 5
   m_Name: Large_Button
   m_TagString: Untagged
@@ -7295,35 +6853,6 @@ RectTransform:
   m_AnchoredPosition: {x: 510, y: -25}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7949491350892545253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8195128356239657309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31691372e3d9ce1489ecb117da268d2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onClick:
-    m_PersistentCalls:
-      m_Calls: []
-  isChangeImage: 1
-  background: {fileID: 8835463359917084687}
-  normalBackground: {fileID: 21300000, guid: 8ad1cf266540b744bb09daee284096ef, type: 3}
-  highlightBackground: {fileID: 21300000, guid: a0f7afe5bf5b2ce40bcc88bed8f45344, type: 3}
-  selectedBackground: {fileID: 0}
-  disabledBackground: {fileID: 0}
-  isChangeTextColor: 1
-  title_Text: {fileID: 7911824479551057194}
-  normalColor: {r: 0.4117647, g: 0.65882355, b: 0.9137255, a: 1}
-  highlightColor: {r: 0, g: 0.78039217, b: 1, a: 1}
-  selectedColor: {r: 0, g: 0, b: 0, a: 0}
-  disableColor: {r: 0, g: 0, b: 0, a: 0}
-  selectList: []
-  isSelect: 0
 --- !u!1 &8222354847967868619
 GameObject:
   m_ObjectHideFlags: 0
@@ -7483,7 +7012,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4778998842795090873}
-  - component: {fileID: 4649589452352430766}
   m_Layer: 5
   m_Name: Item_Info
   m_TagString: Untagged
@@ -7513,28 +7041,6 @@ RectTransform:
   m_AnchoredPosition: {x: 249.5, y: -492}
   m_SizeDelta: {x: 600, y: 830}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4649589452352430766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8910911020003651249}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d90f87b5277bd4e40acdca6dcca7a978, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  modelView: {fileID: 749884792151738236}
-  title_Text: {fileID: 1578974198693248090}
-  energy_Slider: {fileID: 4256382597040438859}
-  weight_Slider: {fileID: 6293367859482445829}
-  speed_Slider: {fileID: 33423688784463380}
-  health_Slider: {fileID: 6178498620676061968}
-  sight_Slider: {fileID: 8355964022470630195}
-  damage_Slider: {fileID: 6981357080858071534}
-  dps_Slider: {fileID: 5893651554760654145}
-  reach_Slider: {fileID: 4605070388809598365}
 --- !u!1 &8955365319004148320
 GameObject:
   m_ObjectHideFlags: 0

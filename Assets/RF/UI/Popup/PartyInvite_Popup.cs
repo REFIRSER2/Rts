@@ -1,32 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
-using Steamworks.Data;
-using UnityEngine;
-using UnityEngine.UI;
-
-public class PartyInvite_Popup : Popup_Base
+namespace RF.UI.Popup
 {
-    #region 변수
-    [SerializeField] private Text title_Text;
-    [SerializeField] private Text main_Text;
-    #endregion
-    
-   #region UI 정보
-    public void SetTitle(string str)
+    public class PartyInvite_Popup : UI_Popup_Base
     {
-        title_Text.text = str;
-    }
+        #region 오버라이드
 
-    public void SetText(string str)
-    {
-        main_Text.text = str;
-    }
-    #endregion
+        public override void On_Open()
+        {
+            base.On_Open();
+        }
 
-    #region 클릭 이벤트
-    public void onCancel()
-    {
-        UI_Manager.Instance.RemovePopup(this);
+        public override void On_Close()
+        {
+            base.On_Close();
+        }
+
+        public override void On_Refresh()
+        {
+            base.On_Refresh();
+        }
+
+        public override void OnAccept()
+        {
+            base.OnAccept();
+        }
+
+        public override void OnDecline()
+        {
+            base.OnDecline();
+        }
+
+        #endregion
     }
-    #endregion
 }

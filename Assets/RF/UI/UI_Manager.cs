@@ -65,18 +65,39 @@ namespace RF.UI
         #endregion
         
         #region 팝업 뷰
-        private Dictionary<string, UI_Popup_Base> popupViewList = new Dictionary<string, UI_Popup_Base>();
+        private Dictionary<string, List<UI_Popup_Base>> popupViewList = new Dictionary<string, List<UI_Popup_Base>>();
 
         public UI_Popup_Base CreatePopupView(string name)
         {
             Transform layer = GameObject.Find("Popup_Layer").transform;
             GameObject popup = Instantiate(Resources.Load("Prefabs/UI/Popup/" + string.Format("{0}", name)), layer) as GameObject;
+            if (!popupViewList.ContainsKey(name))
+            {
+                popupViewList.Add(name, new List<UI_Popup_Base>());
+            }
+            popupViewList[name].Add(popup.GetComponent<UI_Popup_Base>());
+            
+            
             return popup.GetComponent<UI_Popup_Base>();
         }
 
+        public void RemovePopup(string name, int index)
+        {
+            if (!popupViewList.ContainsKey(name))
+            {
+                return;
+            }
+
+            if (popupViewList[name].Count < index)
+            {
+                return;
+            }
+            
+            Destroy(popupViewList[name][index].gameObject);
+        }
+        
         public void RemovePopup(UI_Popup_Base popup)
         {
-            Debug.Log("remove popup");
             Destroy(popup.gameObject);
         }
         #endregion

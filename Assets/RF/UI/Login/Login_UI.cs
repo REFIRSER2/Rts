@@ -1,5 +1,8 @@
 using RF.Account;
+using RF.Lobby;
+using RF.Steam;
 using RF.UI.Popup;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -28,7 +31,7 @@ namespace RF.UI.Login
         #region 프레젠터
         private Login_UI_Model model;
         
-        [SerializeField] private InputField pwdInput;
+        [SerializeField] private TMP_InputField pwdInput;
 
         public Login_UI_Model GetModel()
         {
@@ -52,18 +55,12 @@ namespace RF.UI.Login
                     error.SetMain("알 수 없는 오류로 로그인 할 수 없습니다");
                     break;
                 case 0:
-                    
-
-                
-                    //
-                    //UI_Manager.Instance.CreateUI<MainMenu_UI>();
                     SceneManager.LoadScene("Lobby");
                     
                     AccountManager.Instance.GetProfile();
                     AccountManager.Instance.GetInventory();
-
-                    //LobbyManager.Instance.CreateParty(SteamManager.Instance.steamID);
-                    //MainManager.Instance.GetProfile();
+                    
+                    LobbyManager.Instance.CreateParty(SteamManager.Instance.GetAccount().steamID);
                     break;
                 case 1:
                     error = UI_Manager.Instance.CreatePopupView("Error_Popup") as Error_Popup;

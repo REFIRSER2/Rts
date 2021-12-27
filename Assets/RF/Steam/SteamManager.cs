@@ -1,4 +1,5 @@
 using System;
+using RF.Lobby;
 using Steamworks;
 using Steamworks.Data;
 using UnityEngine;
@@ -30,13 +31,14 @@ namespace RF.Steam
                 Destroy(this.gameObject);
             }
 
-            SetupClient();
+            Setup_Client();
+            Setup_Lobby();
         }
         #endregion
         
         #region 스팀 초기화
 
-        private void SetupClient()
+        private void Setup_Client()
         {
             try
             {
@@ -81,6 +83,39 @@ namespace RF.Steam
             texture.Apply();
 
             return texture;
+        }
+        #endregion
+        
+        #region 로비
+        private Steamworks.Data.Lobby lobby;
+        
+        private void Setup_Lobby()
+        {
+            SteamMatchmaking.OnLobbyCreated += OnLobbyCreated;
+        }
+
+        public Steamworks.Data.Lobby GetLobby()
+        {
+            return lobby;
+        }
+        
+        public void CreateLobby()
+        {
+            SteamMatchmaking.CreateLobbyAsync(8);
+        }
+
+        public void OnLobbyCreated(Result result, Steamworks.Data.Lobby lb)
+        {
+            lobby = lb;
+
+            LobbyManager.Instance.OnCreateQuickMatchLobby();
+        }
+
+        public void JoinLobby(string strID)
+        {
+            ulong id = Convert.ToUInt64(strID);
+            
+            SteamMatchmaking.JoinLobbyAsync(id);
         }
         #endregion
     }

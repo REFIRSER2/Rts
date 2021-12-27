@@ -127,8 +127,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0%
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 368974b5f6f5f4741b34a96767b7667e, type: 2}
+  m_sharedMaterial: {fileID: -8413496414300857513, guid: 368974b5f6f5f4741b34a96767b7667e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -462,10 +462,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Loading
+  m_text: "\uB85C\uB529 \uC911"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 368974b5f6f5f4741b34a96767b7667e, type: 2}
+  m_sharedMaterial: {fileID: -8413496414300857513, guid: 368974b5f6f5f4741b34a96767b7667e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -881,7 +881,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3634690448166596804}
-  - component: {fileID: 6018785939276783232}
   m_Layer: 5
   m_Name: Loading_UI
   m_TagString: Untagged
@@ -909,23 +908,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6018785939276783232
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7957269352049310625}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53955b51a45a5db469b2227bc8149234, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loading_Text: {fileID: 770082683826928994}
-  progress_Bar: {fileID: 6366686209420869119}
-  progress_Text: {fileID: 4882696142363622343}
-  leftGroup: {fileID: 1684318728116848991}
-  rightGroup: {fileID: 2691400508058915301}
 --- !u!1 &8495816229207769090
 GameObject:
   m_ObjectHideFlags: 0

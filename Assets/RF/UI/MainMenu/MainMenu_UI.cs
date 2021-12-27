@@ -15,8 +15,7 @@ namespace RF.UI.MainMenu
             model = this.GetComponent<MainMenu_UI_Model>();
             
             UI_Manager.Instance.AddUIView("MainMenu_UI", this);
-            GetModel().OnRefreshProfile();
-            GetModel().OnRefreshGoods();
+
 
         }
         #endregion
@@ -32,28 +31,13 @@ namespace RF.UI.MainMenu
         #endregion
         
         #region 프레젠터
-        [SerializeField] private RawImage profileIcon;
-        [SerializeField] private Text goldText;
-        [SerializeField] private Text cashText;
 
-        public async void OnRefreshProfile()
+        public void OnTryPlay()
         {
-            var image = await SteamFriends.GetLargeAvatarAsync(Convert.ToUInt64(SteamManager.Instance.GetAccount().steamID));
-            if (image != null)
-            {
-                var texture = SteamManager.Instance.GetProfileIcon(image.Value);
-                profileIcon.texture = texture;
-                profileIcon.gameObject.SetActive(true);
-            }
+            
         }
 
-        public void OnRefreshGoods()
-        {
-            goldText.text = AccountManager.Instance.user.gold.ToString();
-            cashText.text = AccountManager.Instance.user.cash.ToString();
-        }
-
-        public void OnRefreshParty()
+        public void OnTryLeave()
         {
             
         }

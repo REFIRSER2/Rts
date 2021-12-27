@@ -7,9 +7,7 @@ namespace RF.UI.Login
     {
         #region 프레젠터
         private Login_UI presenter;
-        #endregion
-        
-        #region 이벤트
+
         public void OnTryLogin()
         {
             presenter.OnTryLogin();

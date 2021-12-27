@@ -9,6 +9,7 @@ using RF.UI;
 using RF.UI.Connecting;
 using RF.UI.Login;
 using RF.UI.MainMenu;
+using RF.UI.Top;
 using UnityEngine;
 
 namespace RF.Account
@@ -138,7 +139,7 @@ namespace RF.Account
                     user.rankPoint = Convert.ToInt32(data["rankpoint"]);
                     user.mmr = Convert.ToInt32(data["mmr"]);
 
-                    var ui = UI_Manager.Instance.GetUIView("MainMenu_UI") as MainMenu_UI;
+                    var ui = UI_Manager.Instance.GetUIView("Top_UI") as Top_UI;
                     if (ui != null)
                     {
                         ui.GetModel().OnRefreshGoods();  
@@ -176,7 +177,7 @@ namespace RF.Account
                     user.gold = Convert.ToInt32(data["gold"]);
                     user.cash = Convert.ToInt32(data["cash"]);
                     
-                    var ui = UI_Manager.Instance.GetUIView("MainMenu_UI") as MainMenu_UI;
+                    var ui = UI_Manager.Instance.GetUIView("Top_UI") as Top_UI;
                     if (ui != null)
                     {
                         ui.GetModel().OnRefreshGoods();  

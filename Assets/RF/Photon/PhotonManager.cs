@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace RF.Photon
 {
-    public class PhotonManager : MonoBehaviour, IMatchmakingCallbacks, IInRoomCallbacks, ILobbyCallbacks, IConnectionCallbacks
+    public class PhotonManager : MonoBehaviourPunCallbacks
     {
         #region 싱글톤
         public static PhotonManager Instance;
@@ -25,6 +25,8 @@ namespace RF.Photon
         #region 매칭
         public void CreateQuickMatchRoom(string roomName)
         {
+            Debug.Log("매치 룸 생성 포톤");
+            
             var options = new RoomOptions();
             options.IsOpen = true;
             options.IsVisible = false;
@@ -41,12 +43,12 @@ namespace RF.Photon
             PhotonNetwork.CreateRoom(roomName, options, null, ids.ToArray());
         }
         
-        public void OnFriendListUpdate(List<FriendInfo> friendList)
+        public override void OnFriendListUpdate(List<FriendInfo> friendList)
         {
             
         }
 
-        public void OnCreatedRoom()
+        public override void OnCreatedRoom()
         {
             switch (LobbyManager.Instance.GetGamemode())
             {
@@ -60,32 +62,39 @@ namespace RF.Photon
             }
         }
 
-        public void OnCreateRoomFailed(short returnCode, string message)
+        public override void OnCreateRoomFailed(short returnCode, string message)
         {
            
         }
 
-        public void OnJoinedRoom()
+        public override void OnJoinedRoom()
         {
-            RoomManager.Instance.CreateRoomData(PhotonNetwork.CurrentRoom.Name);
+            GameObject lbPlObj = PhotonNetwork.Instantiate("LobbyPlayer", Vector3.zero, Quaternion.identity);
+            LobbyPlayer lobbyPlayer = lbPlObj.GetComponent<LobbyPlayer>();
+            //lobbyPlayer.
+            
+            Debug.Log("매치 룸 참가");  
+                
+            //RoomManager.Instance.CreateRoomData(PhotonNetwork.CurrentRoom.Name);
+            //RoomManager.Instance.CreateWaitData();
         }
 
-        public void OnJoinRoomFailed(short returnCode, string message)
+        public override void OnJoinRoomFailed(short returnCode, string message)
         {
             
         }
 
-        public void OnJoinRandomFailed(short returnCode, string message)
+        public override void OnJoinRandomFailed(short returnCode, string message)
         {
             
         }
 
-        public void OnLeftRoom()
+        public override void OnLeftRoom()
         {
             
         }
         
-        public void OnPlayerEnteredRoom(Player newPlayer)
+        public override void OnPlayerEnteredRoom(Player newPlayer)
         {
             switch (LobbyManager.Instance.GetGamemode())
             {
@@ -99,77 +108,80 @@ namespace RF.Photon
             }
         }
 
-        public void OnPlayerLeftRoom(Player otherPlayer)
+        public override void OnPlayerLeftRoom(Player otherPlayer)
         {
            
         }
 
-        public void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+        public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
         {
             
         }
 
-        public void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+        public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
            
         }
 
-        public void OnMasterClientSwitched(Player newMasterClient)
+        public override void OnMasterClientSwitched(Player newMasterClient)
         {
             
         }
         #endregion
         
         #region 로비
-        public void OnJoinedLobby()
+        public override void OnJoinedLobby()
         {
             Debug.Log("joined lobby");
         }
 
-        public void OnLeftLobby()
+        public override void OnLeftLobby()
         {
            
         }
 
-        public void OnRoomListUpdate(List<RoomInfo> roomList)
+        public override void OnRoomListUpdate(List<RoomInfo> roomList)
         {
             
         }
 
-        public void OnLobbyStatisticsUpdate(List<TypedLobbyInfo> lobbyStatistics)
+        public override void OnLobbyStatisticsUpdate(List<TypedLobbyInfo> lobbyStatistics)
         {
             
         }
         #endregion
         
         #region 마스터
-        public void OnConnected()
+        public override void OnConnected()
         {
+            Debug.Log("connected");
+            
             
         }
 
-        public void OnConnectedToMaster()
+        public override void OnConnectedToMaster()
         {
-            Debug.Log("connected master");
             PhotonNetwork.JoinLobby();
+            Debug.Log("connected master");
+            
         }
 
-        public void OnDisconnected(DisconnectCause cause)
+        public override void OnDisconnected(DisconnectCause cause)
         {
            
         }
 
-        public void OnRegionListReceived(RegionHandler regionHandler)
+        public override void OnRegionListReceived(RegionHandler regionHandler)
         {
             
         }
 
-        public void OnCustomAuthenticationResponse(Dictionary<string, object> data)
+        public override void OnCustomAuthenticationResponse(Dictionary<string, object> data)
         {
             
         }
 
-        public void OnCustomAuthenticationFailed(string debugMessage)
+        public override void OnCustomAuthenticationFailed(string debugMessage)
         {
             
         }
@@ -193,6 +205,13 @@ namespace RF.Photon
         {
             PhotonNetwork.ConnectUsingSettings();
         }
+
+        private void Update()
+        {
+            Debug.Log("is connect : " + PhotonNetwork.IsConnected);
+            Debug.Log("is in lobby : " + PhotonNetwork.InLobby);
+        }
+
         #endregion
     }
 }

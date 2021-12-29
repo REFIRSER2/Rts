@@ -98,7 +98,6 @@ namespace RF.UI
                 if (normalBackground != null && !isSelect && !isDisable)
                 {
                     background.sprite = normalBackground;
-                    Debug.Log("exit");
                 }    
             }
             
@@ -168,6 +167,7 @@ namespace RF.UI
                 if (isDisable && disabledBackground != null)
                 {
                     background.sprite = disabledBackground;
+                   
                 }
                 else
                 {
@@ -197,6 +197,7 @@ namespace RF.UI
                 {
                     if (selectedBackground != null)
                     {
+          
                         background.sprite = selectedBackground;
                     }
                 }

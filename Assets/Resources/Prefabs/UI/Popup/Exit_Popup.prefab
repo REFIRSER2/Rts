@@ -513,7 +513,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4038240126784084125}
-  - component: {fileID: 4165979095762159278}
+  - component: {fileID: 8310914732948290759}
   m_Layer: 5
   m_Name: Cancel_Button
   m_TagString: Untagged
@@ -541,7 +541,7 @@ RectTransform:
   m_AnchoredPosition: {x: 125, y: -249}
   m_SizeDelta: {x: 200, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4165979095762159278
+--- !u!114 &8310914732948290759
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -550,24 +550,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3918036639103413374}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31691372e3d9ce1489ecb117da268d2d, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c5a03e203f45f445a7d943a7fd11b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5034838765314252938}
-        m_TargetAssemblyTypeName: Exit_Popup, Assembly-CSharp
-        m_MethodName: onClose
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   isChangeImage: 1
   background: {fileID: 5798873006139325243}
   normalBackground: {fileID: 21300000, guid: ffd81eee9acc2594494764d584c52028, type: 3}
@@ -587,6 +575,7 @@ MonoBehaviour:
   disableColor: {r: 0, g: 0, b: 0, a: 0}
   selectList: []
   isSelect: 0
+  isDisable: 0
 --- !u!1 &4066069144421635854
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,7 +664,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1225727822151219747}
-  - component: {fileID: 5034838765314252938}
   m_Layer: 5
   m_Name: Exit_Popup
   m_TagString: Untagged
@@ -704,18 +692,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5034838765314252938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4249946263432472449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 791ee16c11ea65c4a88dc816e04c09d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4461553853551156571
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,7 +852,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6531048698201302661}
-  - component: {fileID: 2178469957709788351}
+  - component: {fileID: 746074390229896623}
   m_Layer: 5
   m_Name: Accept_Button
   m_TagString: Untagged
@@ -904,7 +880,7 @@ RectTransform:
   m_AnchoredPosition: {x: -125, y: -249}
   m_SizeDelta: {x: 200, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2178469957709788351
+--- !u!114 &746074390229896623
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -913,24 +889,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7028857404340593055}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31691372e3d9ce1489ecb117da268d2d, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c5a03e203f45f445a7d943a7fd11b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5034838765314252938}
-        m_TargetAssemblyTypeName: Exit_Popup, Assembly-CSharp
-        m_MethodName: onExit
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   isChangeImage: 1
   background: {fileID: 6719226675595317068}
   normalBackground: {fileID: 21300000, guid: ffd81eee9acc2594494764d584c52028, type: 3}
@@ -950,3 +914,4 @@ MonoBehaviour:
   disableColor: {r: 0, g: 0, b: 0, a: 0}
   selectList: []
   isSelect: 0
+  isDisable: 0

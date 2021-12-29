@@ -76,7 +76,7 @@ namespace RF.UI.Popup
 
         public override void OnAccept()
         {
-            base.OnAccept();
+            //base.OnAccept();
             
             LobbyManager.Instance.AcceptQuickMatch(lobbyID);
             
@@ -88,7 +88,7 @@ namespace RF.UI.Popup
 
         public override void OnDecline()
         {
-            base.OnDecline();
+            //base.OnDecline();
 
             GetDeclineButton().gameObject.SetActive(false);
             declineDisableButton.SetActive(true);

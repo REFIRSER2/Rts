@@ -327,6 +327,7 @@ namespace RF.Lobby
 
         public void LeaveQuickMatch()
         {
+            Debug.Log("leave quick match try");
             server.Socket.Emit("leave quick match", localMember, LobbyManager.Instance.party.memberList);
         }
 
@@ -344,6 +345,7 @@ namespace RF.Lobby
 
         private void CreateQuickMatchLobby(List<MemberData> members)
         {
+            Debug.Log("매치 로비 생성");
             lobbyData = new LobbyData();
             lobbyData.members = members;
             SteamManager.Instance.CreateLobby();
@@ -356,18 +358,19 @@ namespace RF.Lobby
         
         private void CreateQuickMatchRoom(string roomName)
         {
-            Debug.Log("Create quick match room");
+            Debug.Log("매치 룸 생성");
             RoomManager.Instance.CreateRoom(roomName);
         }
 
         public void OnCreateQuickMatchRoom()
         {
+            Debug.Log("매치 룸 생성 완료");
             //server.Socket.Emit("");
         }
 
         private void InviteQuickMatch(string lobbyID)
         {
-            Debug.Log("invite quick match");
+            Debug.Log("매치 초대");
             var popup = UI_Manager.Instance.CreatePopupView("MatchAccept_Popup") as MatchAccept_Popup;
             popup.SetLobby(lobbyID);
         }
@@ -379,7 +382,7 @@ namespace RF.Lobby
 
         public void StartQuickMatch(string roomName, List<MemberData> team1, List<MemberData> team2)
         {
-            RoomManager.Instance.AddRoomPlayer(team1, team2);
+            Debug.Log("매치 시작");
         }
         #endregion
         

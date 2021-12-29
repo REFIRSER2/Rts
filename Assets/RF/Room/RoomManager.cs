@@ -13,6 +13,12 @@ namespace RF.Room
         public List<MemberData> team1 = new List<MemberData>();
         public List<MemberData> team2 = new List<MemberData>();
     }
+
+    public class WaitData
+    {
+        public List<LobbyPlayer> team1 = new List<LobbyPlayer>();
+        public List<LobbyPlayer> team2 = new List<LobbyPlayer>();
+    }
     
     public class RoomManager : MonoBehaviour
     {
@@ -22,6 +28,7 @@ namespace RF.Room
         
         #region 방
         private RoomData roomData;
+        private WaitData waitData;
 
         public RoomData GetRoomData()
         {
@@ -48,15 +55,14 @@ namespace RF.Room
             roomData.roomName = roomName;
         }
 
-        public void AddRoomPlayer(MemberData data)
+        public void CreateWaitData()
         {
-            roomData.players.Add(data);
+            waitData = new WaitData();
         }
 
-        public void AddRoomPlayer(List<MemberData> data1, List<MemberData> data2)
+        public void AddWaitPlayer(LobbyPlayer ply)
         {
-            roomData.team1 = data1;
-            roomData.team2 = data2;
+            
         }
         #endregion
         

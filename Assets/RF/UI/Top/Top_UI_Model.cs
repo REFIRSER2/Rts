@@ -44,6 +44,7 @@ namespace RF.UI.Top
         
         public void OnLeaveFindQuickMatch()
         {
+            Debug.Log("leave quick match");
             presenter.OnLeaveFindQuickMatch();
         }
         #endregion

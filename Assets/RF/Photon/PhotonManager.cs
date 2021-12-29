@@ -42,6 +42,11 @@ namespace RF.Photon
 
             PhotonNetwork.CreateRoom(roomName, options, null, ids.ToArray());
         }
+
+        public void JoinQuickMatchRoom(string roomName)
+        {
+            PhotonNetwork.JoinRoom(roomName);
+        }
         
         public override void OnFriendListUpdate(List<FriendInfo> friendList)
         {

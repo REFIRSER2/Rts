@@ -34,12 +34,12 @@ namespace RF.Room
         {
             return roomData;
         }
-        
+
         public void CreateRoom(string roomName)
         {
             switch (LobbyManager.Instance.GetGamemode())
             {
-                case 0 :
+                case 0:
                     PhotonManager.Instance.CreateQuickMatchRoom(roomName);
                     break;
                 case 1:
@@ -49,20 +49,18 @@ namespace RF.Room
             }
         }
 
-        public void CreateRoomData(string roomName)
+        public void JoinRoom(string roomName)
         {
-            roomData = new RoomData();
-            roomData.roomName = roomName;
-        }
-
-        public void CreateWaitData()
-        {
-            waitData = new WaitData();
-        }
-
-        public void AddWaitPlayer(LobbyPlayer ply)
-        {
-            
+            switch (LobbyManager.Instance.GetGamemode())
+            {
+                case 0:
+                    PhotonManager.Instance.JoinQuickMatchRoom(roomName);
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+            }            
         }
         #endregion
         

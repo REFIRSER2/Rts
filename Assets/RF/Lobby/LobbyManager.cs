@@ -383,13 +383,14 @@ namespace RF.Lobby
 
         public void StartQuickMatch(string roomName)
         {
-            Debug.Log("매치 시작");
+            Debug.Log("매치 시작 보냄");
             server.Socket.Emit("start quick match", roomName, localMember);
         }
         
         public void OnStartQuickMatch(string roomName, List<MemberData> team1, List<MemberData> team2)
         {
-            Debug.Log("매치 시작");
+            Debug.Log("매치 시작 받음");
+            RoomManager.Instance.JoinRoom(roomName);
         }
         #endregion
         

@@ -53,7 +53,7 @@ namespace RF.Photon
             switch (LobbyManager.Instance.GetGamemode())
             {
                 case 0:
-                    LobbyManager.Instance.OnCreateQuickMatchRoom();
+                    LobbyManager.Instance.OnCreateQuickMatchRoom(PhotonNetwork.CurrentRoom.Name);
                     break;
                 case 1:
                     break;

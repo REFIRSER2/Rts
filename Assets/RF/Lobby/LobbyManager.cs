@@ -296,7 +296,7 @@ namespace RF.Lobby
             
             server.Socket.On<string, List<MemberData>, List<MemberData>>("start quick match", (roomName, team1, team2) =>
             {
-                StartQuickMatch(roomName, team1, team2);
+                OnStartQuickMatch(roomName, team1, team2);
             });
             
             server.Socket.On("join quick match", () =>
@@ -362,9 +362,10 @@ namespace RF.Lobby
             RoomManager.Instance.CreateRoom(roomName);
         }
 
-        public void OnCreateQuickMatchRoom()
+        public void OnCreateQuickMatchRoom(string roomName)
         {
             Debug.Log("매치 룸 생성 완료");
+            StartQuickMatch(roomName);
             //server.Socket.Emit("");
         }
 
@@ -380,7 +381,13 @@ namespace RF.Lobby
 
         }
 
-        public void StartQuickMatch(string roomName, List<MemberData> team1, List<MemberData> team2)
+        public void StartQuickMatch(string roomName)
+        {
+            Debug.Log("매치 시작");
+            server.Socket.Emit("start quick match", roomName, localMember);
+        }
+        
+        public void OnStartQuickMatch(string roomName, List<MemberData> team1, List<MemberData> team2)
         {
             Debug.Log("매치 시작");
         }
